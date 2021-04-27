@@ -1,8 +1,8 @@
-import { Scaffold } from "~/presentation/components/Scaffold";
+import { Scaffold } from '~/presentation/components/Scaffold'
 
-export default function Home() {
+export default function Passwords() {
   return (
-    <Scaffold title="Dashboard">
+    <Scaffold title="Passwords">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
