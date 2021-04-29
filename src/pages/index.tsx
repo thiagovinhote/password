@@ -1,20 +1,44 @@
 import { Scaffold } from "~/presentation/components/Scaffold";
+import { CardMenuItem } from "~/presentation/pages/index";
+
+const menuItems = [
+  {
+    title: 'Manualmente',
+    description: 'Adicionar senha manualmente, não sendo possível atualizar posteriormente',
+    buttonText: "Adicionar"
+  },
+  {
+    title: 'Senha Forte',
+    description: 'Gerar senha aleatóriamente com base em alguns algoritmos',
+    buttonText: "Gerar"
+  },
+  {
+    title: 'Compartilhamento',
+    description: 'Compartilhe suas credenciais com outros usuários de forma segura',
+    buttonText: "Enviar"
+  },
+  {
+    title: 'Importe/Exporte',
+    description: 'Baixe ou carregue suas senha com um clique e de forma simples',
+    buttonText: "Importar/Exportar"
+  }
+]
 
 export default function Home() {
   return (
     <Scaffold title="Dashboard">
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-        <div className="md:flex">
-          <div className="md:flex-shrink-0">
-            <img className="h-48 w-full object-cover md:w-48" src="https://images.unsplash.com/photo-1515711660811-48832a4c6f69?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Man looking at item at a store" />
-          </div>
-          <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
-            <a href="#" className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
-            <p className="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
-          </div>
-        </div>
-      </div>
+      <ul className="grid grid-cols-4 gap-4">
+        {menuItems.map(item => (
+          <li className="flex" key={item.title}>
+            <CardMenuItem
+              title={item.title}
+              description={item.description}
+              buttonText={item.buttonText}
+              onClickButton={() => {}}
+            />
+          </li>
+        ))}
+      </ul>
     </Scaffold>
   )
 }

@@ -6,17 +6,17 @@ type Props = {
 
 export const Scaffold: React.FC<Props> = ({ title, children }) => {
   return (
-    <>
-      <header className="bg-white shadow">
+    <div className="bg-gray-100 min-h-screen">
+      <header className="shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
         </div>
       </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <section>
           {children}
-        </div>
+        </section>
       </main>
-    </>
+    </div>
   )
 }
