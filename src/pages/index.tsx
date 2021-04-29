@@ -1,26 +1,30 @@
 import { Scaffold } from "~/presentation/components/Scaffold";
-import { CardMenuItem } from "~/presentation/pages/index";
+import { CardMenuItem, Props as CardMenuItemProps } from "~/presentation/pages/index";
 
-const menuItems = [
+const menuItems: CardMenuItemProps[] = [
   {
     title: 'Manualmente',
     description: 'Adicionar senha manualmente, não sendo possível atualizar posteriormente',
-    buttonText: "Adicionar"
+    linkText: "Adicionar",
+    linkTo: { href: "/add" }
   },
   {
     title: 'Senha Forte',
     description: 'Gerar senha aleatóriamente com base em alguns algoritmos',
-    buttonText: "Gerar"
+    linkText: "Gerar",
+    linkTo: { href: "/generate" }
   },
   {
     title: 'Compartilhamento',
     description: 'Compartilhe suas credenciais com outros usuários de forma segura',
-    buttonText: "Enviar"
+    linkText: "Enviar",
+    linkTo: { href: "/send" }
   },
   {
-    title: 'Importe/Exporte',
+    title: 'Um arquivo',
     description: 'Baixe ou carregue suas senha com um clique e de forma simples',
-    buttonText: "Importar/Exportar"
+    linkText: "Importar/Exportar",
+    linkTo: { href: "/one-file" }
   }
 ]
 
@@ -30,12 +34,7 @@ export default function Home() {
       <ul className="grid grid-cols-4 gap-4">
         {menuItems.map(item => (
           <li className="flex" key={item.title}>
-            <CardMenuItem
-              title={item.title}
-              description={item.description}
-              buttonText={item.buttonText}
-              onClickButton={() => {}}
-            />
+            <CardMenuItem {...item} />
           </li>
         ))}
       </ul>
