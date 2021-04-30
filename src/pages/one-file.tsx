@@ -1,14 +1,15 @@
 import { Scaffold } from "~/presentation/components/Scaffold";
+import SubmitSvg from '../assets/images/submit.svg'
 
 export default function OneFile() {
   return (
     <Scaffold title="Um arquivo">
-      <div className="grid grid-cols-2 gap-4 py-44 border-2 border-gray-300 border-dashed rounded-xl bg-white">
-        <div className="text-center space-y-2">
+      <div className="grid grid-cols-2 gap-4 py-28 border-2 border-gray-300 border-dashed rounded-xl bg-white">
+        <div className="flex flex-col items-center justify-center space-y-2">
           <p className="text-3xl font-bold py-4">
             Carrege um arquivo
           </p>
-          <span className="block font-semibold">
+          <span className="block">
             Arraste & Solte o arquivo aqui
           </span>
           <p className="text-gray-500">
@@ -24,8 +25,8 @@ export default function OneFile() {
             </span>
           </p>
         </div>
-        <div>
-          Image
+        <div className="flex flex-col items-center justify-center">
+          <SubmitSvg className="h-5/6" />
         </div>
       </div>
     </Scaffold>
