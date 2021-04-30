@@ -12,7 +12,7 @@ export type Props = {
 
 export const CardMenuItem: React.FC<Props> = (props) => {
   return (
-    <div className="flex flex-col bg-white rounded-xl py-6">
+    <div className="flex flex-col bg-white rounded-xl py-6 border-2 hover:border-blue-200">
       <PadlockImage className="w-3/12 h-auto mx-auto" />
       <div className="px-8 py-6 text-center mb-auto">
         <p className="font-bold text-xl pb-2">

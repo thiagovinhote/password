@@ -26,7 +26,7 @@ export default function OneFile() {
           </p>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <SubmitSvg className="h-5/6" />
+          <SubmitSvg className="h-96" />
         </div>
       </div>
     </Scaffold>
