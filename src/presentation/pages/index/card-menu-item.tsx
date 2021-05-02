@@ -2,6 +2,7 @@ import React from "react";
 import Link, { LinkProps } from 'next/link'
 
 import PadlockImage from '../../../assets/images/padlock.svg'
+import { DefaultButton } from "~/presentation/components/DefaultButton";
 
 export type Props = {
   title: string
@@ -25,9 +26,7 @@ export const CardMenuItem: React.FC<Props> = (props) => {
 
       <div className="flex justify-center text-center">
         <Link {...props.linkTo} passHref>
-          <a className="w-3/5 focus:outline-none active:text-blue-900 active:bg-blue-300 hover:bg-blue-200 hover:text-blue-800 rounded bg-blue-100 text-blue-600 text-sm px-4 py-2">
-            {props.linkText}
-          </a>
+          <DefaultButton className="w-3/5" tag="a" color="blue">{props.linkText}</DefaultButton>
         </Link>
       </div>
     </div>

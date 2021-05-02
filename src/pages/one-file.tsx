@@ -1,3 +1,4 @@
+import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Scaffold } from "~/presentation/components/Scaffold";
 import SubmitSvg from '../assets/images/submit.svg'
 
@@ -15,9 +16,7 @@ export default function OneFile() {
           <p className="text-gray-500">
             ou
           </p>
-          <button className="w-1/4 focus:outline-none active:text-green-900 active:bg-green-300 hover:bg-green-200 hover:text-green-800 rounded bg-green-100 text-green-600 text-sm px-4 py-2">
-            Navegar
-          </button>
+          <DefaultButton className="w-1/4" color="blue">Navegar</DefaultButton>
           <p className="text-gray-500 text-sm py-2">
             Formatos suportados: CSV, XLS, XLSX, XLSM, TXT
             <span className="block">
