@@ -1,13 +1,10 @@
 import React from "react";
+import { classNames } from "~/presentation/helpers";
 
 type Props = {
   tag?: keyof React.ReactHTML;
   color: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'yellow' | 'indigo'
   className?: string
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
 }
 
 export const DefaultButton: React.FC<Props> = (props) => {

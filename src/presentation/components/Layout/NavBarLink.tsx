@@ -1,12 +1,9 @@
 import React, { ReactNode, ReactElement } from 'react'
 import { useRouter } from 'next/router'
 import Link, { LinkProps } from 'next/link'
+import { classNames } from '~/presentation/helpers'
 
 type Props = LinkProps
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export const NavBarLink: React.FC<Props> = (props) => {
   const router = useRouter()
@@ -24,7 +21,7 @@ export const NavBarLink: React.FC<Props> = (props) => {
 
   return (
     <Link {...props}>
-      <a className={classNames(classes)}>
+      <a className={classNames(...classes)}>
         {props.children}
       </a>
     </Link>

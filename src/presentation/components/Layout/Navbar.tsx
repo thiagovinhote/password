@@ -13,11 +13,6 @@ const profile = [
   { name: 'Sign out', href: "/" }
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-
 export const NavBar: React.FC = () => {
   return (
     <Disclosure as="nav" className="bg-gray-800">

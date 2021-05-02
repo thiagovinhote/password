@@ -1,4 +1,5 @@
 import React from "react";
+import { classNames } from "~/presentation/helpers";
 
 type Props = {
   title: string;
@@ -6,10 +7,6 @@ type Props = {
   color?: string;
   icon?: React.FC<any>
   active?: boolean
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
 }
 
 export const CardItem: React.FC<Props> = (props) => {
