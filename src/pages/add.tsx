@@ -1,10 +1,12 @@
-import { ChipIcon, CogIcon, CubeTransparentIcon } from "@heroicons/react/outline";
+import { useState } from "react";
 import { Scaffold } from "~/presentation/components/Scaffold";
-import { CardItem } from '~/presentation/pages/add'
+import { ListCryptography, ListCryptographyProvider } from '~/presentation/pages/add'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { InputForm } from "~/presentation/components/InputForm";
 
 export default function Add() {
+  const [cryptography, setCryptography] = useState(undefined)
+
   return (
     <Scaffold title="Adicionar senha">
       <div className="grid grid-cols-2 gap-6">
@@ -12,12 +14,9 @@ export default function Add() {
           <p className="font-medium text-lg pb-4">
             Escolha o tipo de criptografia
           </p>
-          <div className="space-y-4">
-            <CardItem title="AES128" subtitle="Chave com 16 byte (128 bits)" icon={ChipIcon} color="text-green-400" />
-            <CardItem title="AES128-CBC" subtitle="Chave com 16 byte (128 bits)" icon={ChipIcon} color="text-purple-400" />
-            <CardItem title="AES192" subtitle="Chave com 24 byte (192 bits)" icon={CogIcon} color="text-blue-400" />
-            <CardItem title="AES256" subtitle="Chave com 32 byte (256 bits)" icon={CubeTransparentIcon} color="text-pink-400" active />
-          </div>
+          <ListCryptographyProvider>
+            <ListCryptography onChange={setCryptography} />
+          </ListCryptographyProvider>
         </div>
         <div>
           <p className="font-medium text-lg pb-4">
