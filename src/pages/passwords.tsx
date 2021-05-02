@@ -1,6 +1,7 @@
 import { Badge } from '~/presentation/components/Badge'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
+import { DatePipeOperator } from '~/presentation/pipes'
 
 const passwords = [
   {
@@ -27,6 +28,7 @@ const cryptographyColorByColors = {
 }
 
 export default function Passwords() {
+  const { exec: formatDate } = DatePipeOperator.factory()
 
   return (
     <Scaffold title="Passwords">
@@ -64,7 +66,7 @@ export default function Passwords() {
                 </DataCell>
                 <DataCell>
                   <span className="text-sm text-gray-500">
-                    {password.created_at}
+                    {formatDate({ value: password.created_at, pattern: "dd/MMM/yy 'às' HH:mm" })}
                   </span>
                 </DataCell>
               </tr>
