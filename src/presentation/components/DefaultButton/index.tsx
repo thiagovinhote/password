@@ -3,8 +3,9 @@ import { classNames } from "~/presentation/helpers";
 
 type Props = {
   tag?: keyof React.ReactHTML;
-  color: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'yellow' | 'indigo'
+  color: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'yellow' | 'indigo' | 'gray' | 'white'
   className?: string
+  onClick?: () => void
 }
 
 export const DefaultButton: React.FC<Props> = (props) => {
