@@ -18,6 +18,7 @@ export const TabsModel: React.FC<Props> = (props) => {
             setSelectedTab={setSelectedTab}
             active={index === selectedTab}
             index={index}
+            key={index}
           />
         })}
       </ul>

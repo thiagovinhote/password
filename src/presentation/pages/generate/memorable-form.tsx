@@ -1,13 +1,47 @@
 import { PaperClipIcon } from "@heroicons/react/outline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Toggle } from "~/presentation/components/Toggle";
 import { PasswordItem } from "./password-item";
 
+type FetchGenerateParams = {
+  include_numbers: boolean
+  lowercase_characters: boolean
+  uppercase_characters: boolean
+}
+
+const fetchGenerate = async (params?: FetchGenerateParams) => {
+  const response = await fetch('http://localhost:4000/api/generate', {
+    body: params ? JSON.stringify(params) : null,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+  const data = await response.json()
+
+  return data as { result: string[] }
+}
+
 export const MemorableForm: React.FC = () => {
-  const [includeNumbers, setIncludeNumber] = useState(false)
-  const [uppercaseCharacters, setUppercaseCharacters] = useState(false)
-  const [lowercaseCharacters, setLowercaseCharacters] = useState(false)
+  const [includeNumbers, setIncludeNumber] = useState(true)
+  const [uppercaseCharacters, setUppercaseCharacters] = useState(true)
+  const [lowercaseCharacters, setLowercaseCharacters] = useState(true)
+
+  const [passwords, setPasswords] = useState([])
+
+  const fetchData = async () => {
+    const data = await fetchGenerate({
+      include_numbers: includeNumbers,
+      lowercase_characters: lowercaseCharacters,
+      uppercase_characters: uppercaseCharacters
+    })
+    setPasswords(data.result)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <div className="grid grid-cols-3 gap-4">
@@ -20,8 +54,8 @@ export const MemorableForm: React.FC = () => {
           </div>
           <div className="border-t border-gray-200">
             <div className="grid grid-cols-4 px-4 py-5 gap-4">
-              {Array.from({ length: 16 }).map((_, index) => (
-                <PasswordItem key={index}>{index}</PasswordItem>
+              {passwords.map((item, index) => (
+                <PasswordItem key={index}>{item}</PasswordItem>
               ))}
             </div>
           </div>
@@ -53,7 +87,7 @@ export const MemorableForm: React.FC = () => {
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 flex justify-center my-2">
-                <DefaultButton className="w-1/2" color="blue">Atualizar</DefaultButton>
+                <DefaultButton onClick={fetchData} className="w-1/2" color="blue">Atualizar</DefaultButton>
               </div>
             </dl>
           </div>
