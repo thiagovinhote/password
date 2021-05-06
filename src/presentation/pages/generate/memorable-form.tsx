@@ -1,9 +1,14 @@
 import { PaperClipIcon } from "@heroicons/react/outline";
-import React from "react";
+import React, { useState } from "react";
+import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Toggle } from "~/presentation/components/Toggle";
 import { PasswordItem } from "./password-item";
 
 export const MemorableForm: React.FC = () => {
+  const [includeNumbers, setIncludeNumber] = useState(false)
+  const [uppercaseCharacters, setUppercaseCharacters] = useState(false)
+  const [lowercaseCharacters, setLowercaseCharacters] = useState(false)
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">
@@ -30,14 +35,25 @@ export const MemorableForm: React.FC = () => {
           <div className="border-t border-gray-200">
             <dl>
               <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
-                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Incluir Simbolos</dt>
+                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Incluir Números</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
-                  <Toggle />
+                  <Toggle value={includeNumbers} onChange={setIncludeNumber} />
                 </dd>
               </div>
-              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Application for</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Backend Developer</dd>
+              <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
+                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Minúsculos</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                  <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />
+                </dd>
+              </div>
+              <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
+                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Maiúsculos</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                  <Toggle value={uppercaseCharacters} onChange={setUppercaseCharacters} />
+                </dd>
+              </div>
+              <div className="bg-white px-4 py-5 flex justify-center my-2">
+                <DefaultButton className="w-1/2" color="blue">Atualizar</DefaultButton>
               </div>
             </dl>
           </div>
