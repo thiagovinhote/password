@@ -1,42 +1,34 @@
-import { PaperClipIcon } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
+import { FetchGenerate } from "~/domain/usecases/fetch-generate";
+import { Usecase } from "~/domain/usecases/usecase";
 import { DefaultButton } from "~/presentation/components/DefaultButton";
+import { InputForm } from "~/presentation/components/InputForm";
 import { Toggle } from "~/presentation/components/Toggle";
 import { PasswordItem } from "./password-item";
+import { SelectSize } from "./select-size";
 
-type FetchGenerateParams = {
-  include_numbers: boolean
-  lowercase_characters: boolean
-  uppercase_characters: boolean
+const sizes = [{ label: '5', value: 5}, { label: '10', value: 10 }, { label: '15', value: 15}]
+
+type Props = {
+  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
 }
 
-const fetchGenerate = async (params?: FetchGenerateParams) => {
-  const response = await fetch('http://localhost:4000/api/generate', {
-    body: params ? JSON.stringify(params) : null,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
-  const data = await response.json()
-
-  return data as { result: string[] }
-}
-
-export const MemorableForm: React.FC = () => {
+export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
   const [includeNumbers, setIncludeNumber] = useState(true)
   const [uppercaseCharacters, setUppercaseCharacters] = useState(true)
   const [lowercaseCharacters, setLowercaseCharacters] = useState(true)
+  const [passwordSize, setPasswordSize] = useState(sizes[0])
 
   const [passwords, setPasswords] = useState([])
 
   const fetchData = async () => {
-    const data = await fetchGenerate({
-      include_numbers: includeNumbers,
-      lowercase_characters: lowercaseCharacters,
-      uppercase_characters: uppercaseCharacters
+    const data = await fetchGenerate.exec({
+      includeNumbers,
+      lowercaseCharacters,
+      uppercaseCharacters,
+      passwordSize: passwordSize.value
     })
-    setPasswords(data.result)
+    setPasswords(data)
   }
 
   useEffect(() => {
@@ -68,21 +60,27 @@ export const MemorableForm: React.FC = () => {
           </div>
           <div className="border-t border-gray-200">
             <dl>
+              <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
+                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Tamanho da senha</dt>
+                <dd>
+                  <SelectSize data={sizes} value={passwordSize} onChange={setPasswordSize} />
+                </dd>
+              </div>
               <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
                 <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Incluir Números</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                <dd>
                   <Toggle value={includeNumbers} onChange={setIncludeNumber} />
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
                 <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Minúsculos</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                <dd>
                   <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />
                 </dd>
               </div>
               <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
                 <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Maiúsculos</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                <dd>
                   <Toggle value={uppercaseCharacters} onChange={setUppercaseCharacters} />
                 </dd>
               </div>
