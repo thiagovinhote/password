@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FetchGenerate } from "~/domain/usecases/fetch-generate";
 import { Usecase } from "~/domain/usecases/usecase";
 import { DefaultButton } from "~/presentation/components/DefaultButton";
-import { InputForm } from "~/presentation/components/InputForm";
+import { Select } from "~/presentation/components/Select";
 import { Toggle } from "~/presentation/components/Toggle";
 import { PasswordItem } from "./password-item";
-import { SelectSize } from "./select-size";
 
-const sizes = [{ label: '5', value: 5}, { label: '10', value: 10 }, { label: '15', value: 15}]
+const sizes = [5, 10, 15]
 
 type Props = {
   fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
@@ -26,7 +25,7 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
       includeNumbers,
       lowercaseCharacters,
       uppercaseCharacters,
-      passwordSize: passwordSize.value
+      passwordSize: passwordSize
     })
     setPasswords(data)
   }
@@ -63,7 +62,7 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
               <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
                 <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Tamanho da senha</dt>
                 <dd>
-                  <SelectSize data={sizes} value={passwordSize} onChange={setPasswordSize} />
+                  <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
                 </dd>
               </div>
               <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
