@@ -1,6 +1,6 @@
 import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Scaffold } from "~/presentation/components/Scaffold";
-import SubmitSvg from '../assets/images/submit.svg'
+import { ReactComponent as SubmitSvg } from '../assets/images/submit.svg'
 
 export default function OneFile() {
   return (

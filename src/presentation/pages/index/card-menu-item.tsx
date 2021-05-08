@@ -1,7 +1,7 @@
 import React from "react";
 import Link, { LinkProps } from 'next/link'
 
-import PadlockImage from '../../../assets/images/padlock.svg'
+import { ReactComponent as PadlockImage} from '../../../assets/images/padlock.svg'
 import { DefaultButton } from "~/presentation/components/DefaultButton";
 
 export type Props = {

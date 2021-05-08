@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
-import * as LogoSvg from '../../../assets/images/padlock.svg'
+import { ReactComponent as LogoSvg } from '../../../assets/images/padlock.svg'
 import { NavBarLink } from './NavBarLink'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
