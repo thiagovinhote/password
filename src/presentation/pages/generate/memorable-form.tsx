@@ -4,6 +4,8 @@ import { Usecase } from "~/domain/usecases/usecase";
 import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Select } from "~/presentation/components/Select";
 import { Toggle } from "~/presentation/components/Toggle";
+import { OptionItem } from "./option-item";
+import { OptionsSidebar } from "./options-sidebard";
 import { PasswordItem } from "./password-item";
 
 const sizes = [5, 10, 15]
@@ -53,42 +55,20 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
         </div>
       </div>
       <div>
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Opções</h3>
-          </div>
-          <div className="border-t border-gray-200">
-            <dl>
-              <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
-                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Tamanho da senha</dt>
-                <dd>
-                  <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
-                </dd>
-              </div>
-              <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
-                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Incluir Números</dt>
-                <dd>
-                  <Toggle value={includeNumbers} onChange={setIncludeNumber} />
-                </dd>
-              </div>
-              <div className="bg-white px-4 py-5 grid grid-cols-2 gap-4 px-6">
-                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Minúsculos</dt>
-                <dd>
-                  <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />
-                </dd>
-              </div>
-              <div className="bg-gray-50 px-4 py-5 grid grid-cols-2 gap-4 px-6">
-                <dt className="flex flex-col justify-center text-sm font-medium text-gray-500">Caracteres Maiúsculos</dt>
-                <dd>
-                  <Toggle value={uppercaseCharacters} onChange={setUppercaseCharacters} />
-                </dd>
-              </div>
-              <div className="bg-white px-4 py-5 flex justify-center my-2">
-                <DefaultButton onClick={fetchData} className="w-1/2" color="blue">Atualizar</DefaultButton>
-              </div>
-            </dl>
-          </div>
-        </div>
+        <OptionsSidebar onFetch={fetchData}>
+          <OptionItem label="Tamanho da senha">
+            <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
+          </OptionItem>
+          <OptionItem label="Incluir Números">
+            <Toggle value={includeNumbers} onChange={setIncludeNumber} />
+          </OptionItem>
+          <OptionItem label="Caracteres Minúsculos">
+            <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />
+          </OptionItem>
+          <OptionItem label="Caracteres Maiúsculos">
+            <Toggle value={uppercaseCharacters} onChange={setUppercaseCharacters} />
+          </OptionItem>
+        </OptionsSidebar>
       </div>
     </div>
   )
