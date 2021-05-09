@@ -21,7 +21,6 @@ export const Toggle: React.FC<Props> = (props) => {
 
   const key = [props.disabled ? 'disabled' : 'enabled', props.value ? 'on' : 'off'].join('_and_')
   const switchColor = switchColors[key]
-  console.log(key)
 
   return (
     <Switch
