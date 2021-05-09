@@ -1,18 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { FetchGenerate } from '~/domain/usecases/fetch-generate'
+import { Usecase } from '~/domain/usecases/usecase'
 import { Select } from '~/presentation/components/Select'
 import { Toggle } from '~/presentation/components/Toggle'
+import { classNames, range } from '~/presentation/helpers'
 import { OptionItem } from './option-item'
 import { OptionsSidebar } from './options-sidebard'
 import { PasswordItem } from './password-item'
 
-const sizes = [10, 15, 20]
+const sizes = range(16, 65)
 
-export const StrongForm: React.FC = () => {
-  const [includeSymbol, setIncludeSymbol] = useState(true)
+type Props = {
+  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
+}
+
+export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
+  const [includeSymbols, setIncludeSymbols] = useState(true)
+  const [ambiguousCharacters, setAmbiguousCharacters] = useState(false)
   const [passwordSize, setPasswordSize] = useState(sizes[0])
   const [passwords, setPasswords] = useState([])
 
-  const fetchData = () => {}
+  const fetchData = async () => {
+    const data = await fetchGenerate.exec({
+      includeNumbers: true,
+      lowercaseCharacters: true,
+      uppercaseCharacters: true,
+      passwordSize: passwordSize
+    })
+    setPasswords(data)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const gridClasses = useMemo(() => {
+    return passwordSize >= 35 ? 'grid-cols-1' : 'grid-cols-2'
+  }, [passwords])
 
   return (
     <div className="grid grid-cols-3 gap-4">
@@ -24,7 +48,7 @@ export const StrongForm: React.FC = () => {
             </p>
           </div>
           <div className="border-t border-gray-200">
-            <div className="grid grid-cols-4 px-4 py-5 gap-4">
+            <div className={classNames(gridClasses, "grid px-4 py-5 gap-4")}>
               {passwords.map((item, index) => (
                 <PasswordItem key={index}>{item}</PasswordItem>
               ))}
@@ -47,7 +71,10 @@ export const StrongForm: React.FC = () => {
             <Toggle value={true} disabled />
           </OptionItem>
           <OptionItem label="Incluir Símbolos">
-            <Toggle value={includeSymbol} onChange={setIncludeSymbol} />
+            <Toggle value={includeSymbols} onChange={setIncludeSymbols} />
+          </OptionItem>
+          <OptionItem label="Caracteres Ambíguos">
+            <Toggle value={ambiguousCharacters} onChange={setAmbiguousCharacters} />
           </OptionItem>
         </OptionsSidebar>
       </div>

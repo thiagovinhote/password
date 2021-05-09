@@ -3,18 +3,19 @@ import { FetchGenerate } from "~/domain/usecases/fetch-generate";
 import { Usecase } from "~/domain/usecases/usecase";
 import { Select } from "~/presentation/components/Select";
 import { Toggle } from "~/presentation/components/Toggle";
+import { range } from "~/presentation/helpers";
 import { OptionItem } from "./option-item";
 import { OptionsSidebar } from "./options-sidebard";
 import { PasswordItem } from "./password-item";
 
-const sizes = [5, 10, 15]
+const sizes = range(6, 16)
 
 type Props = {
   fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
 }
 
 export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
-  const [includeNumbers, setIncludeNumber] = useState(true)
+  const [includeNumbers, setIncludeNumbers] = useState(true)
   const [uppercaseCharacters, setUppercaseCharacters] = useState(true)
   const [lowercaseCharacters, setLowercaseCharacters] = useState(true)
   const [passwordSize, setPasswordSize] = useState(sizes[0])
@@ -59,7 +60,7 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
             <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
           </OptionItem>
           <OptionItem label="Incluir Números">
-            <Toggle value={includeNumbers} onChange={setIncludeNumber} />
+            <Toggle value={includeNumbers} onChange={setIncludeNumbers} />
           </OptionItem>
           <OptionItem label="Caracteres Minúsculos">
             <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />

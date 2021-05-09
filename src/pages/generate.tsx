@@ -23,7 +23,7 @@ export default function Generate() {
           <MemorableForm fetchGenerate={apiFetchGenerate} />
         </ModeItemTab>
         <ModeItemTab title="Forte" icon={LightningBoltIcon} color="text-yellow-400">
-          <StrongForm />
+          <StrongForm fetchGenerate={apiFetchGenerate} />
         </ModeItemTab>
         <ModeItemTab title="Muito Forte" icon={ShieldCheckIcon} color="text-red-400">
           Muito Forte
