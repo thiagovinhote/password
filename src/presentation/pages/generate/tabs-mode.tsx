@@ -1,4 +1,5 @@
-import React, { ReactElement, ReactNode, ReactNodeArray, ReactPortal, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
+import { AnimateSharedLayout } from "framer-motion";
 import { ModeItem } from './tab-mode-item'
 
 type Props = {
@@ -11,17 +12,19 @@ export const TabsModel: React.FC<Props> = (props) => {
 
   return (
     <>
-      <ul className="flex flex-row space-x-4">
-        {children.map((item, index) => {
-          return <ModeItem
-            {...item.props}
-            setSelectedTab={setSelectedTab}
-            active={index === selectedTab}
-            index={index}
-            key={index}
-          />
-        })}
-      </ul>
+      <AnimateSharedLayout>
+        <ul className="flex flex-row space-x-4">
+          {children.map((item, index) => {
+            return <ModeItem
+              {...item.props}
+              setSelectedTab={setSelectedTab}
+              active={index === selectedTab}
+              index={index}
+              key={index}
+            />
+          })}
+        </ul>
+      </AnimateSharedLayout>
       <div className="mt-4">
         {children[selectedTab]}
       </div>
