@@ -7,6 +7,7 @@ import { classNames, range } from '~/presentation/helpers'
 import { OptionItem } from './option-item'
 import { OptionsSidebar } from './options-sidebard'
 import { PasswordItem } from './password-item'
+import { TransitionFade } from './transition-fade'
 
 const sizes = range(16, 65)
 
@@ -39,7 +40,7 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
   }, [passwords])
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <TransitionFade className="grid grid-cols-3 gap-4">
       <div className="col-span-2">
         <div className="bg-white shadow overflow-hidden sm:rounded-lg h-full">
           <div className="px-4 py-5 sm:px-6">
@@ -78,6 +79,6 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
           </OptionItem>
         </OptionsSidebar>
       </div>
-    </div>
+    </TransitionFade>
   )
 }
