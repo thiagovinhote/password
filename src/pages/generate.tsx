@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { makeApiFetchGenerate } from '~/main/factories/usecases'
 import { FeedbackAlert } from '~/presentation/components/Alert'
 import { Scaffold } from '~/presentation/components/Scaffold'
-import { TabsModel, ModeItemTab, MemorableForm } from '~/presentation/pages/generate'
+import { TabsModel, ModeItemTab, MemorableForm, StrongForm } from '~/presentation/pages/generate'
 
 const apiFetchGenerate = makeApiFetchGenerate()
 
@@ -23,7 +23,7 @@ export default function Generate() {
           <MemorableForm fetchGenerate={apiFetchGenerate} />
         </ModeItemTab>
         <ModeItemTab title="Forte" icon={LightningBoltIcon} color="text-yellow-400">
-          Forte
+          <StrongForm />
         </ModeItemTab>
         <ModeItemTab title="Muito Forte" icon={ShieldCheckIcon} color="text-red-400">
           Muito Forte

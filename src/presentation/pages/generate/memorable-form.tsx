@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FetchGenerate } from "~/domain/usecases/fetch-generate";
 import { Usecase } from "~/domain/usecases/usecase";
-import { DefaultButton } from "~/presentation/components/DefaultButton";
 import { Select } from "~/presentation/components/Select";
 import { Toggle } from "~/presentation/components/Toggle";
 import { OptionItem } from "./option-item";
