@@ -1,4 +1,4 @@
-import { ApiFetchGenerate } from "~/data/usecases/ApiFetchGenerate"
+import { ApiFetchGenerate } from "~/data/usecases/api-fetch-generate"
 import { FetchHttpClient } from "~/infra/http-client/fetch-http-client"
 import { makeBaseApi } from "../http/base-api"
 
