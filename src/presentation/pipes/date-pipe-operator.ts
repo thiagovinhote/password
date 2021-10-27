@@ -12,7 +12,7 @@ type InputType = {
 export class DatePipeOperator implements PipeOperator<InputType, string> {
   private readonly defaultOptions: any
 
-  private constructor(){
+  private constructor() {
     this.defaultOptions = {
       locale: ptBRLocale
     }
