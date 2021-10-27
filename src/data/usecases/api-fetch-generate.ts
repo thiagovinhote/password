@@ -1,6 +1,8 @@
+import { Either } from "~/common/either";
 import { FetchGenerate } from "~/domain/usecases/fetch-generate";
 import { Usecase } from "~/domain/usecases/usecase";
-import { HttpClient, HttpMethodType } from "../protocols/http/http-client";
+import { AccessDeniedError, InvalidResourceError, UnexpectedError } from "../errors";
+import { HttpClient, HttpMethodType, HttpStatusCode } from "../protocols/http/http-client";
 
 export class ApiFetchGenerate implements Usecase<FetchGenerate.Params, FetchGenerate.Result> {
   constructor(private readonly httpClient: HttpClient<FetchGenerate.ResponseDTO>) {}
@@ -17,6 +19,15 @@ export class ApiFetchGenerate implements Usecase<FetchGenerate.Params, FetchGene
       }
     })
 
-    return response.body.result
+    switch (response.statusCode) {
+      case HttpStatusCode.forbidden:
+        return Either.left(AccessDeniedError.create())
+      case HttpStatusCode.notFound:
+        return Either.left(InvalidResourceError.create())
+      case HttpStatusCode.serverError:
+        return Either.left(UnexpectedError.create())
+    }
+
+    return Either.right(response.body.result)
   }
 }
