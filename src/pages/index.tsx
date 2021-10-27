@@ -1,4 +1,7 @@
 import { Scaffold } from "~/presentation/components/Scaffold";
+import { ssrAuth } from "~/presentation/helpers";
+import { withAuth } from "~/presentation/helpers/with-auth";
+import { useAuth } from "~/presentation/hooks";
 import { CardMenuItem, Props as CardMenuItemProps } from "~/presentation/pages/index";
 
 const menuItems: CardMenuItemProps[] = [
@@ -41,3 +44,9 @@ export default function Home() {
     </Scaffold>
   )
 }
+
+export const getServerSideProps = ssrAuth(async () => {
+  return {
+    props: {}
+  }
+})

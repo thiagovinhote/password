@@ -26,7 +26,7 @@ export const CardMenuItem: React.FC<Props> = (props) => {
 
       <div className="flex justify-center text-center">
         <Link {...props.linkTo} passHref>
-          <DefaultButton className="w-3/5" tag="a" color="blue">{props.linkText}</DefaultButton>
+          <DefaultButton  className="w-3/5" tag="a" color="blue">{props.linkText}</DefaultButton>
         </Link>
       </div>
     </div>

@@ -1,22 +1,30 @@
-import React from "react";
+import React, { AnchorHTMLAttributes, DetailedHTMLFactory, ElementType } from "react";
 import { classNames } from "~/presentation/helpers";
 
-type Props = {
-  tag?: keyof React.ReactHTML;
+type ExtractTag<T> = T extends DetailedHTMLFactory<infer P, any> ? P : unknown;
+
+type Props<T extends ElementType> = {
+  tag?: T;
   color: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'yellow' | 'indigo' | 'gray' | 'white'
   className?: string
   onClick?: () => void
+  children?: React.ReactNode
+  // attrs?: ExtractTag<React.ReactHTML[T]>
+  attrs?: any
 }
 
-export const DefaultButton: React.FC<Props> = (props) => {
-  const tag = props.tag ?? 'button'
+const DefaultButtonFC = <T extends ElementType,>(props: Props<T>, ref: any) => {
+  const { tag, children, color, className, ...rest } = props;
+  const elementType = tag ?? 'button'
 
   const buttonClasses = "focus:outline-none rounded text-sm px-4 py-2"
-  const colorClasses = `active:text-${props.color}-900 active:bg-${props.color}-300 hover:bg-${props.color}-200 hover:text-${props.color}-800 bg-${props.color}-100 text-${props.color}-600`
+  const colorClasses = `active:text-${color}-900 active:bg-${color}-300 hover:bg-${color}-200 hover:text-${color}-800 bg-${color}-100 text-${color}-600`
 
   return React.createElement(
-    tag,
-    { ...props, className: classNames(props.className, buttonClasses, colorClasses) },
-    props.children
+    elementType,
+    { ...rest, ...rest.attrs, ref, className: classNames(className, buttonClasses, colorClasses) },
+    children
   )
 }
+
+export const DefaultButton = React.forwardRef(DefaultButtonFC)

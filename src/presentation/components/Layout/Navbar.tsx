@@ -5,6 +5,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
 import { ReactComponent as LogoSvg } from '../../../assets/images/padlock.svg'
 import { NavBarLink } from './NavBarLink'
+import { useAuth } from '~/presentation/hooks'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = [
@@ -14,6 +15,8 @@ const profile = [
 ]
 
 export const NavBar: React.FC = () => {
+  const { user, isAuthenticated } = useAuth()
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -29,8 +32,8 @@ export const NavBar: React.FC = () => {
                     <NavBarLink href="/" >
                       Dashboard
                     </NavBarLink>
-                    <NavBarLink href="/passwords" >
-                      Passwords
+                    <NavBarLink href="/credentials" >
+                      Credentials
                     </NavBarLink>
                     <NavBarLink href="/generate" >
                       Generate
@@ -40,22 +43,20 @@ export const NavBar: React.FC = () => {
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
-                  <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
-                  <Menu as="div" className="ml-3 relative">
+                  <Menu as="div" className="relative">
                     {({ open }) => (
                       <>
                         <div>
-                          <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                          <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none">
                             <span className="sr-only">Open user menu</span>
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
-                            />
+                            <div className="group relative text-right">
+                            <span className="-m-2 px-2 py-1 block text-white">
+                              {user?.name}
+                            </span>
+                            <span className="-m-2 px-2 py-1 block font-medium text-white">
+                              {user?.email}
+                            </span>
+                            </div>
                           </Menu.Button>
                         </div>
                         <Transition
@@ -86,6 +87,10 @@ export const NavBar: React.FC = () => {
                       </>
                     )}
                   </Menu>
+                  <button className="ml-3 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <span className="sr-only">View notifications</span>
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">

@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 type Props = {
   title: string
+  append?: () => React.ReactNode
 }
 
-export const Scaffold: React.FC<Props> = ({ title, children }) => {
+export const Scaffold: React.FC<Props> = (props) => {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <Fragment>
       <header className="shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
+        <div className="lg:flex lg:items-center lg:justify-between max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">{props.title}</h2>
+          </div>
+          <div className="flex lg:mt-0 lg:ml-4">
+            {props.append?.()}
+          </div>
         </div>
       </header>
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <section>
-          {children}
+          {props.children}
         </section>
       </main>
-    </div>
+    </Fragment>
   )
 }
+
