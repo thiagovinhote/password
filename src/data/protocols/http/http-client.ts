@@ -4,8 +4,10 @@ export interface HttpClient<T = any> {
 
 export enum HttpStatusCode {
   ok = 200,
+  unauthorized = 401,
+  forbidden = 403,
   notFound = 404,
-  forbidden = 403
+  serverError = 500
 }
 
 export enum HttpMethodType {
