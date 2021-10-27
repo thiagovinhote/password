@@ -1,3 +1,5 @@
+import { Either } from "~/common/either"
+
 export namespace FetchGenerate {
   export type Params = {
     includeNumbers: boolean
@@ -6,7 +8,7 @@ export namespace FetchGenerate {
     passwordSize: number
   }
 
-  export type Result = Promise<string[]>
+  export type Result = Promise<Either<Error, string[]>>
 
   export type ResponseDTO = {
     result: string[]
