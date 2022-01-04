@@ -22,13 +22,13 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
   const [passwords, setPasswords] = useState([])
 
   const fetchData = async () => {
-    const data = await fetchGenerate.exec({
+    await fetchGenerate.exec({
       includeNumbers: true,
       lowercaseCharacters: true,
       uppercaseCharacters: true,
       passwordSize: passwordSize
     })
-    setPasswords(data)
+    setPasswords([])
   }
 
   useEffect(() => {
