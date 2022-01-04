@@ -1,10 +1,14 @@
 import React, { useImperativeHandle, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { CreateFolder } from '~/domain/usecases/create-folder'
+import { Usecase } from '~/domain/usecases/usecase'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { InputForm } from '~/presentation/components/InputForm'
 import { SlideOver } from '~/presentation/components/SlideOver'
 
-type Props = {}
+type Props = {
+  createFolder: Usecase<CreateFolder.Params, CreateFolder.Result>
+}
 
 type Ref = {
   open: () => void;
@@ -19,13 +23,12 @@ export const CreateFolderForm = React.forwardRef<Ref,Props>((props, ref) => {
   const { register, handleSubmit } = useForm<FolderFormData>()
 
   const handleSave: SubmitHandler<FolderFormData> = async (data) => {
-    // await apiCreateFolder.exec(data)
+    await props.createFolder.exec(data)
   }
 
   useImperativeHandle(ref, () => ({
     open: () => {
       setOpen(true)
-      console.log('dassdas')
     }
   }))
 

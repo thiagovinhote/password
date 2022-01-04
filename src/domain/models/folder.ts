@@ -5,7 +5,7 @@ export class Folder {
 
   private constructor() { }
 
-  static create(params: { id: string, name: string, createdAt: string | Date }) {
+  static create(params: Folder.Params) {
     const instance = new Folder()
     instance.id = params.id;
     instance.name = params.name;
@@ -25,4 +25,9 @@ export class Folder {
   static serializeArray(array: Folder[]) {
     return array.map(folder => folder.serialize()) as unknown as Folder[]
   }
+}
+
+export namespace Folder {
+  export type DTO = ReturnType<Folder['serialize']>
+  export type Params = { id: string, name: string, createdAt: string | Date }
 }

@@ -1,21 +1,14 @@
-import { PlusIcon, XIcon } from '@heroicons/react/outline'
+import { EyeIcon, PlusIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { Fragment, useRef, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
-import { CreateFolder } from '~/domain/usecases/create-folder'
-import { Usecase } from '~/domain/usecases/usecase'
 import { makeApiCreateFolder, makeApiLoadCredentials, makeApiLoadFolders } from '~/main/factories/usecases'
-import { Badge } from '~/presentation/components/Badge'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { Dropdown } from '~/presentation/components/Dropdown'
-import { InputForm } from '~/presentation/components/InputForm'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { Select } from '~/presentation/components/Select'
-import { SlideOver } from '~/presentation/components/SlideOver'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
-import { range, ssrAuth } from '~/presentation/helpers'
+import { ssrAuth } from '~/presentation/helpers'
 import { CreateFolderForm, CreateFolderFormRef } from '~/presentation/pages/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
 
@@ -27,10 +20,11 @@ const cryptographyColorByColors: Record<any, any> = {
 }
 
 type Props = {
-  // createFolder: Usecase<CreateFolder.Params, CreateFolder.Result>
   credentials: Credential[]
   folders: Folder[]
 }
+
+const apiCreateFolder = makeApiCreateFolder();
 
 const Credentials: React.FC<Props> = (props) => {
   const { exec: formatDate } = DatePipeOperator.factory()
@@ -61,7 +55,7 @@ const Credentials: React.FC<Props> = (props) => {
 
   return (
     <Scaffold title="Passwords" append={scaffoldAppend}>
-      <CreateFolderForm ref={createFolderRef} />
+      <CreateFolderForm ref={createFolderRef} createFolder={apiCreateFolder} />
 
       <div className="overflow-hidden border-2 border-gray-200 rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
@@ -78,6 +72,9 @@ const Credentials: React.FC<Props> = (props) => {
               </HeaderCell>
               <HeaderCell>
                 Criação
+              </HeaderCell>
+              <HeaderCell>
+                <span className="sr-only">Edit</span>
               </HeaderCell>
             </tr>
           </thead>
@@ -98,6 +95,13 @@ const Credentials: React.FC<Props> = (props) => {
                     {formatDate({ value: credential.createdAt, pattern: "dd/MMM 'de' yyyy 'às' HH:mm" })}
                   </span>
                 </DataCell>
+                <DataCell>
+                  <Link href={{ pathname: '/credentials/[id]/reveal', query: { id: credential.id } }} passHref>
+                    <DefaultButton color="yellow" className="inline-flex border border-transparent py-0.5 px-3" tag="a">
+                      <EyeIcon className="h-5 w-5 text-yellow-600" aria-hidden="true" />
+                    </DefaultButton>
+                  </Link>
+                </DataCell>
               </tr>
             ))}
           </tbody>
@@ -112,7 +116,7 @@ export default Credentials;
 export const getServerSideProps = ssrAuth<Props>(async (context) => {
   const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies);
   const apiLoadFolders = makeApiLoadFolders(context.req.cookies);
-  const apiCreateFolder = makeApiCreateFolder();
+
 
   const credentialsResult = await apiLoadCredentials.exec();
   const foldersResult = await apiLoadFolders.exec();
@@ -122,7 +126,6 @@ export const getServerSideProps = ssrAuth<Props>(async (context) => {
 
   return {
     props: {
-      // createFolder: apiCreateFolder,
       credentials: Credential.serializeArray(credentials),
       folders: Folder.serializeArray(folders)
     }
