@@ -1,9 +1,11 @@
 import { PlusIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
-import { Fragment, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
+import { CreateFolder } from '~/domain/usecases/create-folder'
+import { Usecase } from '~/domain/usecases/usecase'
 import { makeApiCreateFolder, makeApiLoadCredentials, makeApiLoadFolders } from '~/main/factories/usecases'
 import { Badge } from '~/presentation/components/Badge'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
@@ -14,6 +16,7 @@ import { Select } from '~/presentation/components/Select'
 import { SlideOver } from '~/presentation/components/SlideOver'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
 import { range, ssrAuth } from '~/presentation/helpers'
+import { CreateFolderForm, CreateFolderFormRef } from '~/presentation/pages/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
 
 const cryptographyColorByColors: Record<any, any> = {
@@ -23,39 +26,29 @@ const cryptographyColorByColors: Record<any, any> = {
   'AES256': 'pink'
 }
 
-type FolderFormData = {
-  name: string;
-}
-
 type Props = {
+  // createFolder: Usecase<CreateFolder.Params, CreateFolder.Result>
   credentials: Credential[]
   folders: Folder[]
 }
 
-const apiCreateFolder = makeApiCreateFolder();
-
 const Credentials: React.FC<Props> = (props) => {
   const { exec: formatDate } = DatePipeOperator.factory()
-  const { register, handleSubmit } = useForm<FolderFormData>()
-  const [open, setOpen] = useState(false)
   const [folder, setFolder] = useState(props.folders[0])
-
-  const handleSave: SubmitHandler<FolderFormData> = async (data) => {
-    await apiCreateFolder.exec(data)
-  }
+  const createFolderRef = useRef<CreateFolderFormRef>()
 
   const scaffoldAppend = () => {
     return (
       <Fragment>
         <Select value={folder} data={props.folders} labelProp="name" valueProp="id" onChange={setFolder} />
         <span className="sm:ml-3">
-          <DefaultButton color="gray" className="inline-flex border border-transparent py-1.5 px-3" onClick={() => setOpen(true)}>
+          <DefaultButton color="gray" className="inline-flex border border-transparent py-1.5 px-3" onClick={() => createFolderRef.current?.open()}>
             <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-gray-600" aria-hidden="true" />
             Nova Pasta
           </DefaultButton>
         </span>
         <span className="sm:ml-3">
-          <Link href={`/add?folder_id=${folder.id}`} passHref>
+          <Link href="/add" as={{ query: { folder_id: folder?.id } }} passHref>
             <DefaultButton color="blue" className="inline-flex border border-transparent py-1.5 px-3" tag="a">
               <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-blue-600" aria-hidden="true" />
               Nova Credencial
@@ -68,13 +61,7 @@ const Credentials: React.FC<Props> = (props) => {
 
   return (
     <Scaffold title="Passwords" append={scaffoldAppend}>
-      <SlideOver value={open} onChange={setOpen} title="Nova pasta">
-        <form className="border-2 border-gray-300 border-dashed rounded-xl bg-white space-y-4 p-4">
-          <InputForm label="Nome" placeholder="Nome" type="text" formRegister={register('name')} />
-          <hr />
-          <DefaultButton className="w-2/6" color="green" onClick={handleSubmit(handleSave)}>Salvar</DefaultButton>
-        </form>
-      </SlideOver>
+      <CreateFolderForm ref={createFolderRef} />
 
       <div className="overflow-hidden border-2 border-gray-200 rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
@@ -125,13 +112,17 @@ export default Credentials;
 export const getServerSideProps = ssrAuth<Props>(async (context) => {
   const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies);
   const apiLoadFolders = makeApiLoadFolders(context.req.cookies);
+  const apiCreateFolder = makeApiCreateFolder();
 
-  const credentials = await apiLoadCredentials.exec();
-  const folders = await apiLoadFolders.exec();
+  const credentialsResult = await apiLoadCredentials.exec();
+  const foldersResult = await apiLoadFolders.exec();
 
+  const credentials = credentialsResult.isRight() ? credentialsResult.value : []
+  const folders = foldersResult.isRight() ? foldersResult.value : []
 
   return {
     props: {
+      // createFolder: apiCreateFolder,
       credentials: Credential.serializeArray(credentials),
       folders: Folder.serializeArray(folders)
     }
