@@ -1,3 +1,3 @@
 export const makeBaseApi = () => {
-  return 'http://localhost:3333/'
+  return process.env.NEXT_PUBLIC_BASE_API_URL
 }
