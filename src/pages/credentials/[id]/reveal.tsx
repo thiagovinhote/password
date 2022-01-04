@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
-import { Password } from '~/domain/models/password'
-import { Credential } from '~/domain/models/credential'
+import { PasswordTypes } from '~/domain/models/password'
+import { CredentialTypes } from '~/domain/models/credential'
 import {
   makeApiRetrieveCredential,
   makeApiRevealCredential
@@ -13,8 +13,8 @@ import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { Fragment } from 'react'
 
 type Props = {
-  password: Password.DTO
-  credential: Credential.DTO
+  password: PasswordTypes.DTO
+  credential: CredentialTypes.DTO
 }
 
 const Reveal: React.FC<Props> = props => {
