@@ -1,11 +1,11 @@
 export class Password {
-  public decrypted: string;
+  public decrypted: string
 
-  private constructor() { }
+  private constructor() {}
 
-  static create(params: { decrypted: string }) {
+  static create(params: PasswordTypes.Params) {
     const instance = new Password()
-    instance.decrypted = params.decrypted;
+    instance.decrypted = params.decrypted
 
     return instance
   }
@@ -17,6 +17,7 @@ export class Password {
   }
 }
 
-export namespace Password {
+export namespace PasswordTypes {
   export type DTO = ReturnType<Password['serialize']>
+  export type Params = { decrypted: string }
 }

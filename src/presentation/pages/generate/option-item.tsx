@@ -5,10 +5,6 @@ export type Props = {
   children: ReactNode
 }
 
-export const OptionItem: React.FC<Props> = (props) => {
-  return (
-    <Fragment>
-      {props.children}
-    </Fragment>
-  )
+export const OptionItem: React.FC<Props> = props => {
+  return <Fragment>{props.children}</Fragment>
 }

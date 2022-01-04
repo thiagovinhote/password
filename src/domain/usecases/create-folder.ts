@@ -1,9 +1,9 @@
-import { Either } from "~/common/either"
-import { Folder } from "../models/folder"
+import { Either } from '~/common/either'
+import { Folder } from '../models/folder'
 
 export namespace CreateFolder {
   export type Params = {
-    name: string;
+    name: string
   }
 
   export type Result = Promise<Either<Error, Folder>>

@@ -1,5 +1,5 @@
-import { Either } from "~/common/either"
-import { Folder } from "../models/folder"
+import { Either } from '~/common/either'
+import { Folder } from '../models/folder'
 
 export namespace LoadFolders {
   export type Result = Promise<Either<Error, Folder[]>>

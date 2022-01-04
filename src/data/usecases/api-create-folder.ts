@@ -1,13 +1,23 @@
+import { Either } from '~/common/either'
+import { Folder } from '~/domain/models/folder'
+import { CreateFolder } from '~/domain/usecases/create-folder'
+import { Usecase } from '~/domain/usecases/usecase'
+import {
+  AccessDeniedError,
+  InvalidResourceError,
+  UnexpectedError
+} from '../errors'
+import {
+  HttpClient,
+  HttpMethodType,
+  HttpStatusCode
+} from '../protocols/http/http-client'
 
-import { Either } from "~/common/either";
-import { Folder } from "~/domain/models/folder";
-import { CreateFolder } from "~/domain/usecases/create-folder";
-import { Usecase } from "~/domain/usecases/usecase";
-import { AccessDeniedError, InvalidResourceError, UnexpectedError } from "../errors";
-import { HttpClient, HttpMethodType, HttpStatusCode } from "../protocols/http/http-client";
-
-export class ApiCreateFolder implements Usecase<CreateFolder.Params, CreateFolder.Result> {
-  constructor(private readonly httpClient: HttpClient<CreateFolder.ResponseDTO>) { }
+export class ApiCreateFolder
+  implements Usecase<CreateFolder.Params, CreateFolder.Result> {
+  constructor(
+    private readonly httpClient: HttpClient<CreateFolder.ResponseDTO>
+  ) {}
 
   async exec(params: CreateFolder.Params): CreateFolder.Result {
     const response = await this.httpClient.request({
@@ -25,7 +35,7 @@ export class ApiCreateFolder implements Usecase<CreateFolder.Params, CreateFolde
         return Either.left(UnexpectedError.create())
     }
 
-    const payload = response.body;
+    const payload = response.body
     const folder = Folder.create({
       id: payload.id,
       name: payload.name,

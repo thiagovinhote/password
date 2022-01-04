@@ -1,4 +1,4 @@
-import { ElementType } from "react";
+import { ElementType } from 'react'
 import { useAuth } from '../hooks'
 
 export const withAuth = (Component: ElementType) => {
@@ -12,5 +12,5 @@ export const withAuth = (Component: ElementType) => {
     return <Component {...props} />
   }
 
-  return Wrapper;
+  return Wrapper
 }

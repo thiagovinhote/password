@@ -6,15 +6,24 @@ type Props = {
   show: boolean
   onDismiss: () => void
   data: {
-    title: string,
-    description: string,
+    title: string
+    description: string
     buttonText?: string
-    color?: 'blue' | 'green' | 'purple' | 'pink' | 'red' | 'yellow' | 'indigo' | 'gray' | 'white'
+    color?:
+      | 'blue'
+      | 'green'
+      | 'purple'
+      | 'pink'
+      | 'red'
+      | 'yellow'
+      | 'indigo'
+      | 'gray'
+      | 'white'
     icon?: React.FC<any>
   }
 }
 
-export const FeedbackAlert: React.FC<Props> = (props) => {
+export const FeedbackAlert: React.FC<Props> = props => {
   const Icon = props.data.icon
   const dismissButtonRef = useRef()
 
@@ -42,7 +51,10 @@ export const FeedbackAlert: React.FC<Props> = (props) => {
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+          <span
+            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
           <Transition.Child
@@ -57,13 +69,27 @@ export const FeedbackAlert: React.FC<Props> = (props) => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  {Icon &&
-                    <div className={classNames("sm:mr-4 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10", `bg-${props.data.color}-100`)}>
-                      <Icon className={classNames("h-6 w-6", `text-${props.data.color}-600`)} aria-hidden="true" />
+                  {Icon && (
+                    <div
+                      className={classNames(
+                        'sm:mr-4 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10',
+                        `bg-${props.data.color}-100`
+                      )}
+                    >
+                      <Icon
+                        className={classNames(
+                          'h-6 w-6',
+                          `text-${props.data.color}-600`
+                        )}
+                        aria-hidden="true"
+                      />
                     </div>
-                  }
+                  )}
                   <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg leading-6 font-medium text-gray-900"
+                    >
                       {props.data.title}
                     </Dialog.Title>
                     <div className="mt-2">

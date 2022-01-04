@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { FetchGenerate } from "~/domain/usecases/fetch-generate";
-import { Usecase } from "~/domain/usecases/usecase";
-import { Select } from "~/presentation/components/Select";
-import { Toggle } from "~/presentation/components/Toggle";
-import { range } from "~/presentation/helpers";
-import { OptionItem } from "./option-item";
-import { OptionsSidebar } from "./options-sidebard";
-import { PasswordItem } from "./password-item";
-import { TransitionFade } from "./transition-fade";
+import React, { useEffect, useState } from 'react'
+import { FetchGenerate } from '~/domain/usecases/fetch-generate'
+import { Usecase } from '~/domain/usecases/usecase'
+import { Select } from '~/presentation/components/Select'
+import { Toggle } from '~/presentation/components/Toggle'
+import { range } from '~/presentation/helpers'
+import { OptionItem } from './option-item'
+import { OptionsSidebar } from './options-sidebard'
+import { PasswordItem } from './password-item'
+import { TransitionFade } from './transition-fade'
 
 const sizes = range(6, 16)
 
@@ -43,7 +43,8 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
         <div className="bg-white shadow overflow-hidden sm:rounded-lg h-full">
           <div className="px-4 py-5 sm:px-6">
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Perfeito para proteger seu computador ou dispositivo móvel, ou em algum lugar que seja detectável força bruta.
+              Perfeito para proteger seu computador ou dispositivo móvel, ou em
+              algum lugar que seja detectável força bruta.
             </p>
           </div>
           <div className="border-t border-gray-200">
@@ -58,16 +59,26 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
       <div>
         <OptionsSidebar onFetch={fetchData}>
           <OptionItem label="Tamanho da senha">
-            <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
+            <Select
+              value={passwordSize}
+              data={sizes}
+              onChange={setPasswordSize}
+            />
           </OptionItem>
           <OptionItem label="Incluir Números">
             <Toggle value={includeNumbers} onChange={setIncludeNumbers} />
           </OptionItem>
           <OptionItem label="Caracteres Minúsculos">
-            <Toggle value={lowercaseCharacters} onChange={setLowercaseCharacters} />
+            <Toggle
+              value={lowercaseCharacters}
+              onChange={setLowercaseCharacters}
+            />
           </OptionItem>
           <OptionItem label="Caracteres Maiúsculos">
-            <Toggle value={uppercaseCharacters} onChange={setUppercaseCharacters} />
+            <Toggle
+              value={uppercaseCharacters}
+              onChange={setUppercaseCharacters}
+            />
           </OptionItem>
         </OptionsSidebar>
       </div>

@@ -2,8 +2,9 @@ import '~/assets/styles/tailwind.css'
 import '~/assets/styles/globals.css'
 import { Layout } from '~/presentation/components/Layout'
 import { AuthProvider } from '~/presentation/contexts'
+import { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }) {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <AuthProvider>
       <Layout>

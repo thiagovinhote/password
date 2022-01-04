@@ -1,22 +1,18 @@
-import { DefaultButton } from "~/presentation/components/DefaultButton";
-import { Scaffold } from "~/presentation/components/Scaffold";
+import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { Scaffold } from '~/presentation/components/Scaffold'
 import { ReactComponent as SubmitSvg } from '../assets/images/submit.svg'
 
-export default function OneFile() {
+const OneFile: React.FC = () => {
   return (
     <Scaffold title="Um arquivo">
       <div className="grid grid-cols-2 gap-4 py-28 border-2 border-gray-300 border-dashed rounded-xl bg-white">
         <div className="flex flex-col items-center justify-center space-y-2">
-          <p className="text-3xl font-bold py-4">
-            Carrege um arquivo
-          </p>
-          <span className="block">
-            Arraste & Solte o arquivo aqui
-          </span>
-          <p className="text-gray-500">
-            ou
-          </p>
-          <DefaultButton className="w-1/4" color="blue">Navegar</DefaultButton>
+          <p className="text-3xl font-bold py-4">Carrege um arquivo</p>
+          <span className="block">Arraste & Solte o arquivo aqui</span>
+          <p className="text-gray-500">ou</p>
+          <DefaultButton className="w-1/4" color="blue">
+            Navegar
+          </DefaultButton>
           <p className="text-gray-500 text-sm py-2">
             Formatos suportados: CSV, XLS, XLSX, XLSM, TXT
             <span className="block">
@@ -31,3 +27,5 @@ export default function OneFile() {
     </Scaffold>
   )
 }
+
+export default OneFile

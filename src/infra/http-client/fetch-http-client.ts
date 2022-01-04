@@ -1,4 +1,8 @@
-import { HttpClient, HttpRequest, HttpResponse } from "~/data/protocols/http/http-client";
+import {
+  HttpClient,
+  HttpRequest,
+  HttpResponse
+} from '~/data/protocols/http/http-client'
 
 export class FetchHttpClient implements HttpClient {
   constructor(private readonly baseUrl: string) {}

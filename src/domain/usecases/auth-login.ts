@@ -1,14 +1,14 @@
-import { User } from "../models/user"
+import { User } from '../models/user'
 import { Either } from '~/common/either'
 
 export namespace AuthLogin {
   export type Params = {
-    email: string;
-    password: string;
+    email: string
+    password: string
   }
 
   export type Model = {
-    user: User,
+    user: User
     token: string
   }
 
@@ -16,10 +16,10 @@ export namespace AuthLogin {
 
   export type ResponseDTO = {
     user: {
-      id: string;
-      name: string;
-      email: string;
-    },
+      id: string
+      name: string
+      email: string
+    }
     token: string
   }
 }

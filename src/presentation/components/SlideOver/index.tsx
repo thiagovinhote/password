@@ -1,18 +1,23 @@
-import React from "react";
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
+
 import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from "@heroicons/react/outline";
+import { XIcon } from '@heroicons/react/outline'
 
 type Props = {
-  title: string;
-  value: boolean;
-  onChange: (value: boolean) => void;
+  title: string
+  value: boolean
+  onChange: (value: boolean) => void
 }
 
-export const SlideOver: React.FC<Props> = (props) => {
+export const SlideOver: React.FC<Props> = props => {
   return (
     <Transition.Root show={props.value} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 overflow-hidden" open={props.value} onClose={props.onChange}>
+      <Dialog
+        as="div"
+        className="fixed inset-0 overflow-hidden"
+        open={props.value}
+        onClose={props.onChange}
+      >
         <div className="absolute inset-0 overflow-hidden">
           <Transition.Child
             as={Fragment}
@@ -58,7 +63,9 @@ export const SlideOver: React.FC<Props> = (props) => {
                 </Transition.Child>
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                   <div className="px-4 sm:px-6">
-                    <Dialog.Title className="text-lg font-medium text-gray-900">{props.title}</Dialog.Title>
+                    <Dialog.Title className="text-lg font-medium text-gray-900">
+                      {props.title}
+                    </Dialog.Title>
                   </div>
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
                     {props.children}

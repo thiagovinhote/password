@@ -1,13 +1,15 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react'
 
 type ListCryptographyValue = {
-  selected: string;
+  selected: string
   selectItem: (value: string) => void
 }
 
-export const ListCryptographyContext = createContext({} as ListCryptographyValue)
+export const ListCryptographyContext = createContext(
+  {} as ListCryptographyValue
+)
 
-export const ListCryptographyProvider: React.FC = (props) => {
+export const ListCryptographyProvider: React.FC = props => {
   const [currentIndex, setCurrentIndex] = useState(undefined)
 
   const initialValue: ListCryptographyValue = {

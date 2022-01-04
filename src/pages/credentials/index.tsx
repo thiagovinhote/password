@@ -3,30 +3,37 @@ import Link from 'next/link'
 import { Fragment, useRef, useState } from 'react'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
-import { makeApiCreateFolder, makeApiLoadCredentials, makeApiLoadFolders } from '~/main/factories/usecases'
+import {
+  makeApiCreateFolder,
+  makeApiLoadCredentials,
+  makeApiLoadFolders
+} from '~/main/factories/usecases'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { Select } from '~/presentation/components/Select'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
 import { ssrAuth } from '~/presentation/helpers'
-import { CreateFolderForm, CreateFolderFormRef } from '~/presentation/pages/credentials'
+import {
+  CreateFolderForm,
+  CreateFolderFormRef
+} from '~/presentation/pages/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
 
-const cryptographyColorByColors: Record<any, any> = {
-  'AES128': 'green',
-  'AES128-CBC': 'purple',
-  'AES192': 'blue',
-  'AES256': 'pink'
-}
+// const cryptographyColorByColors: Record<any, any> = {
+//   AES128: 'green',
+//   'AES128-CBC': 'purple',
+//   AES192: 'blue',
+//   AES256: 'pink'
+// }
 
 type Props = {
   credentials: Credential[]
   folders: Folder[]
 }
 
-const apiCreateFolder = makeApiCreateFolder();
+const apiCreateFolder = makeApiCreateFolder()
 
-const Credentials: React.FC<Props> = (props) => {
+const Credentials: React.FC<Props> = props => {
   const { exec: formatDate } = DatePipeOperator.factory()
   const [folder, setFolder] = useState(props.folders[0])
   const createFolderRef = useRef<CreateFolderFormRef>()
@@ -34,17 +41,37 @@ const Credentials: React.FC<Props> = (props) => {
   const scaffoldAppend = () => {
     return (
       <Fragment>
-        <Select value={folder} data={props.folders} labelProp="name" valueProp="id" onChange={setFolder} />
+        <Select
+          value={folder}
+          data={props.folders}
+          labelProp="name"
+          valueProp="id"
+          onChange={setFolder}
+        />
         <span className="sm:ml-3">
-          <DefaultButton color="gray" className="inline-flex border border-transparent py-1.5 px-3" onClick={() => createFolderRef.current?.open()}>
-            <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-gray-600" aria-hidden="true" />
+          <DefaultButton
+            color="gray"
+            className="inline-flex border border-transparent py-1.5 px-3"
+            onClick={() => createFolderRef.current?.open()}
+          >
+            <PlusIcon
+              className="-ml-1 mr-2 h-5 w-5 text-gray-600"
+              aria-hidden="true"
+            />
             Nova Pasta
           </DefaultButton>
         </span>
         <span className="sm:ml-3">
           <Link href="/add" as={{ query: { folder_id: folder?.id } }} passHref>
-            <DefaultButton color="blue" className="inline-flex border border-transparent py-1.5 px-3" tag="a">
-              <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-blue-600" aria-hidden="true" />
+            <DefaultButton
+              color="blue"
+              className="inline-flex border border-transparent py-1.5 px-3"
+              tag="a"
+            >
+              <PlusIcon
+                className="-ml-1 mr-2 h-5 w-5 text-blue-600"
+                aria-hidden="true"
+              />
               Nova Credencial
             </DefaultButton>
           </Link>
@@ -61,44 +88,58 @@ const Credentials: React.FC<Props> = (props) => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <HeaderCell>
-                Nome
-              </HeaderCell>
-              <HeaderCell>
-                Conta
-              </HeaderCell>
-              <HeaderCell>
-                Descrição
-              </HeaderCell>
-              <HeaderCell>
-                Criação
-              </HeaderCell>
+              <HeaderCell>Nome</HeaderCell>
+              <HeaderCell>Conta</HeaderCell>
+              <HeaderCell>Descrição</HeaderCell>
+              <HeaderCell>Criação</HeaderCell>
               <HeaderCell>
                 <span className="sr-only">Edit</span>
               </HeaderCell>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {props.credentials.map((credential) => (
+            {props.credentials.map(credential => (
               <tr key={credential.id}>
                 <DataCell>
-                  <span className="text-sm text-gray-900">{credential.name}</span>
-                </DataCell>
-                <DataCell>
-                  <h4 className="text-sm font-medium text-gray-900">{credential.username}</h4>
-                </DataCell>
-                <DataCell>
-                  <h4 className="text-sm font-medium text-gray-900">{credential.description}</h4>
-                </DataCell>
-                <DataCell>
-                  <span className="text-sm text-gray-500">
-                    {formatDate({ value: credential.createdAt, pattern: "dd/MMM 'de' yyyy 'às' HH:mm" })}
+                  <span className="text-sm text-gray-900">
+                    {credential.name}
                   </span>
                 </DataCell>
                 <DataCell>
-                  <Link href={{ pathname: '/credentials/[id]/reveal', query: { id: credential.id } }} passHref>
-                    <DefaultButton color="yellow" className="inline-flex border border-transparent py-0.5 px-3" tag="a">
-                      <EyeIcon className="h-5 w-5 text-yellow-600" aria-hidden="true" />
+                  <h4 className="text-sm font-medium text-gray-900">
+                    {credential.username}
+                  </h4>
+                </DataCell>
+                <DataCell>
+                  <h4 className="text-sm font-medium text-gray-900">
+                    {credential.description}
+                  </h4>
+                </DataCell>
+                <DataCell>
+                  <span className="text-sm text-gray-500">
+                    {formatDate({
+                      value: credential.createdAt,
+                      pattern: "dd/MMM 'de' yyyy 'às' HH:mm"
+                    })}
+                  </span>
+                </DataCell>
+                <DataCell>
+                  <Link
+                    href={{
+                      pathname: '/credentials/[id]/reveal',
+                      query: { id: credential.id }
+                    }}
+                    passHref
+                  >
+                    <DefaultButton
+                      color="yellow"
+                      className="inline-flex border border-transparent py-0.5 px-3"
+                      tag="a"
+                    >
+                      <EyeIcon
+                        className="h-5 w-5 text-yellow-600"
+                        aria-hidden="true"
+                      />
                     </DefaultButton>
                   </Link>
                 </DataCell>
@@ -111,15 +152,14 @@ const Credentials: React.FC<Props> = (props) => {
   )
 }
 
-export default Credentials;
+export default Credentials
 
-export const getServerSideProps = ssrAuth<Props>(async (context) => {
-  const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies);
-  const apiLoadFolders = makeApiLoadFolders(context.req.cookies);
+export const getServerSideProps = ssrAuth<Props>(async context => {
+  const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies)
+  const apiLoadFolders = makeApiLoadFolders(context.req.cookies)
 
-
-  const credentialsResult = await apiLoadCredentials.exec();
-  const foldersResult = await apiLoadFolders.exec();
+  const credentialsResult = await apiLoadCredentials.exec()
+  const foldersResult = await apiLoadFolders.exec()
 
   const credentials = credentialsResult.isRight() ? credentialsResult.value : []
   const folders = foldersResult.isRight() ? foldersResult.value : []

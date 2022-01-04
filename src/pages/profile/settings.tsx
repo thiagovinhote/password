@@ -1,7 +1,5 @@
-export default function ProfileSettings() {
-  return (
-    <div>
-      Profile Settings
-    </div>
-  )
+const ProfileSettings: React.FC = () => {
+  return <div>Profile Settings</div>
 }
+
+export default ProfileSettings

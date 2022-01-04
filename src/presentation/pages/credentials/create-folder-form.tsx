@@ -11,18 +11,18 @@ type Props = {
 }
 
 type Ref = {
-  open: () => void;
+  open: () => void
 }
 
 type FolderFormData = {
-  name: string;
+  name: string
 }
 
-export const CreateFolderForm = React.forwardRef<Ref,Props>((props, ref) => {
+export const CreateFolderForm = React.forwardRef<Ref, Props>((props, ref) => {
   const [open, setOpen] = useState(false)
   const { register, handleSubmit } = useForm<FolderFormData>()
 
-  const handleSave: SubmitHandler<FolderFormData> = async (data) => {
+  const handleSave: SubmitHandler<FolderFormData> = async data => {
     await props.createFolder.exec(data)
   }
 
@@ -35,12 +35,23 @@ export const CreateFolderForm = React.forwardRef<Ref,Props>((props, ref) => {
   return (
     <SlideOver value={open} onChange={setOpen} title="Nova pasta">
       <form className="border-2 border-gray-300 border-dashed rounded-xl bg-white space-y-4 p-4">
-        <InputForm label="Nome" placeholder="Nome" type="text" formRegister={register('name')} />
+        <InputForm
+          label="Nome"
+          placeholder="Nome"
+          type="text"
+          formRegister={register('name')}
+        />
         <hr />
-        <DefaultButton className="w-2/6" color="green" onClick={handleSubmit(handleSave)}>Salvar</DefaultButton>
+        <DefaultButton
+          className="w-2/6"
+          color="green"
+          onClick={handleSubmit(handleSave)}
+        >
+          Salvar
+        </DefaultButton>
       </form>
     </SlideOver>
   )
 })
 
-export type CreateFolderFormRef = Ref;
+export type CreateFolderFormRef = Ref

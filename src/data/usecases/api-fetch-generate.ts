@@ -1,11 +1,22 @@
-import { Either } from "~/common/either";
-import { FetchGenerate } from "~/domain/usecases/fetch-generate";
-import { Usecase } from "~/domain/usecases/usecase";
-import { AccessDeniedError, InvalidResourceError, UnexpectedError } from "../errors";
-import { HttpClient, HttpMethodType, HttpStatusCode } from "../protocols/http/http-client";
+import { Either } from '~/common/either'
+import { FetchGenerate } from '~/domain/usecases/fetch-generate'
+import { Usecase } from '~/domain/usecases/usecase'
+import {
+  AccessDeniedError,
+  InvalidResourceError,
+  UnexpectedError
+} from '../errors'
+import {
+  HttpClient,
+  HttpMethodType,
+  HttpStatusCode
+} from '../protocols/http/http-client'
 
-export class ApiFetchGenerate implements Usecase<FetchGenerate.Params, FetchGenerate.Result> {
-  constructor(private readonly httpClient: HttpClient<FetchGenerate.ResponseDTO>) {}
+export class ApiFetchGenerate
+  implements Usecase<FetchGenerate.Params, FetchGenerate.Result> {
+  constructor(
+    private readonly httpClient: HttpClient<FetchGenerate.ResponseDTO>
+  ) {}
 
   async exec(params: FetchGenerate.Params): FetchGenerate.Result {
     const response = await this.httpClient.request({

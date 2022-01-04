@@ -18,7 +18,7 @@ export enum HttpMethodType {
 export type HttpRequest = {
   url: string
   method: HttpMethodType
-  body?: {}
+  body?: Record<string, unknown>
   params?: { [key: string]: string }
   headers?: { [key: string]: string }
 }
@@ -27,4 +27,3 @@ export type HttpResponse<T = any> = {
   statusCode: HttpStatusCode
   body?: T
 }
-

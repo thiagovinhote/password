@@ -45,11 +45,12 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
         <div className="bg-white shadow overflow-hidden sm:rounded-lg h-full">
           <div className="px-4 py-5 sm:px-6">
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Robusto o suficiente para manter sua conta de hospedagem na web segura.
+              Robusto o suficiente para manter sua conta de hospedagem na web
+              segura.
             </p>
           </div>
           <div className="border-t border-gray-200">
-            <div className={classNames(gridClasses, "grid px-4 py-5 gap-4")}>
+            <div className={classNames(gridClasses, 'grid px-4 py-5 gap-4')}>
               {passwords.map((item, index) => (
                 <PasswordItem key={index}>{item}</PasswordItem>
               ))}
@@ -60,7 +61,11 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
       <div>
         <OptionsSidebar onFetch={fetchData}>
           <OptionItem label="Tamanho da senha">
-            <Select value={passwordSize} data={sizes} onChange={setPasswordSize} />
+            <Select
+              value={passwordSize}
+              data={sizes}
+              onChange={setPasswordSize}
+            />
           </OptionItem>
           <OptionItem label="Incluir Números">
             <Toggle value={true} disabled />
@@ -75,7 +80,10 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
             <Toggle value={includeSymbols} onChange={setIncludeSymbols} />
           </OptionItem>
           <OptionItem label="Caracteres Ambíguos">
-            <Toggle value={ambiguousCharacters} onChange={setAmbiguousCharacters} />
+            <Toggle
+              value={ambiguousCharacters}
+              onChange={setAmbiguousCharacters}
+            />
           </OptionItem>
         </OptionsSidebar>
       </div>

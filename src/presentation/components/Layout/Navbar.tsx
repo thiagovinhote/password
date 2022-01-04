@@ -9,13 +9,13 @@ import { useAuth } from '~/presentation/hooks'
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = [
-  { name: 'Seu perfil', href: "/profile" },
-  { name: 'Settings', href: "/profile/settings" },
-  { name: 'Sign out', href: "/" }
+  { name: 'Seu perfil', href: '/profile' },
+  { name: 'Settings', href: '/profile/settings' },
+  { name: 'Sign out', href: '/' }
 ]
 
 export const NavBar: React.FC = () => {
-  const { user, isAuthenticated } = useAuth()
+  const { user } = useAuth()
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -29,15 +29,9 @@ export const NavBar: React.FC = () => {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <NavBarLink href="/" >
-                      Dashboard
-                    </NavBarLink>
-                    <NavBarLink href="/credentials" >
-                      Credentials
-                    </NavBarLink>
-                    <NavBarLink href="/generate" >
-                      Generate
-                    </NavBarLink>
+                    <NavBarLink href="/">Dashboard</NavBarLink>
+                    <NavBarLink href="/credentials">Credentials</NavBarLink>
+                    <NavBarLink href="/generate">Generate</NavBarLink>
                   </div>
                 </div>
               </div>
@@ -50,12 +44,12 @@ export const NavBar: React.FC = () => {
                           <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none">
                             <span className="sr-only">Open user menu</span>
                             <div className="group relative text-right">
-                            <span className="-m-2 px-2 py-1 block text-white">
-                              {user?.name}
-                            </span>
-                            <span className="-m-2 px-2 py-1 block font-medium text-white">
-                              {user?.email}
-                            </span>
+                              <span className="-m-2 px-2 py-1 block text-white">
+                                {user?.name}
+                              </span>
+                              <span className="-m-2 px-2 py-1 block font-medium text-white">
+                                {user?.email}
+                              </span>
                             </div>
                           </Menu.Button>
                         </div>
@@ -73,10 +67,14 @@ export const NavBar: React.FC = () => {
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           >
-                            {profile.map((item) => (
+                            {profile.map(item => (
                               <Menu.Item key={item.href}>
                                 <Link href={item.href}>
-                                  <a className={"hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"}>
+                                  <a
+                                    className={
+                                      'hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700'
+                                    }
+                                  >
                                     {item.name}
                                   </a>
                                 </Link>
@@ -111,7 +109,10 @@ export const NavBar: React.FC = () => {
               {navigation.map((item, itemIdx) =>
                 itemIdx === 0 ? (
                   <Fragment key={item}>
-                    <a href="#" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <a
+                      href="#"
+                      className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                    >
                       {item}
                     </a>
                   </Fragment>
@@ -136,8 +137,12 @@ export const NavBar: React.FC = () => {
                   />
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium leading-none text-white">Tom Cook</div>
-                  <div className="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+                  <div className="text-base font-medium leading-none text-white">
+                    Tom Cook
+                  </div>
+                  <div className="text-sm font-medium leading-none text-gray-400">
+                    tom@example.com
+                  </div>
                 </div>
                 <button className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span className="sr-only">View notifications</span>
@@ -145,7 +150,7 @@ export const NavBar: React.FC = () => {
                 </button>
               </div>
               <div className="mt-3 px-2 space-y-1">
-                {profile.map((item) => (
+                {profile.map(item => (
                   <a
                     key={item.href}
                     href="#"

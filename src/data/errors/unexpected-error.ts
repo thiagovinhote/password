@@ -1,10 +1,10 @@
 export class UnexpectedError extends Error {
   private constructor() {
-    super('Algo de errado aconteceu.');
-    this.name = 'UnexpectedError';
+    super('Algo de errado aconteceu.')
+    this.name = 'UnexpectedError'
   }
 
-  static create() {
+  static create(): UnexpectedError {
     return new UnexpectedError()
   }
 }

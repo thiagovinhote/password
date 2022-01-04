@@ -1,4 +1,4 @@
-import { PipeOperator } from "../protocols/pipes";
+import { PipeOperator } from '../protocols/pipes'
 import dateFormat from 'date-fns/format'
 import dateParseIso from 'date-fns/parseISO'
 import dateIsDate from 'date-fns/isDate'
@@ -24,7 +24,9 @@ export class DatePipeOperator implements PipeOperator<InputType, string> {
   }
 
   exec(input: InputType): string {
-    const value = dateIsDate(input) ? input.value as Date : dateParseIso(input.value as string)
+    const value = dateIsDate(input)
+      ? (input.value as Date)
+      : dateParseIso(input.value as string)
 
     return dateFormat(value, input.pattern, this.defaultOptions)
   }

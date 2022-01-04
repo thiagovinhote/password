@@ -31,13 +31,19 @@
   ],
   "rules": {
     "prettier/prettier": "error",
+    "no-useless-constructor": "off",
     "space-before-function-paren": "off",
+    "camelcase": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
     "@typescript-eslint/no-namespace": [
-      true,
-      "allowDeclarations"
+      0,
+      {
+        "allowDeclarations": true
+      }
     ],
     "no-use-before-define": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

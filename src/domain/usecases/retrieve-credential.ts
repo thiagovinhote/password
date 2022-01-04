@@ -1,9 +1,9 @@
-import { Either } from "~/common/either"
-import { Credential } from "../models/credential"
+import { Either } from '~/common/either'
+import { Credential } from '../models/credential'
 
 export namespace RetrieveCredential {
   export type Params = {
-    id: string;
+    id: string
   }
 
   export type Result = Promise<Either<Error, Credential>>
@@ -12,12 +12,12 @@ export namespace RetrieveCredential {
     id: string
     name: string
     username: string
-    description: string;
+    description: string
     created_at: string
-    updated_at: string;
+    updated_at: string
     folders: {
-      id: string;
-      name: string;
+      id: string
+      name: string
       created_at: string
     }[]
   }

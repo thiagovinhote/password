@@ -1,12 +1,23 @@
-import { Either } from "~/common/either";
-import { Credential } from "~/domain/models/credential";
-import { CreateCredential } from "~/domain/usecases/create-credential";
-import { Usecase } from "~/domain/usecases/usecase";
-import { AccessDeniedError, InvalidResourceError, UnexpectedError } from "../errors";
-import { HttpClient, HttpMethodType, HttpStatusCode } from "../protocols/http/http-client";
+import { Either } from '~/common/either'
+import { Credential } from '~/domain/models/credential'
+import { CreateCredential } from '~/domain/usecases/create-credential'
+import { Usecase } from '~/domain/usecases/usecase'
+import {
+  AccessDeniedError,
+  InvalidResourceError,
+  UnexpectedError
+} from '../errors'
+import {
+  HttpClient,
+  HttpMethodType,
+  HttpStatusCode
+} from '../protocols/http/http-client'
 
-export class ApiCreateCredential implements Usecase<CreateCredential.Params, CreateCredential.Result> {
-  constructor(private readonly httpClient: HttpClient<CreateCredential.ResponseDTO>) { }
+export class ApiCreateCredential
+  implements Usecase<CreateCredential.Params, CreateCredential.Result> {
+  constructor(
+    private readonly httpClient: HttpClient<CreateCredential.ResponseDTO>
+  ) {}
 
   async exec(params: CreateCredential.Params): CreateCredential.Result {
     const response = await this.httpClient.request({
@@ -30,7 +41,7 @@ export class ApiCreateCredential implements Usecase<CreateCredential.Params, Cre
         return Either.left(UnexpectedError.create())
     }
 
-    const payload = response.body;
+    const payload = response.body
     const credential = Credential.create({
       id: payload.id,
       name: payload.name,

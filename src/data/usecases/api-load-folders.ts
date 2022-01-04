@@ -1,18 +1,27 @@
-import { Either } from "~/common/either";
-import { Credential } from "~/domain/models/credential";
-import { Folder } from "~/domain/models/folder";
-import { LoadFolders } from "~/domain/usecases/load-folders";
-import { Usecase } from "~/domain/usecases/usecase";
-import { AccessDeniedError, InvalidResourceError, UnexpectedError } from "../errors";
-import { HttpClient, HttpMethodType, HttpStatusCode } from "../protocols/http/http-client";
+import { Either } from '~/common/either'
+import { Folder } from '~/domain/models/folder'
+import { LoadFolders } from '~/domain/usecases/load-folders'
+import { Usecase } from '~/domain/usecases/usecase'
+import {
+  AccessDeniedError,
+  InvalidResourceError,
+  UnexpectedError
+} from '../errors'
+import {
+  HttpClient,
+  HttpMethodType,
+  HttpStatusCode
+} from '../protocols/http/http-client'
 
 export class ApiLoadFolders implements Usecase<never, LoadFolders.Result> {
-  constructor(private readonly httpClient: HttpClient<LoadFolders.ResponseDTO>) { }
+  constructor(
+    private readonly httpClient: HttpClient<LoadFolders.ResponseDTO>
+  ) {}
 
   async exec(): LoadFolders.Result {
     const response = await this.httpClient.request({
       url: '/folders',
-      method: HttpMethodType.get,
+      method: HttpMethodType.get
     })
 
     switch (response.statusCode) {
@@ -24,14 +33,14 @@ export class ApiLoadFolders implements Usecase<never, LoadFolders.Result> {
         return Either.left(UnexpectedError.create())
     }
 
-    const payload = response.body;
-    const folders = Array.from(
-      payload,
-      (item) => Folder.create({
+    const payload = response.body
+    const folders = Array.from(payload, item =>
+      Folder.create({
         id: item.id,
         name: item.name,
         createdAt: item.created_at
-      }))
+      })
+    )
 
     return Either.right(folders)
   }

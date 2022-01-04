@@ -1,4 +1,4 @@
-import { Either } from "~/common/either"
+import { Either } from '~/common/either'
 
 export namespace FetchGenerate {
   export type Params = {

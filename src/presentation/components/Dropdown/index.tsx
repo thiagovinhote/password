@@ -1,19 +1,23 @@
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/outline";
-import React, { Fragment } from "react";
-import { classNames } from "~/presentation/helpers";
-import { DefaultButton } from "../DefaultButton";
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/outline'
+import React, { Fragment } from 'react'
+import { classNames } from '~/presentation/helpers'
+import { DefaultButton } from '../DefaultButton'
 
 type Props = {
-  label: string;
+  label: string
   options: string[]
 }
 
-export const Dropdown: React.FC<Props> = (props) => {
+export const Dropdown: React.FC<Props> = props => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <DefaultButton color="white" tag={Menu.Button} className="inline-flex px-3 py-1.5 border border-gray-300">
+        <DefaultButton
+          color="white"
+          tag={Menu.Button}
+          className="inline-flex px-3 py-1.5 border border-gray-300"
+        >
           {props.label}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </DefaultButton>
