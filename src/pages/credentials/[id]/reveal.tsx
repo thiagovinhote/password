@@ -49,7 +49,7 @@ const Reveal: React.FC<Props> = props => {
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             {props.credential.name}
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className="mt-1 max-w-2xl text-sm text-gray-500 whitespace-pre-line">
             {props.credential.description}
           </p>
         </div>

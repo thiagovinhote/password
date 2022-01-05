@@ -101,16 +101,18 @@ const Credentials: React.FC<Props> = props => {
             {props.credentials.map(credential => (
               <tr key={credential.id}>
                 <DataCell>
-                  <span className="text-sm text-gray-900">
-                    {credential.name}
-                  </span>
+                  <div className="flex items-center">
+                    <div className="ml-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {credential.name}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {credential.username}
+                      </div>
+                    </div>
+                  </div>
                 </DataCell>
-                <DataCell>
-                  <h4 className="text-sm font-medium text-gray-900">
-                    {credential.username}
-                  </h4>
-                </DataCell>
-                <DataCell>
+                <DataCell className="whitespace-pre-line">
                   <h4 className="text-sm font-medium text-gray-900">
                     {credential.description}
                   </h4>
