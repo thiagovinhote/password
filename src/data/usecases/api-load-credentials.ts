@@ -1,5 +1,6 @@
 import { Either } from '~/common/either'
 import { Credential } from '~/domain/models/credential'
+import { Paginator } from '~/domain/models/paginator'
 import { LoadCredentials } from '~/domain/usecases/load-credentials'
 import { Usecase } from '~/domain/usecases/usecase'
 import {
@@ -14,15 +15,16 @@ import {
 } from '../protocols/http/http-client'
 
 export class ApiLoadCredentials
-  implements Usecase<unknown, LoadCredentials.Result> {
+  implements Usecase<LoadCredentials.Params, LoadCredentials.Result> {
   constructor(
     private readonly httpClient: HttpClient<LoadCredentials.ResponseDTO>
   ) {}
 
-  async exec(): LoadCredentials.Result {
+  async exec(params: LoadCredentials.Params): LoadCredentials.Result {
     const response = await this.httpClient.request({
       url: '/credentials',
-      method: HttpMethodType.get
+      method: HttpMethodType.get,
+      params: { page: (params.page || 1).toString() }
     })
 
     switch (response.statusCode) {
@@ -35,7 +37,7 @@ export class ApiLoadCredentials
     }
 
     const payload = response.body
-    const credentials = Array.from(payload, item =>
+    const credentials = Array.from(payload.data, item =>
       Credential.create({
         id: item.id,
         name: item.name,
@@ -46,6 +48,16 @@ export class ApiLoadCredentials
       })
     )
 
-    return Either.right(credentials)
+    const pagination = Paginator.create({
+      pagination: {
+        total: payload.meta.total,
+        currentPage: payload.meta.current_page,
+        lastPage: payload.meta.last_page,
+        perPage: payload.meta.per_page
+      },
+      data: credentials
+    })
+
+    return Either.right(pagination)
   }
 }
