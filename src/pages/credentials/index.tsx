@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { Fragment, useRef, useState } from 'react'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
+import { Paginator } from '~/domain/models/paginator'
 import {
   makeApiCreateFolder,
   makeApiLoadCredentials,
   makeApiLoadFolders
 } from '~/main/factories/usecases'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { Pagination } from '~/presentation/components/Pagination'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { Select } from '~/presentation/components/Select'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
@@ -27,7 +29,7 @@ import { DatePipeOperator } from '~/presentation/pipes'
 // }
 
 type Props = {
-  credentials: Credential[]
+  credentials: Paginator<Credential>
   folders: Folder[]
 }
 
@@ -91,7 +93,7 @@ const Credentials: React.FC<Props> = props => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {props.credentials.map(credential => (
+            {props.credentials.data.map(credential => (
               <tr key={credential.id}>
                 <DataCell>
                   <div className="flex items-center">
@@ -160,6 +162,7 @@ const Credentials: React.FC<Props> = props => {
             ))}
           </tbody>
         </table>
+        <Pagination value={props.credentials.pagination} />
       </div>
     </Scaffold>
   )
@@ -171,15 +174,19 @@ export const getServerSideProps = ssrAuth<Props>(async context => {
   const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies)
   const apiLoadFolders = makeApiLoadFolders(context.req.cookies)
 
-  const credentialsResult = await apiLoadCredentials.exec()
+  const credentialsResult = await apiLoadCredentials.exec({
+    page: Number(context.query.page)
+  })
   const foldersResult = await apiLoadFolders.exec()
 
-  const credentials = credentialsResult.isRight() ? credentialsResult.value : []
+  const credentials = credentialsResult.isRight()
+    ? credentialsResult.value
+    : null
   const folders = foldersResult.isRight() ? foldersResult.value : []
 
   return {
     props: {
-      credentials: Credential.serializeArray(credentials),
+      credentials: credentials?.serialize(),
       folders: Folder.serializeArray(folders)
     }
   }
