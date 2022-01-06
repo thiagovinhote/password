@@ -1,7 +1,11 @@
 import { ArrowLeftIcon } from '@heroicons/react/outline'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { CredentialTypes } from '~/domain/models/credential'
-import { makeApiRetrieveCredential } from '~/main/factories/usecases'
+import {
+  makeApiRetrieveCredential,
+  makeApiUpdateCredential
+} from '~/main/factories/usecases'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { ssrAuth } from '~/presentation/helpers'
 import { DatePipeOperator } from '~/presentation/pipes'
@@ -25,7 +29,10 @@ type DetailsFormData = {
   description?: string
 }
 
+const apiUpdateCredential = makeApiUpdateCredential()
+
 const Credential: React.FC<Props> = props => {
+  const router = useRouter()
   const { exec: formatDate } = DatePipeOperator.factory()
   const accountForm = useForm<AccountFormData>({
     defaultValues: {
@@ -40,9 +47,29 @@ const Credential: React.FC<Props> = props => {
     }
   })
 
-  const handleSaveAccount: SubmitHandler<AccountFormData> = () => {}
+  const handleSaveAccount: SubmitHandler<AccountFormData> = async data => {
+    const result = await apiUpdateCredential.exec({
+      id: props.credential.id,
+      payload: data
+    })
 
-  const handleSaveDetails: SubmitHandler<DetailsFormData> = () => {}
+    if (result.isRight()) {
+      await router.replace(router.asPath)
+      alert('Dados salvos com sucesso!')
+    }
+  }
+
+  const handleSaveDetails: SubmitHandler<DetailsFormData> = async data => {
+    const result = await apiUpdateCredential.exec({
+      id: props.credential.id,
+      payload: data
+    })
+
+    if (result.isRight()) {
+      await router.replace(router.asPath)
+      alert('Dados salvos com sucesso!')
+    }
+  }
 
   const scaffoldAppend = () => {
     return (
