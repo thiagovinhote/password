@@ -12,7 +12,8 @@ export enum HttpStatusCode {
 
 export enum HttpMethodType {
   get = 'GET',
-  post = 'POST'
+  post = 'POST',
+  put = 'PUT'
 }
 
 export type HttpRequest = {
