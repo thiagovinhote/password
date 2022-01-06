@@ -1,4 +1,4 @@
-import { EyeIcon, PlusIcon } from '@heroicons/react/outline'
+import { EyeIcon, PencilIcon, PlusIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { Fragment, useRef, useState } from 'react'
 import { Credential } from '~/domain/models/credential'
@@ -48,34 +48,30 @@ const Credentials: React.FC<Props> = props => {
           valueProp="id"
           onChange={setFolder}
         />
-        <span className="sm:ml-3">
+        <DefaultButton
+          color="gray"
+          className="inline-flex border border-transparent py-1.5 px-3 ml-3"
+          onClick={() => createFolderRef.current?.open()}
+        >
+          <PlusIcon
+            className="-ml-1 mr-2 h-5 w-5 text-gray-600"
+            aria-hidden="true"
+          />
+          Nova Pasta
+        </DefaultButton>
+        <Link href="/add" as={{ query: { folder_id: folder?.id } }} passHref>
           <DefaultButton
-            color="gray"
-            className="inline-flex border border-transparent py-1.5 px-3"
-            onClick={() => createFolderRef.current?.open()}
+            color="blue"
+            className="inline-flex border border-transparent py-1.5 px-3 ml-3"
+            tag="a"
           >
             <PlusIcon
-              className="-ml-1 mr-2 h-5 w-5 text-gray-600"
+              className="-ml-1 mr-2 h-5 w-5 text-blue-600"
               aria-hidden="true"
             />
-            Nova Pasta
+            Nova Credencial
           </DefaultButton>
-        </span>
-        <span className="sm:ml-3">
-          <Link href="/add" as={{ query: { folder_id: folder?.id } }} passHref>
-            <DefaultButton
-              color="blue"
-              className="inline-flex border border-transparent py-1.5 px-3"
-              tag="a"
-            >
-              <PlusIcon
-                className="-ml-1 mr-2 h-5 w-5 text-blue-600"
-                aria-hidden="true"
-              />
-              Nova Credencial
-            </DefaultButton>
-          </Link>
-        </span>
+        </Link>
       </Fragment>
     )
   }
@@ -89,12 +85,9 @@ const Credentials: React.FC<Props> = props => {
           <thead className="bg-gray-50">
             <tr>
               <HeaderCell>Nome</HeaderCell>
-              <HeaderCell>Conta</HeaderCell>
               <HeaderCell>Descrição</HeaderCell>
               <HeaderCell>Criação</HeaderCell>
-              <HeaderCell>
-                <span className="sr-only">Edit</span>
-              </HeaderCell>
+              <HeaderCell>Ações</HeaderCell>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -140,6 +133,24 @@ const Credentials: React.FC<Props> = props => {
                     >
                       <EyeIcon
                         className="h-5 w-5 text-yellow-600"
+                        aria-hidden="true"
+                      />
+                    </DefaultButton>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: '/credentials/[id]',
+                      query: { id: credential.id }
+                    }}
+                    passHref
+                  >
+                    <DefaultButton
+                      color="blue"
+                      className="inline-flex border border-transparent py-0.5 px-3 ml-3"
+                      tag="a"
+                    >
+                      <PencilIcon
+                        className="h-5 w-5 text-blue-600"
                         aria-hidden="true"
                       />
                     </DefaultButton>
