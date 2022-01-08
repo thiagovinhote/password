@@ -9,6 +9,7 @@ type Props = {
   name?: string
   formRegister?: UseFormRegisterReturn
   readOnly?: true
+  className?: string
 }
 
 export const InputForm: React.FC<Props> = props => {
@@ -20,7 +21,7 @@ export const InputForm: React.FC<Props> = props => {
   )
 
   return (
-    <div className="text-gray-800">
+    <div className={classNames('text-gray-800', props.className)}>
       {props.label && (
         <label htmlFor={props.name} className="block font-medium text-sm mb-1">
           {props.label}

@@ -1,5 +1,11 @@
-import { EyeIcon, PencilIcon, PlusIcon } from '@heroicons/react/outline'
+import {
+  EyeIcon,
+  PencilIcon,
+  PlusIcon,
+  SearchIcon
+} from '@heroicons/react/outline'
 import Link from 'next/link'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { Fragment, useRef, useState } from 'react'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
@@ -13,6 +19,7 @@ import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { Pagination } from '~/presentation/components/Pagination'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { Select } from '~/presentation/components/Select'
+import { InputForm } from '~/presentation/components/InputForm'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
 import { ssrAuth } from '~/presentation/helpers'
 import {
@@ -20,6 +27,7 @@ import {
   CreateFolderFormRef
 } from '~/presentation/pages/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
+import { useRouter } from 'next/router'
 
 // const cryptographyColorByColors: Record<any, any> = {
 //   AES128: 'green',
@@ -33,11 +41,19 @@ type Props = {
   folders: Folder[]
 }
 
+type SearchDataForm = {
+  value?: string
+}
+
 const apiCreateFolder = makeApiCreateFolder()
 
 const Credentials: React.FC<Props> = props => {
   const { exec: formatDate } = DatePipeOperator.factory()
   const [folder, setFolder] = useState(props.folders[0])
+  const router = useRouter()
+  const searchForm = useForm<SearchDataForm>({
+    defaultValues: { value: router.query.search as string }
+  })
   const createFolderRef = useRef<CreateFolderFormRef>()
 
   const scaffoldAppend = () => {
@@ -78,11 +94,37 @@ const Credentials: React.FC<Props> = props => {
     )
   }
 
+  const handleSearch: SubmitHandler<SearchDataForm> = async data => {
+    await router.push({ query: { search: data.value } })
+  }
+
   return (
     <Scaffold title="Passwords" append={scaffoldAppend}>
       <CreateFolderForm ref={createFolderRef} createFolder={apiCreateFolder} />
 
       <div className="overflow-hidden border-2 border-gray-200 rounded-lg">
+        <form
+          className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200 sm:px-6"
+          onSubmit={searchForm.handleSubmit(handleSearch)}
+        >
+          <InputForm
+            type="text"
+            className="w-full"
+            placeholder="Buscar pelo nome, username ou descrição"
+            formRegister={searchForm.register('value')}
+          />
+          <DefaultButton
+            color="purple"
+            className="inline-flex border border-transparent py-1.5 px-3 ml-3"
+            attrs={{ type: 'submit' }}
+          >
+            <SearchIcon
+              className="h-5 w-5 text-purple-600"
+              aria-hidden="true"
+            />
+          </DefaultButton>
+        </form>
+
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -162,6 +204,7 @@ const Credentials: React.FC<Props> = props => {
             ))}
           </tbody>
         </table>
+
         <Pagination value={props.credentials.pagination} />
       </div>
     </Scaffold>
@@ -175,7 +218,8 @@ export const getServerSideProps = ssrAuth<Props>(async context => {
   const apiLoadFolders = makeApiLoadFolders(context.req.cookies)
 
   const credentialsResult = await apiLoadCredentials.exec({
-    page: Number(context.query.page)
+    page: Number(context.query.page),
+    search: context.query.search as string
   })
   const foldersResult = await apiLoadFolders.exec()
 
