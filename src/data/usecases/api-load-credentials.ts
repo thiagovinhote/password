@@ -24,7 +24,10 @@ export class ApiLoadCredentials
     const response = await this.httpClient.request({
       url: '/credentials',
       method: HttpMethodType.get,
-      params: { page: (params.page || 1).toString() }
+      params: {
+        page: (params.page || 1).toString(),
+        search: params.search ?? ''
+      }
     })
 
     switch (response.statusCode) {

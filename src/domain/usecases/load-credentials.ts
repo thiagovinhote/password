@@ -5,6 +5,7 @@ import { Paginator } from '../models/paginator'
 export namespace LoadCredentials {
   export type Params = {
     page?: number
+    search?: string
   }
 
   export type Result = Promise<Either<Error, Paginator<Credential>>>
