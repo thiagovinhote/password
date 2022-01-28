@@ -2,7 +2,8 @@ import {
   EyeIcon,
   PencilIcon,
   PlusIcon,
-  SearchIcon
+  SearchIcon,
+  TrashIcon
 } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -12,6 +13,7 @@ import { Folder } from '~/domain/models/folder'
 import { Paginator } from '~/domain/models/paginator'
 import {
   makeApiCreateFolder,
+  makeApiDeleteCredential,
   makeApiLoadCredentials,
   makeApiLoadFolders
 } from '~/main/factories/usecases'
@@ -46,6 +48,7 @@ type SearchDataForm = {
 }
 
 const apiCreateFolder = makeApiCreateFolder()
+const apiDeleteCredential = makeApiDeleteCredential()
 
 const Credentials: React.FC<Props> = props => {
   const { exec: formatDate } = DatePipeOperator.factory()
@@ -77,10 +80,7 @@ const Credentials: React.FC<Props> = props => {
           />
           Nova Pasta
         </DefaultButton>
-        <Link
-          href={{ pathname: 'add', query: { folder_id: folder?.id } }}
-          passHref
-        >
+        <Link href="/add" passHref>
           <DefaultButton
             color="blue"
             className="inline-flex border border-transparent py-1.5 px-3 ml-3"
@@ -99,6 +99,11 @@ const Credentials: React.FC<Props> = props => {
 
   const handleSearch: SubmitHandler<SearchDataForm> = async data => {
     await router.push({ query: { search: data.value } })
+  }
+
+  const deleteCredential = async (id: string) => {
+    await apiDeleteCredential.exec({ id })
+    await router.replace({ query: router.query })
   }
 
   return (
@@ -165,7 +170,7 @@ const Credentials: React.FC<Props> = props => {
                     })}
                   </span>
                 </DataCell>
-                <DataCell>
+                <DataCell className="space-x-2">
                   <Link
                     href={{
                       pathname: '/credentials/[id]/reveal',
@@ -193,7 +198,7 @@ const Credentials: React.FC<Props> = props => {
                   >
                     <DefaultButton
                       color="blue"
-                      className="inline-flex border border-transparent py-0.5 px-3 ml-3"
+                      className="inline-flex border border-transparent py-0.5 px-3"
                       tag="a"
                     >
                       <PencilIcon
@@ -202,6 +207,16 @@ const Credentials: React.FC<Props> = props => {
                       />
                     </DefaultButton>
                   </Link>
+                  <DefaultButton
+                    color="red"
+                    className="inline-flex border border-transparent py-0.5 px-3"
+                    onClick={() => deleteCredential(credential.id)}
+                  >
+                    <TrashIcon
+                      className="h-5 w-5 text-red-600"
+                      aria-hidden="true"
+                    />
+                  </DefaultButton>
                 </DataCell>
               </tr>
             ))}

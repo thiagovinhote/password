@@ -31,7 +31,7 @@ const Add: React.FC = () => {
   const handleSave: SubmitHandler<CredentialFormData> = async data => {
     await apiCreateCredential.exec({
       ...data,
-      folderId: router.query.folder_id as string
+      folderId: (router.query.folder_id as string) ?? ''
     })
 
     setShowAlert(!showAlert)
