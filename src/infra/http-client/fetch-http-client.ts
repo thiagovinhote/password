@@ -7,6 +7,15 @@ import {
 export class FetchHttpClient implements HttpClient {
   constructor(private readonly baseUrl: string) {}
 
+  private async bodyParser(response: Response): Promise<any> {
+    try {
+      const data = await response.json()
+      return data
+    } catch {
+      return null
+    }
+  }
+
   async request(params: HttpRequest): Promise<HttpResponse> {
     const url = new URL(params.url, this.baseUrl)
 
@@ -28,7 +37,7 @@ export class FetchHttpClient implements HttpClient {
     }
 
     const response = await fetch(url.toString(), options)
-    const data = await response.json()
+    const data = await this.bodyParser(response)
 
     return {
       body: data,
