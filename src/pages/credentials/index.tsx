@@ -77,7 +77,10 @@ const Credentials: React.FC<Props> = props => {
           />
           Nova Pasta
         </DefaultButton>
-        <Link href="/add" as={{ query: { folder_id: folder?.id } }} passHref>
+        <Link
+          href={{ pathname: 'add', query: { folder_id: folder?.id } }}
+          passHref
+        >
           <DefaultButton
             color="blue"
             className="inline-flex border border-transparent py-1.5 px-3 ml-3"
