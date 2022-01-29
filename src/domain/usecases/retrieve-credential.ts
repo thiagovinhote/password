@@ -20,5 +20,11 @@ export namespace RetrieveCredential {
       name: string
       created_at: string
     }[]
+    tags: {
+      id: string
+      label: string
+      color?: string
+      created_at: string
+    }[]
   }
 }

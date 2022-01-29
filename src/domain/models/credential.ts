@@ -1,4 +1,5 @@
 import { Folder, FolderTypes } from './folder'
+import { Tag, TagTypes } from './tag'
 
 export class Credential {
   public id: string
@@ -9,6 +10,7 @@ export class Credential {
   public createdAt: Date
   public updatedAt: Date | null
   public folders?: Folder[]
+  public tags?: Tag[]
 
   private constructor() {}
 
@@ -28,6 +30,7 @@ export class Credential {
         ? new Date(params.updatedAt)
         : params.updatedAt
     instance.folders = params.folders?.map(Folder.create)
+    instance.tags = params.tags?.map(Tag.create)
 
     return instance
   }
@@ -40,7 +43,8 @@ export class Credential {
       password: this.password ?? null,
       description: this.description ?? null,
       createdAt: this.createdAt.toISOString(),
-      folders: this.folders?.map(folder => folder.serialize()) ?? null
+      folders: this.folders?.map(folder => folder.serialize()) ?? null,
+      tags: this.tags?.map(tag => tag.serialize()) ?? null
     }
   }
 
@@ -62,5 +66,6 @@ export namespace CredentialTypes {
     createdAt: string | Date
     updatedAt?: string | Date
     folders?: FolderTypes.Params[]
+    tags?: TagTypes.Params[]
   }
 }
