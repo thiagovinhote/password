@@ -2,6 +2,7 @@ import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '~/presentation/hooks'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { InputForm } from '~/presentation/components/InputForm'
 
 type UserFormData = {
   email: string
@@ -27,37 +28,23 @@ const Login: React.FC = () => {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleSignIn)}>
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                {...register('email')}
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                {...register('password')}
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
+          <div className="rounded-md shadow-sm space-y-4">
+            <InputForm
+              formRegister={register('email')}
+              label="Seu e-mail"
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="Endereço de e-mail"
+            />
+            <InputForm
+              formRegister={register('password')}
+              label="Senha"
+              type="password"
+              autoComplete="current-password"
+              required
+              placeholder="Senha utilizada no cadastro"
+            />
           </div>
 
           <div className="flex items-center justify-between">

@@ -7,8 +7,10 @@ type Props = {
   placeholder?: string
   type: string
   name?: string
-  formRegister?: UseFormRegisterReturn
+  autoComplete?: string
   readOnly?: true
+  required?: true
+  formRegister?: UseFormRegisterReturn
   className?: string
 }
 
@@ -34,6 +36,8 @@ export const InputForm: React.FC<Props> = props => {
         placeholder={props.placeholder}
         type={props.type}
         id={props.name}
+        autoComplete={props.autoComplete}
+        required={props.required}
         readOnly={props.readOnly}
       />
     </div>
