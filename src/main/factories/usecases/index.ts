@@ -1,5 +1,6 @@
 export * from './api-fetch-generate'
 export * from './api-auth-login'
+export * from './api-auth-logout'
 export * from './api-auth-me'
 export * from './api-load-credentials'
 export * from './api-load-tags'

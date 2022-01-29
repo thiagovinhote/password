@@ -11,7 +11,7 @@ const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = [
   { name: 'Seu perfil', href: '/profile' },
   { name: 'Settings', href: '/profile/settings' },
-  { name: 'Sign out', href: '/' }
+  { name: 'Sign out', href: '/auth/logout' }
 ]
 
 export const NavBar: React.FC = () => {
