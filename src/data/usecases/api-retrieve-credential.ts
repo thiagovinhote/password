@@ -45,6 +45,12 @@ export class ApiRetrieveCredential
         id: folder.id,
         name: folder.name,
         createdAt: folder.created_at
+      })),
+      tags: payload.tags.map(tag => ({
+        id: tag.id,
+        label: tag.label,
+        color: tag.color,
+        createdAt: tag.created_at
       }))
     })
 
