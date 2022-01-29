@@ -13,7 +13,7 @@ type AuthContextData = {
   user: User
   isAuthenticated: boolean
   isRecovering: boolean
-  signIn: (params: SignInParams) => Promise<void>
+  signIn: (params: SignInParams) => Promise<Error | null>
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC = props => {
 
     if (auth.isLeft()) {
       setUser(null)
-      return
+      return auth.value
     }
 
     setCookie(undefined, 'password:token', auth.value.token, {
@@ -52,7 +52,9 @@ export const AuthProvider: React.FC = props => {
 
     setUser(auth.value.user)
 
-    Router.push('/')
+    await Router.push('/')
+
+    return null
   }
 
   return (

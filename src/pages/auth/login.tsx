@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '~/presentation/hooks'
@@ -7,14 +8,18 @@ import { InputForm } from '~/presentation/components/InputForm'
 type UserFormData = {
   email: string
   password: string
+  error?: string
 }
 
 const Login: React.FC = () => {
-  const { register, handleSubmit } = useForm<UserFormData>()
+  const signForm = useForm<UserFormData>()
+  const [signError, setSignError] = useState<string>()
   const { signIn } = useAuth()
 
   const handleSignIn: SubmitHandler<UserFormData> = async data => {
-    await signIn({ email: data.email, password: data.password })
+    setSignError(undefined)
+    const error = await signIn({ email: data.email, password: data.password })
+    setSignError(error?.message)
   }
 
   return (
@@ -26,11 +31,26 @@ const Login: React.FC = () => {
             Entrar com sua conta
           </h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleSignIn)}>
+
+        {signError && (
+          <div
+            className="p-4 mb-4  bg-red-100 rounded-lg dark:bg-red-200"
+            role="alert"
+          >
+            <span className="text-sm text-red-700 dark:text-red-800">
+              {signError}
+            </span>
+          </div>
+        )}
+
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={signForm.handleSubmit(handleSignIn)}
+        >
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm space-y-4">
             <InputForm
-              formRegister={register('email')}
+              formRegister={signForm.register('email')}
               label="Seu e-mail"
               type="email"
               autoComplete="email"
@@ -38,7 +58,7 @@ const Login: React.FC = () => {
               placeholder="Endereço de e-mail"
             />
             <InputForm
-              formRegister={register('password')}
+              formRegister={signForm.register('password')}
               label="Senha"
               type="password"
               autoComplete="current-password"
