@@ -52,8 +52,8 @@ const Add: React.FC = () => {
         }}
       />
 
-      <div className="grid grid-cols-2 gap-6">
-        <div>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="hidden sm:block">
           <p className="font-medium text-lg pb-4">
             Escolha o tipo de criptografia
           </p>
@@ -65,7 +65,7 @@ const Add: React.FC = () => {
           <p className="font-medium text-lg pb-4">Informe suas credenciais</p>
           <form
             onSubmit={handleSubmit(handleSave)}
-            className="border-2 border-gray-300 border-dashed rounded-xl bg-white space-y-4 p-8"
+            className="border-2 border-gray-300 border-dashed rounded-xl bg-white space-y-4 p-4 sm:p-8"
           >
             <InputForm
               label="Nome"
