@@ -1,18 +1,25 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '~/presentation/hooks'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { InputForm } from '~/presentation/components/InputForm'
+import { GetServerSideProps } from 'next'
 
 type UserFormData = {
   email: string
   password: string
-  error?: string
 }
 
-const Login: React.FC = () => {
-  const signForm = useForm<UserFormData>()
+type Props = {
+  email?: string
+}
+
+const Login: React.FC<Props> = props => {
+  const signForm = useForm<UserFormData>({
+    defaultValues: { email: props.email }
+  })
   const [signError, setSignError] = useState<string>()
   const { signIn } = useAuth()
 
@@ -48,7 +55,7 @@ const Login: React.FC = () => {
           onSubmit={signForm.handleSubmit(handleSignIn)}
         >
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm space-y-4">
+          <div className="rounded-md space-y-4">
             <InputForm
               formRegister={signForm.register('email')}
               label="Seu e-mail"
@@ -67,41 +74,24 @@ const Login: React.FC = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
+          <div className="space-y-4">
+            <div className="mt-6">
+              <DefaultButton
+                color="indigo"
+                className="w-full font-medium"
+                tag="button"
+                attrs={{ type: 'submit' }}
               >
-                Remember me
-              </label>
+                Entrar
+              </DefaultButton>
             </div>
-
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </a>
+            <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
+              <Link href="/auth/register" passHref>
+                <a className="text-indigo-600 font-medium hover:text-indigo-500">
+                  Criar conta
+                </a>
+              </Link>
             </div>
-          </div>
-
-          <div>
-            <DefaultButton
-              color="indigo"
-              className="w-full font-medium"
-              tag="button"
-              attrs={{ type: 'submit' }}
-            >
-              Login
-            </DefaultButton>
           </div>
         </form>
       </div>
@@ -110,3 +100,13 @@ const Login: React.FC = () => {
 }
 
 export default Login
+
+export const getServerSideProps: GetServerSideProps<Props> = context => {
+  const email = context.query.email as string
+
+  return Promise.resolve({
+    props: {
+      email: email ?? null
+    }
+  })
+}

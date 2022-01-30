@@ -14,6 +14,7 @@ type AuthContextData = {
   isAuthenticated: boolean
   isRecovering: boolean
   signIn: (params: SignInParams) => Promise<Error | null>
+  signOut: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -33,6 +34,10 @@ export const AuthProvider: React.FC = props => {
       }
     })
   }, [])
+
+  const signOut = () => {
+    setUser(null)
+  }
 
   const signIn = async (params: SignInParams) => {
     const auth = await apiAuthLogin.exec({
@@ -59,7 +64,7 @@ export const AuthProvider: React.FC = props => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, isRecovering, signIn }}
+      value={{ user, isAuthenticated: !!user, isRecovering, signIn, signOut }}
     >
       {props.children}
     </AuthContext.Provider>
