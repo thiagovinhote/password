@@ -39,7 +39,7 @@ const menuItems: CardMenuItemProps[] = [
 const Home: React.FC = () => {
   return (
     <Scaffold title="Dashboard">
-      <ul className="grid grid-cols-4 gap-4">
+      <ul className="grid md:grid-cols-4 gap-4">
         {menuItems.map(item => (
           <li className="flex" key={item.title}>
             <CardMenuItem {...item} />
