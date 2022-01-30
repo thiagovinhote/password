@@ -7,7 +7,6 @@ import { ReactComponent as LogoSvg } from '../../../assets/images/padlock.svg'
 import { NavBarLink } from './NavBarLink'
 import { useAuth } from '~/presentation/hooks'
 
-const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports']
 const profile = [
   { name: 'Seu perfil', href: '/profile' },
   { name: 'Settings', href: '/profile/settings' },
@@ -69,7 +68,7 @@ export const NavBar: React.FC = () => {
                           >
                             {profile.map(item => (
                               <Menu.Item key={item.href}>
-                                <Link href={item.href}>
+                                <Link href={item.href} passHref>
                                   <a
                                     className={
                                       'hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700'
@@ -133,13 +132,11 @@ export const NavBar: React.FC = () => {
               </div>
               <div className="mt-3 px-2 space-y-1">
                 {profile.map(item => (
-                  <a
-                    key={item.href}
-                    href="#"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
-                  >
-                    {item.name}
-                  </a>
+                  <Link key={item.href} href={item.href} passHref>
+                    <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+                      {item.name}
+                    </a>
+                  </Link>
                 ))}
               </div>
             </div>
