@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef } from 'react'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
 import { Paginator } from '~/domain/models/paginator'
@@ -20,7 +20,6 @@ import {
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { Pagination } from '~/presentation/components/Pagination'
 import { Scaffold } from '~/presentation/components/Scaffold'
-import { Select } from '~/presentation/components/Select'
 import { InputForm } from '~/presentation/components/InputForm'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
 import { ssrAuth } from '~/presentation/helpers'
@@ -52,7 +51,6 @@ const apiDeleteCredential = makeApiDeleteCredential()
 
 const Credentials: React.FC<Props> = props => {
   const { exec: formatDate } = DatePipeOperator.factory()
-  const [folder, setFolder] = useState(props.folders[0])
   const router = useRouter()
   const searchForm = useForm<SearchDataForm>({
     defaultValues: { value: router.query.search as string }
@@ -89,7 +87,7 @@ const Credentials: React.FC<Props> = props => {
   }
 
   return (
-    <Scaffold title="Passwords" append={scaffoldAppend}>
+    <Scaffold title="Credenciais" append={scaffoldAppend}>
       <CreateFolderForm ref={createFolderRef} createFolder={apiCreateFolder} />
 
       <div className="overflow-hidden sm:border-2 border-gray-200 rounded-lg">

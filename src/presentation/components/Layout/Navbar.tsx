@@ -9,8 +9,7 @@ import { useAuth } from '~/presentation/hooks'
 
 const profile = [
   { name: 'Seu perfil', href: '/profile' },
-  { name: 'Settings', href: '/profile/settings' },
-  { name: 'Sign out', href: '/auth/logout' }
+  { name: 'Sair', href: '/auth/logout' }
 ]
 
 export const NavBar: React.FC = () => {
@@ -18,7 +17,7 @@ export const NavBar: React.FC = () => {
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
@@ -28,9 +27,15 @@ export const NavBar: React.FC = () => {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <NavBarLink href="/">Dashboard</NavBarLink>
-                    <NavBarLink href="/credentials">Credentials</NavBarLink>
-                    <NavBarLink href="/generate">Generate</NavBarLink>
+                    <NavBarLink href="/" onClick={close}>
+                      Dashboard
+                    </NavBarLink>
+                    <NavBarLink href="/credentials" onClick={close}>
+                      Credenciais
+                    </NavBarLink>
+                    <NavBarLink href="/generate" onClick={close}>
+                      Generate
+                    </NavBarLink>
                   </div>
                 </div>
               </div>
@@ -105,13 +110,13 @@ export const NavBar: React.FC = () => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <NavBarLink href="/" vertical>
+              <NavBarLink href="/" vertical onClick={close}>
                 Dashboard
               </NavBarLink>
-              <NavBarLink href="/credentials" vertical>
-                Credentials
+              <NavBarLink href="/credentials" vertical onClick={close}>
+                Credenciais
               </NavBarLink>
-              <NavBarLink href="/generate" vertical>
+              <NavBarLink href="/generate" vertical onClick={close}>
                 Generate
               </NavBarLink>
             </div>

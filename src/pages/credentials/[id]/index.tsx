@@ -172,9 +172,9 @@ const Credential: React.FC<Props> = props => {
 
   return (
     <Scaffold title="Credencial" append={scaffoldAppend}>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 gap-6">
         <div className="grid grid-rows-2 gap-6">
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="bg-white shadow overflow-hidden rounded-lg">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
                 Detalhes
@@ -188,7 +188,7 @@ const Credential: React.FC<Props> = props => {
             </div>
             <form
               onSubmit={detailsForm.handleSubmit(handleSaveDetails)}
-              className="border-t border-gray-200 space-y-4 p-6"
+              className="border-t border-gray-200 space-y-4 px-4 py-5 sm:px-6"
             >
               <InputForm
                 label="Nome"
@@ -200,7 +200,7 @@ const Credential: React.FC<Props> = props => {
                 label="Descrição"
                 placeholder="Informações extras sobre a credencial"
                 formRegister={detailsForm.register('description')}
-                rows={2}
+                rows={3}
               />
 
               <DefaultButton
@@ -213,7 +213,7 @@ const Credential: React.FC<Props> = props => {
             </form>
           </div>
 
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="bg-white shadow overflow-hidden rounded-lg">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
                 {props.credential.name}
@@ -224,7 +224,7 @@ const Credential: React.FC<Props> = props => {
             </div>
             <form
               onSubmit={accountForm.handleSubmit(handleSaveAccount)}
-              className="border-t border-gray-200 space-y-4 p-6"
+              className="border-t border-gray-200 space-y-4 px-4 py-5 sm:px-6"
             >
               <InputForm
                 label="Email / Username"
@@ -234,9 +234,8 @@ const Credential: React.FC<Props> = props => {
               />
               <InputForm
                 label="Senha"
-                placeholder="Digite sua senha"
+                placeholder="Não pode ser atualizada"
                 type="password"
-                formRegister={accountForm.register('password')}
                 readOnly
               />
               <DefaultButton
@@ -250,7 +249,7 @@ const Credential: React.FC<Props> = props => {
           </div>
         </div>
 
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white shadow overflow-hidden rounded-lg">
           <div className="px-4 py-5 sm:px-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               Tags

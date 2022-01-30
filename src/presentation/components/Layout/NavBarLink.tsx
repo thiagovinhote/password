@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link, { LinkProps } from 'next/link'
 import { classNames } from '~/presentation/helpers'
 
-type Props = LinkProps & { vertical?: true }
+type Props = LinkProps & { vertical?: true; onClick?: () => void }
 
 const Classes = {
   horizontal: {
@@ -34,7 +34,9 @@ export const NavBarLink: React.FC<Props> = props => {
 
   return (
     <Link {...props}>
-      <a className={classNames(...classes)}>{props.children}</a>
+      <a className={classNames(...classes)} onClick={props.onClick}>
+        {props.children}
+      </a>
     </Link>
   )
 }
