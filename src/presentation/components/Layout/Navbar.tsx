@@ -45,7 +45,7 @@ export const NavBar: React.FC = () => {
                             <span className="sr-only">Open user menu</span>
                             <div className="group relative text-right">
                               <span className="-m-2 px-2 py-1 block text-white">
-                                {user?.name}
+                                {user?.name ?? 'Faça o login'}
                               </span>
                               <span className="-m-2 px-2 py-1 block font-medium text-white">
                                 {user?.email}
@@ -106,42 +106,24 @@ export const NavBar: React.FC = () => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navigation.map((item, itemIdx) =>
-                itemIdx === 0 ? (
-                  <Fragment key={item}>
-                    <a
-                      href="#"
-                      className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      {item}
-                    </a>
-                  </Fragment>
-                ) : (
-                  <a
-                    key={item}
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    {item}
-                  </a>
-                )
-              )}
+              <NavBarLink href="/" vertical>
+                Dashboard
+              </NavBarLink>
+              <NavBarLink href="/credentials" vertical>
+                Credentials
+              </NavBarLink>
+              <NavBarLink href="/generate" vertical>
+                Generate
+              </NavBarLink>
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="ml-3">
+                <div>
                   <div className="text-base font-medium leading-none text-white">
-                    Tom Cook
+                    {user?.name ?? 'Faça o login'}
                   </div>
                   <div className="text-sm font-medium leading-none text-gray-400">
-                    tom@example.com
+                    {user?.email}
                   </div>
                 </div>
                 <button className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
