@@ -62,28 +62,10 @@ const Credentials: React.FC<Props> = props => {
   const scaffoldAppend = () => {
     return (
       <Fragment>
-        <Select
-          value={folder}
-          data={props.folders}
-          labelProp="name"
-          valueProp="id"
-          onChange={setFolder}
-        />
-        <DefaultButton
-          color="gray"
-          className="inline-flex border border-transparent py-1.5 px-3 ml-3"
-          onClick={() => createFolderRef.current?.open()}
-        >
-          <PlusIcon
-            className="-ml-1 mr-2 h-5 w-5 text-gray-600"
-            aria-hidden="true"
-          />
-          Nova Pasta
-        </DefaultButton>
         <Link href="/add" passHref>
           <DefaultButton
             color="blue"
-            className="inline-flex border border-transparent py-1.5 px-3 ml-3"
+            className="inline-flex border border-transparent py-1.5 px-3"
             tag="a"
           >
             <PlusIcon
@@ -110,9 +92,9 @@ const Credentials: React.FC<Props> = props => {
     <Scaffold title="Passwords" append={scaffoldAppend}>
       <CreateFolderForm ref={createFolderRef} createFolder={apiCreateFolder} />
 
-      <div className="overflow-hidden border-2 border-gray-200 rounded-lg">
+      <div className="overflow-hidden sm:border-2 border-gray-200 rounded-lg">
         <form
-          className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200 sm:px-6"
+          className="bg-white px-0 pb-3 sm:py-3 flex items-center justify-between sm:border-b border-gray-200 sm:px-6"
           onSubmit={searchForm.handleSubmit(handleSearch)}
         >
           <InputForm
@@ -123,7 +105,7 @@ const Credentials: React.FC<Props> = props => {
           />
           <DefaultButton
             color="purple"
-            className="inline-flex border border-transparent py-1.5 px-3 ml-3"
+            className="inline-flex border border-transparent px-3 ml-3"
             attrs={{ type: 'submit' }}
           >
             <SearchIcon
@@ -133,7 +115,7 @@ const Credentials: React.FC<Props> = props => {
           </DefaultButton>
         </form>
 
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="hidden md:inline-table min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <HeaderCell>Nome</HeaderCell>
@@ -222,6 +204,71 @@ const Credentials: React.FC<Props> = props => {
             ))}
           </tbody>
         </table>
+
+        <div className="sm:hidden min-w-full divide-y space-y-4 divide-gray-200">
+          {props.credentials.data.map(credential => (
+            <div
+              key={credential.id}
+              className="p-6 bg-white overflow-hidden rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+            >
+              <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {credential.name}
+              </h5>
+              <p className="mb-3 font-normal text-ellipsis hover:text-clip text-gray-700 dark:text-gray-400">
+                {credential.description}
+              </p>
+
+              <div className="flex space-x-3">
+                <Link
+                  href={{
+                    pathname: '/credentials/[id]/reveal',
+                    query: { id: credential.id }
+                  }}
+                  passHref
+                >
+                  <DefaultButton
+                    color="yellow"
+                    className="inline-flex border border-transparent py-0.5 px-3"
+                    tag="a"
+                  >
+                    <EyeIcon
+                      className="h-5 w-5 text-yellow-600"
+                      aria-hidden="true"
+                    />
+                  </DefaultButton>
+                </Link>
+                <Link
+                  href={{
+                    pathname: '/credentials/[id]',
+                    query: { id: credential.id }
+                  }}
+                  passHref
+                >
+                  <DefaultButton
+                    color="blue"
+                    className="inline-flex border border-transparent py-0.5 px-3"
+                    tag="a"
+                  >
+                    <PencilIcon
+                      className="h-5 w-5 text-blue-600"
+                      aria-hidden="true"
+                    />
+                  </DefaultButton>
+                </Link>
+                <DefaultButton
+                  color="red"
+                  className="inline-flex border border-transparent py-0.5 px-3"
+                  onClick={() => deleteCredential(credential.id)}
+                >
+                  <TrashIcon
+                    className="h-5 w-5 text-red-600"
+                    aria-hidden="true"
+                  />
+                </DefaultButton>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <Pagination value={props.credentials.pagination} />
       </div>

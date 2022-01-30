@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import {
   ListCryptography,
   ListCryptographyProvider
 } from '~/presentation/pages/add'
+import Link from 'next/link'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { InputForm } from '~/presentation/components/InputForm'
 import { FeedbackAlert } from '~/presentation/components/Alert'
@@ -12,6 +13,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { makeApiCreateCredential } from '~/main/factories/usecases'
 import { useRouter } from 'next/router'
 import { TextAreaForm } from '~/presentation/components/TextAreaForm'
+import { ArrowLeftIcon } from '@heroicons/react/outline'
 
 type CredentialFormData = {
   name: string
@@ -37,8 +39,30 @@ const Add: React.FC = () => {
     setShowAlert(!showAlert)
   }
 
+  const scaffoldAppend = () => {
+    return (
+      <Fragment>
+        <span className="sm:ml-3">
+          <Link href={{ pathname: '/credentials' }} passHref>
+            <DefaultButton
+              tag="a"
+              color="gray"
+              className="inline-flex border border-transparent py-1.5 px-3"
+            >
+              <ArrowLeftIcon
+                className="-ml-1 mr-2 h-5 w-5 text-gray-600"
+                aria-hidden="true"
+              />
+              Voltar
+            </DefaultButton>
+          </Link>
+        </span>
+      </Fragment>
+    )
+  }
+
   return (
-    <Scaffold title="Adicionar senha">
+    <Scaffold title="Adicionar senha" append={scaffoldAppend}>
       <FeedbackAlert
         data={{
           title: 'Nova credencial',

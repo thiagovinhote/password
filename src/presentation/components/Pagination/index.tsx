@@ -32,20 +32,46 @@ export const Pagination: React.FC<Props> = props => {
   const defaultStyle = 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
 
   return (
-    <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div className="bg-white px-0 py-3 flex items-center justify-between mt-2 sm:mt-0 sm:border-t border-gray-200 sm:px-6">
       <div className="flex-1 flex justify-between sm:hidden">
-        <a
-          href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+        <Link
+          passHref
+          href={{
+            query: !previousIsDisabled
+              ? { ...router.query, page: props.value.currentPage - 1 }
+              : null
+          }}
         >
-          Anterior
-        </a>
-        <a
-          href="#"
-          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          <a
+            className={classNames(
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md bg-white hover:bg-gray-50',
+              previousIsDisabled
+                ? 'text-gray-200 pointer-events-none'
+                : 'text-gray-500'
+            )}
+          >
+            Anterior
+          </a>
+        </Link>
+        <Link
+          passHref
+          href={{
+            query: !nextIsDisabled
+              ? { ...router.query, page: props.value.currentPage + 1 }
+              : null
+          }}
         >
-          Próximo
-        </a>
+          <a
+            className={classNames(
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md bg-white hover:bg-gray-50',
+              nextIsDisabled
+                ? 'text-gray-200 pointer-events-none'
+                : 'text-gray-500'
+            )}
+          >
+            Próximo
+          </a>
+        </Link>
       </div>
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>

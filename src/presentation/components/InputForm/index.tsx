@@ -25,18 +25,20 @@ export const InputForm: React.FC<Props> = props => {
 
   return (
     <div className={classNames('text-gray-800', props.className)}>
-      <div className="grid grid-cols-2 mb-1">
-        {props.label && (
-          <label htmlFor={props.name} className="block font-medium text-sm">
-            {props.label}
-          </label>
-        )}
-        {props.error && (
-          <p className="text-right text-sm text-red-600 dark:text-red-500">
-            {props.error}
-          </p>
-        )}
-      </div>
+      {(props.label || props.error) && (
+        <div className="grid grid-cols-2 mb-1">
+          {props.label && (
+            <label htmlFor={props.name} className="block font-medium text-sm">
+              {props.label}
+            </label>
+          )}
+          {props.error && (
+            <p className="text-right text-sm text-red-600 dark:text-red-500">
+              {props.error}
+            </p>
+          )}
+        </div>
+      )}
 
       <input
         {...props.formRegister}
