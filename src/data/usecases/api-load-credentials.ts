@@ -26,7 +26,8 @@ export class ApiLoadCredentials
       method: HttpMethodType.get,
       params: {
         page: (params.page || 1).toString(),
-        search: params.search ?? ''
+        search: params.search ?? '',
+        tags: params.tags ?? []
       }
     })
 

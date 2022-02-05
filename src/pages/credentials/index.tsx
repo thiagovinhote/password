@@ -3,32 +3,31 @@ import {
   PencilIcon,
   PlusIcon,
   SearchIcon,
-  TrashIcon
+  TrashIcon,
+  FilterIcon
 } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Fragment, useRef } from 'react'
+import { useState } from 'react'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
 import { Paginator } from '~/domain/models/paginator'
 import {
-  makeApiCreateFolder,
   makeApiDeleteCredential,
   makeApiLoadCredentials,
-  makeApiLoadFolders
+  makeApiLoadFolders,
+  makeApiLoadTags
 } from '~/main/factories/usecases'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { Pagination } from '~/presentation/components/Pagination'
 import { Scaffold } from '~/presentation/components/Scaffold'
 import { InputForm } from '~/presentation/components/InputForm'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
-import { ssrAuth } from '~/presentation/helpers'
-import {
-  CreateFolderForm,
-  CreateFolderFormRef
-} from '~/presentation/pages/credentials'
+import { QueryStringParser, ssrAuth } from '~/presentation/helpers'
+import { FilterForm, OnChangeFilter } from '~/presentation/pages/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
 import { useRouter } from 'next/router'
+import { TagTypes } from '~/domain/models/tag'
 
 // const cryptographyColorByColors: Record<any, any> = {
 //   AES128: 'green',
@@ -40,26 +39,38 @@ import { useRouter } from 'next/router'
 type Props = {
   credentials: Paginator<Credential>
   folders: Folder[]
+  tags: TagTypes.DTO[]
+  selected: string[]
 }
 
 type SearchDataForm = {
   value?: string
 }
 
-const apiCreateFolder = makeApiCreateFolder()
 const apiDeleteCredential = makeApiDeleteCredential()
 
 const Credentials: React.FC<Props> = props => {
   const { exec: formatDate } = DatePipeOperator.factory()
   const router = useRouter()
+  const [filterIsOpen, setFilterIsOpen] = useState(false)
   const searchForm = useForm<SearchDataForm>({
     defaultValues: { value: router.query.search as string }
   })
-  const createFolderRef = useRef<CreateFolderFormRef>()
 
   const scaffoldAppend = () => {
     return (
-      <Fragment>
+      <div className="space-x-4">
+        <DefaultButton
+          color="indigo"
+          className="inline-flex border border-transparent py-1.5 px-3"
+          onClick={() => setFilterIsOpen(true)}
+        >
+          <FilterIcon
+            className="-ml-1 mr-2 h-5 w-5 text-indigo-600"
+            aria-hidden="true"
+          />
+          Filtros
+        </DefaultButton>
         <Link href="/add" passHref>
           <DefaultButton
             color="blue"
@@ -73,7 +84,7 @@ const Credentials: React.FC<Props> = props => {
             Nova Credencial
           </DefaultButton>
         </Link>
-      </Fragment>
+      </div>
     )
   }
 
@@ -86,9 +97,19 @@ const Credentials: React.FC<Props> = props => {
     await router.replace({ query: router.query })
   }
 
+  const handleChangeFilters: OnChangeFilter = async value => {
+    await router.replace({ query: { ...router.query, tags: value.tags } })
+  }
+
   return (
     <Scaffold title="Credenciais" append={scaffoldAppend}>
-      <CreateFolderForm ref={createFolderRef} createFolder={apiCreateFolder} />
+      <FilterForm
+        open={filterIsOpen}
+        onClose={setFilterIsOpen}
+        tags={props.tags}
+        selected={props.selected}
+        onChange={handleChangeFilters}
+      />
 
       <div className="overflow-hidden sm:border-2 border-gray-200 rounded-lg">
         <form
@@ -276,25 +297,43 @@ const Credentials: React.FC<Props> = props => {
 
 export default Credentials
 
+type QueryString = {
+  search: string
+  page: string
+  tags: string | string[]
+}
+
 export const getServerSideProps = ssrAuth<Props>(async context => {
   const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies)
   const apiLoadFolders = makeApiLoadFolders(context.req.cookies)
+  const apiLoadTags = makeApiLoadTags(context.req.cookies)
+  const query = context.query as QueryString
+  const tagsQuery = QueryStringParser.array(query.tags)
 
-  const credentialsResult = await apiLoadCredentials.exec({
-    page: Number(context.query.page),
-    search: context.query.search as string
-  })
-  const foldersResult = await apiLoadFolders.exec()
+  const [credentialsResult, foldersResult, tagsResult] = await Promise.all([
+    apiLoadCredentials.exec({
+      page: Number(query.page),
+      search: query.search,
+      tags: tagsQuery
+    }),
+    apiLoadFolders.exec(),
+    apiLoadTags.exec({ limit: 1000 })
+  ])
 
   const credentials = credentialsResult.isRight()
     ? credentialsResult.value
     : null
   const folders = foldersResult.isRight() ? foldersResult.value : []
+  const tags = tagsResult.isRight()
+    ? tagsResult.value
+    : Paginator.create({ data: [], pagination: null })
 
   return {
     props: {
       credentials: credentials?.serialize(),
-      folders: Folder.serializeArray(folders)
+      folders: Folder.serializeArray(folders),
+      tags: tags.serialize().data,
+      selected: tagsQuery
     }
   }
 })

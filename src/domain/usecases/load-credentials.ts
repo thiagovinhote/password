@@ -6,6 +6,7 @@ export namespace LoadCredentials {
   export type Params = {
     page?: number
     search?: string
+    tags?: string[]
   }
 
   export type Result = Promise<Either<Error, Paginator<Credential>>>

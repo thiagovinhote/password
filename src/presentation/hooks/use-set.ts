@@ -21,5 +21,9 @@ export const useSet = <T>(initialValue: T[] = []) => {
     return state.current.has(value)
   }
 
-  return { add, remove, has }
+  const values = (): Array<T> => {
+    return Array.from(state.current)
+  }
+
+  return { add, remove, has, values }
 }

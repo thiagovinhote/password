@@ -21,7 +21,7 @@ export type HttpRequest = {
   url: string
   method: HttpMethodType
   body?: Record<string, unknown>
-  params?: { [key: string]: string }
+  params?: { [key: string]: string | string[] }
   headers?: { [key: string]: string }
 }
 

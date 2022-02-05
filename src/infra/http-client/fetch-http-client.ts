@@ -1,3 +1,4 @@
+import qs from 'querystring'
 import {
   HttpClient,
   HttpRequest,
@@ -21,7 +22,13 @@ export class FetchHttpClient implements HttpClient {
 
     if (params.params) {
       Object.entries(params.params).forEach(([key, value]) => {
-        url.searchParams.append(key, value)
+        if (Array.isArray(value)) {
+          value.forEach(nestedValue => {
+            url.searchParams.append(key, nestedValue)
+          })
+        } else {
+          url.searchParams.append(key, value)
+        }
       })
     }
 
