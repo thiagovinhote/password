@@ -5,8 +5,8 @@ import {
 } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { makeApiFetchGenerate } from '~/main/factories/usecases'
-import { FeedbackAlert } from '~/presentation/components/Alert'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { FeedbackAlert } from '~/presentation/molecules/Alert'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import {
   TabsModel,
   ModeItemTab,

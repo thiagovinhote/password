@@ -1,5 +1,5 @@
-import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ReactComponent as SubmitSvg } from '../assets/images/submit.svg'
 
 const OneFile: React.FC = () => {

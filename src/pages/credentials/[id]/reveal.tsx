@@ -6,10 +6,10 @@ import {
   makeApiRetrieveCredential,
   makeApiRevealCredential
 } from '~/main/factories/usecases'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ssrAuth } from '~/presentation/helpers'
 import { DatePipeOperator } from '~/presentation/pipes'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
 import { Fragment } from 'react'
 
 type Props = {

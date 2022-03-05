@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '~/presentation/hooks'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { InputForm } from '~/presentation/components/InputForm'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { InputForm } from '~/presentation/molecules/InputForm'
 import { GetServerSideProps } from 'next'
 
 type UserFormData = {

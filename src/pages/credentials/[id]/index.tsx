@@ -10,18 +10,18 @@ import {
   makeApiRetrieveCredential,
   makeApiUpdateCredential
 } from '~/main/factories/usecases'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ssrAuth } from '~/presentation/helpers'
 import { DatePipeOperator } from '~/presentation/pipes'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
 import { Fragment, useState } from 'react'
-import { InputForm } from '~/presentation/components/InputForm'
+import { InputForm } from '~/presentation/molecules/InputForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { TextAreaForm } from '~/presentation/components/TextAreaForm'
-import { DataCell, HeaderCell } from '~/presentation/components/Table'
+import { TextAreaForm } from '~/presentation/molecules/TextAreaForm'
+import { DataCell, HeaderCell } from '~/presentation/molecules/Table'
 import { Paginator } from '~/domain/models/paginator'
 import { Tag } from '~/domain/models/tag'
-import { Toggle } from '~/presentation/components/Toggle'
+import { Toggle } from '~/presentation/molecules/Toggle'
 import { useSet } from '~/presentation/hooks'
 
 type Props = {

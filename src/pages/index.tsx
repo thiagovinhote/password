@@ -1,5 +1,5 @@
 import React from 'react'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ssrAuth } from '~/presentation/helpers'
 import {
   CardMenuItem,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
 
 type Props = {
   value: boolean

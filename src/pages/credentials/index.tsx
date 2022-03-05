@@ -18,11 +18,11 @@ import {
   makeApiLoadFolders,
   makeApiLoadTags
 } from '~/main/factories/usecases'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { Pagination } from '~/presentation/components/Pagination'
-import { Scaffold } from '~/presentation/components/Scaffold'
-import { InputForm } from '~/presentation/components/InputForm'
-import { DataCell, HeaderCell } from '~/presentation/components/Table'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { Pagination } from '~/presentation/molecules/Pagination'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
+import { InputForm } from '~/presentation/molecules/InputForm'
+import { DataCell, HeaderCell } from '~/presentation/molecules/Table'
 import { QueryStringParser, ssrAuth } from '~/presentation/helpers'
 import {
   FilterForm,

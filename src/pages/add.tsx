@@ -1,18 +1,18 @@
 import React, { Fragment, useState } from 'react'
-import { Scaffold } from '~/presentation/components/Scaffold'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 import {
   ListCryptography,
   ListCryptographyProvider
 } from '~/presentation/organisms/add'
 import Link from 'next/link'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { InputForm } from '~/presentation/components/InputForm'
-import { FeedbackAlert } from '~/presentation/components/Alert'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { InputForm } from '~/presentation/molecules/InputForm'
+import { FeedbackAlert } from '~/presentation/molecules/Alert'
 import { CheckIcon } from '@heroicons/react/solid'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { makeApiCreateCredential } from '~/main/factories/usecases'
 import { useRouter } from 'next/router'
-import { TextAreaForm } from '~/presentation/components/TextAreaForm'
+import { TextAreaForm } from '~/presentation/molecules/TextAreaForm'
 import { ArrowLeftIcon } from '@heroicons/react/outline'
 
 type CredentialFormData = {

@@ -1,6 +1,6 @@
 import { TagTypes } from '~/domain/models/tag'
-import { DefaultButton } from '~/presentation/components/DefaultButton'
-import { SlideOver } from '~/presentation/components/SlideOver'
+import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { SlideOver } from '~/presentation/molecules/SlideOver'
 import { useSet } from '~/presentation/hooks'
 import { TagItemSelect } from './tag-item-select'
 
