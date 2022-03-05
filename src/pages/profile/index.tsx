@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { InputForm } from '~/presentation/molecules/InputForm'
 import { Scaffold } from '~/presentation/molecules/Scaffold'
-import { DataCell, HeaderCell } from '~/presentation/molecules/Table'
+import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Paginator } from '~/domain/models/paginator'
 import { Tag } from '~/domain/models/tag'

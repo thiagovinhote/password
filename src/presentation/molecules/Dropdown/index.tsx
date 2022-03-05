@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 import React, { Fragment } from 'react'
 import { classNames } from '~/presentation/helpers'
-import { DefaultButton } from '../DefaultButton'
+import { DefaultButton } from '../../atoms/DefaultButton'
 
 type Props = {
   label: string

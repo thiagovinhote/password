@@ -1,5 +1,5 @@
 import { TagTypes } from '~/domain/models/tag'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { SlideOver } from '~/presentation/molecules/SlideOver'
 import { useSet } from '~/presentation/hooks'
 import { TagItemSelect } from './tag-item-select'

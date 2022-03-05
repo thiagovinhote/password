@@ -2,7 +2,7 @@ import React, { useImperativeHandle, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CreateFolder } from '~/domain/usecases/create-folder'
 import { Usecase } from '~/domain/usecases/usecase'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { InputForm } from '~/presentation/molecules/InputForm'
 import { SlideOver } from '~/presentation/molecules/SlideOver'
 

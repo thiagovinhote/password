@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '~/presentation/hooks'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { InputForm } from '~/presentation/molecules/InputForm'
 import { GetServerSideProps } from 'next'
 

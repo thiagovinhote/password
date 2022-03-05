@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { classNames } from '~/presentation/helpers'
-import { DefaultButton } from '../DefaultButton'
+import { DefaultButton } from '../../atoms/DefaultButton'
 
 type Props<T> = T extends number | string
   ? {

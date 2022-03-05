@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { classNames } from '~/presentation/helpers'
 import { Props as OptionItemProps } from './option-item'
 

@@ -1,4 +1,4 @@
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ReactComponent as SubmitSvg } from '../assets/images/submit.svg'
 

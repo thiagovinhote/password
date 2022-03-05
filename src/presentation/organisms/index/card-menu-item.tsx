@@ -2,7 +2,7 @@ import React from 'react'
 import Link, { LinkProps } from 'next/link'
 
 import { ReactComponent as PadlockImage } from '../../../assets/images/padlock.svg'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 
 export type Props = {
   title: string

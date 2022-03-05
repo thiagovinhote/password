@@ -9,7 +9,7 @@ import {
 import { Scaffold } from '~/presentation/molecules/Scaffold'
 import { ssrAuth } from '~/presentation/helpers'
 import { DatePipeOperator } from '~/presentation/pipes'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { Fragment } from 'react'
 
 type Props = {

@@ -5,7 +5,7 @@ import {
   ListCryptographyProvider
 } from '~/presentation/organisms/add'
 import Link from 'next/link'
-import { DefaultButton } from '~/presentation/molecules/DefaultButton'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { InputForm } from '~/presentation/molecules/InputForm'
 import { FeedbackAlert } from '~/presentation/molecules/Alert'
 import { CheckIcon } from '@heroicons/react/solid'
