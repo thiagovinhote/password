@@ -3,4 +3,8 @@ export class UnprocessableEntityError extends Error {
     super('A entidade não pôde ser processada')
     this.name = 'UnprocessableEntityError'
   }
+
+  static create(): UnprocessableEntityError {
+    return new UnprocessableEntityError()
+  }
 }

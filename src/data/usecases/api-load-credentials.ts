@@ -6,7 +6,8 @@ import { Usecase } from '~/domain/usecases/usecase'
 import {
   AccessDeniedError,
   InvalidResourceError,
-  UnexpectedError
+  UnexpectedError,
+  UnprocessableEntityError
 } from '../errors'
 import {
   HttpClient,
@@ -38,6 +39,8 @@ export class ApiLoadCredentials
         return Either.left(InvalidResourceError.create())
       case HttpStatusCode.serverError:
         return Either.left(UnexpectedError.create())
+      case HttpStatusCode.unprocessableEntity:
+        return Either.left(UnprocessableEntityError.create())
     }
 
     const payload = response.body
