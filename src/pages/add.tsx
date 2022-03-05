@@ -3,7 +3,7 @@ import { Scaffold } from '~/presentation/components/Scaffold'
 import {
   ListCryptography,
   ListCryptographyProvider
-} from '~/presentation/pages/add'
+} from '~/presentation/organisms/add'
 import Link from 'next/link'
 import { DefaultButton } from '~/presentation/components/DefaultButton'
 import { InputForm } from '~/presentation/components/InputForm'

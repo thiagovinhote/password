@@ -24,7 +24,10 @@ import { Scaffold } from '~/presentation/components/Scaffold'
 import { InputForm } from '~/presentation/components/InputForm'
 import { DataCell, HeaderCell } from '~/presentation/components/Table'
 import { QueryStringParser, ssrAuth } from '~/presentation/helpers'
-import { FilterForm, OnChangeFilter } from '~/presentation/pages/credentials'
+import {
+  FilterForm,
+  OnChangeFilter
+} from '~/presentation/organisms/credentials'
 import { DatePipeOperator } from '~/presentation/pipes'
 import { useRouter } from 'next/router'
 import { TagTypes } from '~/domain/models/tag'

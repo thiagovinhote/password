@@ -4,7 +4,7 @@ import { ssrAuth } from '~/presentation/helpers'
 import {
   CardMenuItem,
   Props as CardMenuItemProps
-} from '~/presentation/pages/index'
+} from '~/presentation/organisms/index/index'
 
 const menuItems: CardMenuItemProps[] = [
   {

@@ -12,7 +12,7 @@ import {
   ModeItemTab,
   MemorableForm,
   StrongForm
-} from '~/presentation/pages/generate'
+} from '~/presentation/organisms/generate'
 
 const apiFetchGenerate = makeApiFetchGenerate()
 
