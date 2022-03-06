@@ -1,14 +1,10 @@
-interface Serializable {
-  serialize: () => any
-}
-
-export class Paginator<T extends Serializable> {
+export class Paginator<T> {
   public pagination: PaginatorTypes.Pagination
   public data: T[]
 
-  private constructor() {}
+  protected constructor() {}
 
-  static create<T extends Serializable>(params: PaginatorTypes.Params<T>) {
+  static create<T>(params: PaginatorTypes.Params<T>) {
     const instance = new Paginator<T>()
     instance.pagination = {
       total: params.pagination.total,
@@ -20,19 +16,9 @@ export class Paginator<T extends Serializable> {
 
     return instance
   }
-
-  serialize() {
-    return {
-      pagination: this.pagination,
-      data: this.data.map(item => item.serialize())
-    } as Paginator<T>
-  }
 }
 
 export namespace PaginatorTypes {
-  export type DTO<T extends Serializable> = ReturnType<
-    Paginator<T>['serialize']
-  >
   export type Params<T> = {
     pagination: Pagination
     data: T[]

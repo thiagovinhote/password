@@ -1,3 +1,5 @@
+import { Timestamp } from '../fields/timestamp'
+
 export class Folder {
   public id: string
   public name: string
@@ -9,28 +11,12 @@ export class Folder {
     const instance = new Folder()
     instance.id = params.id
     instance.name = params.name
-    instance.createdAt =
-      typeof params.createdAt === 'string'
-        ? new Date(params.createdAt)
-        : params.createdAt
+    instance.createdAt = Timestamp.create(params.createdAt)
 
     return instance
-  }
-
-  serialize() {
-    return {
-      id: this.id,
-      name: this.name,
-      createdAt: this.createdAt.toISOString()
-    }
-  }
-
-  static serializeArray(array: Folder[]) {
-    return (array.map(folder => folder.serialize()) as unknown) as Folder[]
   }
 }
 
 export namespace FolderTypes {
-  export type DTO = ReturnType<Folder['serialize']>
   export type Params = { id: string; name: string; createdAt: string | Date }
 }

@@ -13,17 +13,8 @@ export class User {
 
     return instance
   }
-
-  serialize() {
-    return {
-      id: this.id,
-      name: this.name,
-      email: this.email
-    }
-  }
 }
 
 export namespace UserTypes {
-  export type DTO = ReturnType<User['serialize']>
   export type Params = { id: string; name: string; email: string }
 }

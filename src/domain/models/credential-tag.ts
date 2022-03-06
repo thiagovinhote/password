@@ -1,9 +1,11 @@
+import { Timestamp } from '../fields/timestamp'
+
 export class CredentialTag {
   public id: string
   public credentialId: string
   public tagId: string
-  public createdAt: Date
-  public updatedAt: Date | null
+  public createdAt: Timestamp
+  public updatedAt: Timestamp | null
 
   private constructor() {}
 
@@ -12,30 +14,14 @@ export class CredentialTag {
     instance.id = params.id
     instance.credentialId = params.credentialId
     instance.tagId = params.tagId
-    instance.createdAt =
-      typeof params.createdAt === 'string'
-        ? new Date(params.createdAt)
-        : params.createdAt
-    instance.updatedAt =
-      typeof params.updatedAt === 'string'
-        ? new Date(params.updatedAt)
-        : params.updatedAt
+    instance.createdAt = Timestamp.create(params.createdAt)
+    instance.updatedAt = Timestamp.create(params.updatedAt)
 
     return instance
-  }
-
-  serialize() {
-    return {
-      id: this.id,
-      credentialId: this.credentialId,
-      tagId: this.tagId,
-      createdAt: this.createdAt.toISOString()
-    }
   }
 }
 
 export namespace CredentialTagTypes {
-  export type DTO = ReturnType<CredentialTag['serialize']>
   export type Params = {
     id: string
     credentialId: string

@@ -9,15 +9,8 @@ export class Password {
 
     return instance
   }
-
-  serialize() {
-    return {
-      decrypted: this.decrypted
-    }
-  }
 }
 
 export namespace PasswordTypes {
-  export type DTO = ReturnType<Password['serialize']>
   export type Params = { decrypted: string }
 }
