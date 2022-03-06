@@ -24,7 +24,7 @@ export class DatePipeOperator implements PipeOperator<InputType, string> {
   }
 
   exec(input: InputType): string {
-    const value = dateIsDate(input)
+    const value = dateIsDate(input.value)
       ? (input.value as Date)
       : dateParseIso(input.value as string)
 
