@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Credential } from '~/domain/models/credential'
 import { Folder } from '~/domain/models/folder'
 import { Paginator } from '~/domain/models/paginator'
-import { TagTypes } from '~/domain/models/tag'
+import { Tag } from '~/domain/models/tag'
 import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
 import { InputForm } from '~/presentation/molecules/InputForm'
@@ -27,7 +27,7 @@ import { DatePipeOperator } from '~/presentation/pipes'
 type Props = {
   credentials: Paginator<Credential>
   folders: Folder[]
-  tags: TagTypes.DTO[]
+  tags: Tag[]
   initializeValues: {
     selectedTags: string[]
     searchTerm?: string

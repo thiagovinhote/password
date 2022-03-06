@@ -1,4 +1,4 @@
-import { TagTypes } from '~/domain/models/tag'
+import { Tag } from '~/domain/models/tag'
 import { DefaultButton } from '~/presentation/atoms/DefaultButton'
 import { SlideOver } from '~/presentation/molecules/SlideOver'
 import { useSet } from '~/presentation/hooks'
@@ -14,7 +14,7 @@ type Props = {
   open: boolean
   onClose: (value: boolean) => void
   selected?: string[]
-  tags?: TagTypes.DTO[]
+  tags?: Tag[]
   onChange?: OnChangeFilter
 }
 
