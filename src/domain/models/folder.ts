@@ -3,7 +3,7 @@ import { Timestamp } from '../fields/timestamp'
 export class Folder {
   public id: string
   public name: string
-  public createdAt: Date
+  public createdAt: Timestamp | null
 
   private constructor() {}
 
