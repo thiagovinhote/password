@@ -55,6 +55,13 @@ export const NavBar: React.FC = () => {
                                 {user?.email}
                               </span>
                             </div>
+                            {user?.pictureUrl && (
+                              <img
+                                className="ml-2 h-9 w-9 rounded-full border-2"
+                                src={user.pictureUrl.toString()}
+                                alt=""
+                              />
+                            )}
                           </Menu.Button>
                         </div>
                         <Transition
@@ -122,6 +129,13 @@ export const NavBar: React.FC = () => {
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">
+                {user?.pictureUrl && (
+                  <img
+                    className="mr-2 h-9 w-9 rounded-full border-2"
+                    src={user.pictureUrl.toString()}
+                    alt=""
+                  />
+                )}
                 <div>
                   <div className="text-base font-medium leading-none text-white">
                     {user?.name ?? 'Faça o login'}

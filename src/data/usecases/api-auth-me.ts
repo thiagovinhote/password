@@ -4,6 +4,7 @@ import { AuthMe } from '~/domain/usecases/auth-me'
 import { Usecase } from '~/domain/usecases/usecase'
 import {
   AccessDeniedError,
+  InvalidCredentialsError,
   InvalidResourceError,
   UnexpectedError
 } from '../errors'
@@ -23,6 +24,8 @@ export class ApiAuthMe implements Usecase<never, AuthMe.Result> {
     })
 
     switch (response.statusCode) {
+      case HttpStatusCode.unauthorized:
+        return Either.left(InvalidCredentialsError.create())
       case HttpStatusCode.forbidden:
         return Either.left(AccessDeniedError.create())
       case HttpStatusCode.notFound:
