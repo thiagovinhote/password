@@ -37,7 +37,9 @@ export class FetchHttpClient implements HttpClient {
       body: null
     }
 
-    if (params.body) {
+    if (params.body && params.body instanceof FormData) {
+      options.body = params.body
+    } else if (params.body && params.body === Object(params.body)) {
       options.headers['Content-Type'] = 'application/json'
       options.body = JSON.stringify(params.body)
     }

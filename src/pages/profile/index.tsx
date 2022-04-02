@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react'
-import { makeApiAuthMe, makeApiLoadTags } from '~/main/factories/usecases'
+import {
+  makeApiAuthMe,
+  makeApiLoadTags,
+  makeApiUpdateUserPicture
+} from '~/main/factories/usecases'
 import { ssrAuth, TagPaginator } from '~/presentation/helpers'
 import {
   IndexTemplate,
@@ -9,6 +13,7 @@ import { PlainObject, ReadonlyRequired } from '~/domain/fields/plain-object'
 import { Paginator } from '~/domain/models/paginator'
 import { Tag } from '~/domain/models/tag'
 import { User } from '~/domain/models/user'
+import { useRouter } from 'next/router'
 
 type Props = {
   user: ReadonlyRequired<User>
@@ -16,8 +21,10 @@ type Props = {
 }
 
 const apiLoadTags = makeApiLoadTags()
+const apiUpdateUserPicture = makeApiUpdateUserPicture()
 
 export default function Page(props: Props) {
+  const router = useRouter()
   const deserialized = useMemo(() => {
     return {
       tags: PlainObject.deserializer(TagPaginator.create, props.tags),
@@ -34,11 +41,17 @@ export default function Page(props: Props) {
     }
   }
 
+  const handleOnChangePicture: IndexTemplateProps['onChangePicture'] = async picture => {
+    await apiUpdateUserPicture.exec({ id: props.user.id, picture })
+    await router.replace(router.pathname)
+  }
+
   return (
     <IndexTemplate
       tags={tags}
       user={deserialized.user}
       onLoadTags={handleLoadTags}
+      onChangePicture={handleOnChangePicture}
     />
   )
 }

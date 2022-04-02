@@ -1,3 +1,5 @@
+import { URL } from 'url'
+
 type Unpacked<T> = T extends (infer U)[] ? U : T
 type Packed<T, U> = T extends ReadonlyRequired<any[]>
   ? U[]
@@ -23,6 +25,9 @@ export class PlainObject {
       }
       if (value instanceof Date) {
         return [key, value.toISOString()]
+      }
+      if (value instanceof URL) {
+        return [key, value.toString()]
       }
       if (Array.isArray(value)) {
         return [key, value.map(PlainObject.serializer)]

@@ -21,7 +21,7 @@ export enum HttpMethodType {
 export type HttpRequest = {
   url: string
   method: HttpMethodType
-  body?: Record<string, unknown>
+  body?: Record<string, unknown> | FormData
   params?: { [key: string]: string | string[] }
   headers?: { [key: string]: string }
 }

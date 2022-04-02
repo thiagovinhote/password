@@ -1,6 +1,5 @@
 import { Either } from '~/common/either'
-import { User } from '~/domain/models/user'
-import { AuthMe } from '~/domain/usecases/auth-me'
+import { UpdateUserPicture } from '~/domain/usecases/update-user-picture'
 import { Usecase } from '~/domain/usecases/usecase'
 import {
   AccessDeniedError,
@@ -13,13 +12,21 @@ import {
   HttpStatusCode
 } from '../protocols/http/http-client'
 
-export class ApiAuthMe implements Usecase<never, AuthMe.Result> {
-  constructor(private readonly httpClient: HttpClient<AuthMe.ResponseDTO>) {}
+export class ApiUpdateUserPicture
+  implements Usecase<UpdateUserPicture.Params, UpdateUserPicture.Result> {
+  constructor(
+    private readonly httpClient: HttpClient<UpdateUserPicture.ResponseDTO>
+  ) {}
 
-  async exec(): AuthMe.Result {
+  async exec(params: UpdateUserPicture.Params): UpdateUserPicture.Result {
+    const file = params.picture
+    const content = new FormData()
+    content.append('picture', file)
+
     const response = await this.httpClient.request({
-      url: '/auth/me',
-      method: HttpMethodType.get
+      url: `/users/${params.id}/picture`,
+      method: HttpMethodType.post,
+      body: content
     })
 
     switch (response.statusCode) {
@@ -31,14 +38,6 @@ export class ApiAuthMe implements Usecase<never, AuthMe.Result> {
         return Either.left(UnexpectedError.create())
     }
 
-    const payload = response.body
-    const user = User.create({
-      id: payload.id,
-      email: payload.email,
-      name: payload.name,
-      pictureUrl: payload.picture_url
-    })
-
-    return Either.right(user)
+    return Either.right(undefined)
   }
 }

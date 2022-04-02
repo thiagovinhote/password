@@ -8,5 +8,6 @@ export namespace AuthMe {
     id: string
     name: string
     email: string
+    picture_url: string
   }
 }

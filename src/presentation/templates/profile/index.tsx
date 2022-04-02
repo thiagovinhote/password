@@ -1,15 +1,18 @@
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
-import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
+import { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Paginator } from '~/domain/models/paginator'
 import { Tag } from '~/domain/models/tag'
 import { User } from '~/domain/models/user'
+import { DefaultButton } from '~/presentation/atoms/DefaultButton'
+import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
+import { InputForm } from '~/presentation/molecules/InputForm'
+import { Scaffold } from '~/presentation/molecules/Scaffold'
 
 type Props = {
   user: User
   tags: Paginator<Tag>
   onLoadTags: (term: string) => Promise<void>
+  onChangePicture: (picture: File) => Promise<void>
 }
 
 type TagsFormData = {
@@ -20,9 +23,23 @@ export type { Props as IndexTemplateProps }
 
 export const IndexTemplate: React.FC<Props> = props => {
   const tagsForm = useForm<TagsFormData>()
+  const [pictureIsSaving, setPictureIsSaving] = useState(false)
+  const pictureUrl =
+    props.user.pictureUrl?.toString() ?? '/images/profile-picture.jpeg'
 
   const handleSearchTags: SubmitHandler<TagsFormData> = async data => {
     await props.onLoadTags(data.value)
+  }
+
+  const handleChangePicture = async (event: ChangeEvent<HTMLInputElement>) => {
+    setPictureIsSaving(true)
+    const { files } = event.target
+    const picture = files.item(0)
+    if (!picture) {
+      return
+    }
+    await props.onChangePicture(picture)
+    setPictureIsSaving(false)
   }
 
   return (
@@ -38,7 +55,7 @@ export const IndexTemplate: React.FC<Props> = props => {
             <div className="flex flex-col items-center pb-10 mt-8">
               <img
                 className="mb-3 w-24 h-24 rounded-full shadow-lg"
-                src="/images/profile-picture.jpeg"
+                src={pictureUrl}
                 alt={props.user.name}
               />
               <h3 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
@@ -47,6 +64,29 @@ export const IndexTemplate: React.FC<Props> = props => {
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {props.user.email}
               </span>
+
+              <DefaultButton
+                tag="label"
+                attrs={{ htmlFor: 'picture-upload' }}
+                color="yellow"
+                className="cursor-pointer mt-2 py-1.5 px-3"
+                loading={pictureIsSaving}
+              >
+                {pictureIsSaving ? (
+                  <span>Alterando foto</span>
+                ) : (
+                  <span>Alterar foto</span>
+                )}
+                <input
+                  id="picture-upload"
+                  name="picture-upload"
+                  type="file"
+                  className="sr-only"
+                  accept="image/*"
+                  disabled={pictureIsSaving}
+                  onChange={handleChangePicture}
+                />
+              </DefaultButton>
             </div>
           </div>
         </div>
