@@ -19,6 +19,7 @@ export namespace AuthLogin {
       id: string
       name: string
       email: string
+      picture_url: string
     }
     token: string
   }

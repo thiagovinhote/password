@@ -43,7 +43,8 @@ export class ApiAuthLogin
     const user = User.create({
       id: payload.user.id,
       email: payload.user.email,
-      name: payload.user.name
+      name: payload.user.name,
+      pictureUrl: payload.user.picture_url
     })
     const token = payload.token
 
