@@ -20,12 +20,14 @@ export class ApiFetchGenerate
 
   async exec(params: FetchGenerate.Params): FetchGenerate.Result {
     const response = await this.httpClient.request({
-      url: '/api/generate',
+      url: '/generate',
       method: HttpMethodType.post,
       body: {
-        include_numbers: params.includeNumbers,
         lowercase_characters: params.lowercaseCharacters,
         uppercase_characters: params.uppercaseCharacters,
+        include_numbers: params.includeNumbers,
+        include_symbols: params.includeSymbols,
+        no_ambiguous_characters: params.noAmbiguousCharacters,
         password_size: params.passwordSize
       }
     })
@@ -39,6 +41,6 @@ export class ApiFetchGenerate
         return Either.left(UnexpectedError.create())
     }
 
-    return Either.right(response.body.result)
+    return Either.right(response.body)
   }
 }
