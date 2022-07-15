@@ -24,13 +24,15 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
   const [passwords, setPasswords] = useState([])
 
   const fetchData = async () => {
-    await fetchGenerate.exec({
+    const data = await fetchGenerate.exec({
       includeNumbers,
+      includeSymbols: false,
       lowercaseCharacters,
       uppercaseCharacters,
+      noAmbiguousCharacters: false,
       passwordSize: passwordSize
     })
-    setPasswords([])
+    if (data.isRight()) setPasswords(data.value)
   }
 
   useEffect(() => {
