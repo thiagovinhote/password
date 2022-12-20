@@ -1,5 +1,6 @@
 import React from 'react'
 import { DatePipeOperator } from '~/presentation/pipes'
+import packageJSON from '~/../package.json'
 
 export const Footer: React.FC = () => {
   const { exec: formatDate } = DatePipeOperator.factory()
@@ -11,6 +12,10 @@ export const Footer: React.FC = () => {
           value: new Date(),
           pattern: "dd/MM 'de' yyyy"
         })}
+      </span>
+      <span className="text-sm text-gray-300">&nbsp;-&nbsp;</span>
+      <span className="text-sm text-gray-300 font-semibold">
+        {packageJSON.version}
       </span>
     </div>
   )
