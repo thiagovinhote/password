@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import Head from 'next/head'
 import { NavBar } from './Navbar'
+import { Footer } from './Footer'
 
 export const Layout: React.FC = ({ children }) => {
   return (
@@ -30,10 +31,12 @@ export const Layout: React.FC = ({ children }) => {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <div>
+      <div className="flex flex-col h-screen justify-between">
         <NavBar />
 
         {children}
+
+        <Footer />
       </div>
     </Fragment>
   )
