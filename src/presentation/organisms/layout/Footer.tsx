@@ -17,6 +17,10 @@ export const Footer: React.FC = () => {
       <span className="text-sm text-gray-300 font-semibold">
         {packageJSON.version}
       </span>
+      <span className="text-sm text-gray-300">&nbsp;-&nbsp;</span>
+      <span className="text-sm text-gray-300 font-semibold">
+        {packageJSON.engines.node}
+      </span>
     </div>
   )
 }
