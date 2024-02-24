@@ -1,49 +1,51 @@
-import { useState } from 'react'
-import Link from 'next/link'
-import { ReactComponent as LogoSvg } from '../../assets/images/padlock.svg'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { makeApiAuthRegister } from '~/main/factories/usecases'
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { makeApiAuthRegister } from "~/main/factories/usecases";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { InputForm } from "~/presentation/molecules/InputForm";
 import {
   CompareValueValidation,
-  EmailValueValidation
-} from '~/presentation/validations'
+  EmailValueValidation,
+} from "~/presentation/validations";
+
+import { ReactComponent as LogoSvg } from "../../../assets/images/padlock.svg";
 
 type UserFormData = {
-  email: string
-  name: string
-  password: string
-  passwordConfirmation: string
-}
+  email: string;
+  name: string;
+  password: string;
+  passwordConfirmation: string;
+};
 
-const apiAuthRegister = makeApiAuthRegister()
+const apiAuthRegister = makeApiAuthRegister();
 
 const Register: React.FC = () => {
-  const signUpForm = useForm<UserFormData>()
-  const [signUpError, setSignUpError] = useState<string>()
-  const router = useRouter()
-  const { exec: emailValidation } = EmailValueValidation.factory()
-  const { exec: compareValidation } = CompareValueValidation.factory()
+  const signUpForm = useForm<UserFormData>();
+  const [signUpError, setSignUpError] = useState<string>();
+  const router = useRouter();
+  const { exec: emailValidation } = EmailValueValidation.factory();
+  const { exec: compareValidation } = CompareValueValidation.factory();
 
-  const handleSignUp: SubmitHandler<UserFormData> = async data => {
-    setSignUpError(undefined)
+  const handleSignUp: SubmitHandler<UserFormData> = async (data) => {
+    setSignUpError(undefined);
     const registerResult = await apiAuthRegister.exec({
       name: data.name,
       email: data.email,
-      password: data.password
-    })
+      password: data.password,
+    });
 
     if (registerResult.isRight()) {
       return router.replace({
-        pathname: '/auth/login',
-        query: { email: data.email }
-      })
+        pathname: "/auth/login",
+        query: { email: data.email },
+      });
     }
 
-    setSignUpError(registerResult.value.message)
-  }
+    setSignUpError(registerResult.value.message);
+  };
 
   return (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -74,8 +76,8 @@ const Register: React.FC = () => {
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md space-y-4">
             <InputForm
-              formRegister={signUpForm.register('name', {
-                required: 'Nome obrigatório'
+              formRegister={signUpForm.register("name", {
+                required: "Nome obrigatório",
               })}
               label="Seu nome"
               type="text"
@@ -84,11 +86,11 @@ const Register: React.FC = () => {
               error={signUpForm.formState.errors.name?.message}
             />
             <InputForm
-              formRegister={signUpForm.register('email', {
-                required: 'E-mail obrigatório',
+              formRegister={signUpForm.register("email", {
+                required: "E-mail obrigatório",
                 validate: {
-                  email: value => emailValidation(value)?.message
-                }
+                  email: (value) => emailValidation(value)?.message,
+                },
               })}
               label="Seu e-mail"
               type="email"
@@ -97,8 +99,8 @@ const Register: React.FC = () => {
               error={signUpForm.formState.errors.email?.message}
             />
             <InputForm
-              formRegister={signUpForm.register('password', {
-                required: 'Senha obrigatória'
+              formRegister={signUpForm.register("password", {
+                required: "Senha obrigatória",
               })}
               label="Senha"
               type="password"
@@ -107,15 +109,15 @@ const Register: React.FC = () => {
               error={signUpForm.formState.errors.password?.message}
             />
             <InputForm
-              formRegister={signUpForm.register('passwordConfirmation', {
-                required: 'Senha obrigatória',
+              formRegister={signUpForm.register("passwordConfirmation", {
+                required: "Senha obrigatória",
                 validate: {
-                  compare: value =>
+                  compare: (value) =>
                     compareValidation({
                       left: value,
-                      right: signUpForm.getValues().password
-                    })?.message
-                }
+                      right: signUpForm.getValues().password,
+                    })?.message,
+                },
               })}
               label="Confirmar senha"
               type="password"
@@ -131,13 +133,13 @@ const Register: React.FC = () => {
                 color="indigo"
                 className="w-full font-medium"
                 tag="button"
-                attrs={{ type: 'submit' }}
+                attrs={{ type: "submit" }}
               >
                 Criar
               </DefaultButton>
             </div>
             <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
-              <Link href="/auth/login" passHref>
+              <Link href="/old/auth/login" passHref>
                 <a className="text-indigo-600 font-medium hover:text-indigo-500">
                   Já possuo conta
                 </a>
@@ -147,7 +149,7 @@ const Register: React.FC = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

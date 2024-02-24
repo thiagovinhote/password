@@ -1,6 +1,7 @@
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
-import { ReactComponent as SubmitSvg } from '../assets/images/submit.svg'
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
+
+import { ReactComponent as SubmitSvg } from "../../assets/images/submit.svg";
 
 const OneFile: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const OneFile: React.FC = () => {
         </div>
       </div>
     </Scaffold>
-  )
-}
+  );
+};
 
-export default OneFile
+export default OneFile;

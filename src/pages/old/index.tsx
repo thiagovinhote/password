@@ -5,7 +5,7 @@ import { Scaffold } from "~/presentation/molecules/Scaffold";
 import {
   CardMenuItem,
   Props as CardMenuItemProps,
-} from "~/presentation/organisms/index/index";
+} from "~/presentation/organisms/index";
 
 const menuItems: CardMenuItemProps[] = [
   {

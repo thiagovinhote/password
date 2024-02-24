@@ -63,7 +63,7 @@ export const IndexTemplate: React.FC<Props> = (props) => {
           />
           Filtros
         </DefaultButton>
-        <Link href="/add" passHref legacyBehavior>
+        <Link href="/old/add" passHref legacyBehavior>
           <DefaultButton
             color="blue"
             className="inline-flex border border-transparent py-1.5 px-3"

@@ -14,7 +14,7 @@ export const ssrAuth = <
     if (!cookies["password:token"]) {
       return {
         redirect: {
-          destination: "/auth/login",
+          destination: "/old/auth/login",
           permanent: false,
         },
       };
