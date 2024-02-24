@@ -19,6 +19,7 @@
 # misc
 .DS_Store
 *.pem
+tmp
 
 # debug
 npm-debug.log*
@@ -36,3 +37,4 @@ yarn-error.log*
 
 # IDE
 .vscode
+.idea
