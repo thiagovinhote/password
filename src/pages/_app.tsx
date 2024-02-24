@@ -3,8 +3,8 @@ import "~/assets/styles/globals.css";
 
 import { AppProps } from "next/app";
 
-import { AuthProvider } from "~/presentation/contexts";
 import { Layout } from "~/presentation/organisms/layout";
+import { AuthProvider } from "~/presentation/providers/auth-provider";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (

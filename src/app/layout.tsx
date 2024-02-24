@@ -2,7 +2,7 @@ import "~/assets/styles/globals.css";
 
 import { PropsWithChildren } from "react";
 
-import { ThemeProvider } from "~/presentation/contexts/theme-provider";
+import { ThemeProvider } from "~/presentation/providers/theme-provider";
 
 export const metadata = {
   title: "Next.js",

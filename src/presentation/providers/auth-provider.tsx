@@ -16,7 +16,7 @@ type SignInParams = {
 };
 
 type AuthContextData = {
-  user: User;
+  user: User | null;
   isAuthenticated: boolean;
   isRecovering: boolean;
   signIn: (params: SignInParams) => Promise<Error | null>;
@@ -29,7 +29,7 @@ const apiAuthLogin = makeApiAuthLogin();
 const apiAuthMe = makeApiAuthMe();
 
 export const AuthProvider = (props: PropsWithChildren) => {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isRecovering, setIsRecovering] = useState(true);
 
   useEffect(() => {
