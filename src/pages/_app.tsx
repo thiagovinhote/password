@@ -1,8 +1,10 @@
-import '~/assets/styles/tailwind.css'
-import '~/assets/styles/globals.css'
-import { Layout } from '~/presentation/organisms/layout'
-import { AuthProvider } from '~/presentation/contexts'
-import { AppProps } from 'next/app'
+import "~/assets/styles/tailwind.css";
+import "~/assets/styles/globals.css";
+
+import { AppProps } from "next/app";
+
+import { AuthProvider } from "~/presentation/contexts";
+import { Layout } from "~/presentation/organisms/layout";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
@@ -11,7 +13,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </Layout>
     </AuthProvider>
-  )
-}
+  );
+};
 
-export default MyApp
+export default MyApp;

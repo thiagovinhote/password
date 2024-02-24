@@ -1,66 +1,72 @@
-import React, { createContext, useState, useEffect } from 'react'
-import Router from 'next/router'
-import { setCookie } from 'nookies'
-import { makeApiAuthLogin, makeApiAuthMe } from '~/main/factories/usecases'
-import { User } from '~/domain/models/user'
+import Router from "next/router";
+import { setCookie } from "nookies";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
+
+import { User } from "~/domain/models/user";
+import { makeApiAuthLogin, makeApiAuthMe } from "~/main/factories/usecases";
 
 type SignInParams = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 type AuthContextData = {
-  user: User
-  isAuthenticated: boolean
-  isRecovering: boolean
-  signIn: (params: SignInParams) => Promise<Error | null>
-  signOut: () => void
-}
+  user: User;
+  isAuthenticated: boolean;
+  isRecovering: boolean;
+  signIn: (params: SignInParams) => Promise<Error | null>;
+  signOut: () => void;
+};
 
-export const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData);
 
-const apiAuthLogin = makeApiAuthLogin()
-const apiAuthMe = makeApiAuthMe()
+const apiAuthLogin = makeApiAuthLogin();
+const apiAuthMe = makeApiAuthMe();
 
-export const AuthProvider: React.FC = props => {
-  const [user, setUser] = useState<User>(null)
-  const [isRecovering, setIsRecovering] = useState(true)
+export const AuthProvider = (props: PropsWithChildren) => {
+  const [user, setUser] = useState<User>(null);
+  const [isRecovering, setIsRecovering] = useState(true);
 
   useEffect(() => {
-    apiAuthMe.exec().then(user => {
+    apiAuthMe.exec().then((user) => {
       if (user.isRight()) {
-        setUser(user.value)
-        setIsRecovering(false)
+        setUser(user.value);
+        setIsRecovering(false);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   const signOut = () => {
-    setUser(null)
-  }
+    setUser(null);
+  };
 
   const signIn = async (params: SignInParams) => {
     const auth = await apiAuthLogin.exec({
       email: params.email,
-      password: params.password
-    })
+      password: params.password,
+    });
 
     if (auth.isLeft()) {
-      setUser(null)
-      return auth.value
+      setUser(null);
+      return auth.value;
     }
 
-    setCookie(undefined, 'password:token', auth.value.token, {
+    setCookie(undefined, "password:token", auth.value.token, {
       maxAge: 60 * 60 * 1, // 1 hour
-      path: '/'
-    })
+      path: "/",
+    });
 
-    setUser(auth.value.user)
+    setUser(auth.value.user);
 
-    await Router.push('/')
+    await Router.push("/");
 
-    return null
-  }
+    return null;
+  };
 
   return (
     <AuthContext.Provider
@@ -68,5 +74,5 @@ export const AuthProvider: React.FC = props => {
     >
       {props.children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

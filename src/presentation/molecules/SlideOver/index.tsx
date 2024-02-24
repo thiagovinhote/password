@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react'
-
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
+import { Dialog, Transition } from "@headlessui/react";
+import { XCircleIcon } from "@heroicons/react/24/outline";
+import React, { Fragment } from "react";
 
 type Props = {
-  title: string
-  value: boolean
-  onChange: (value: boolean) => void
-}
+  title: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+};
 
-export const SlideOver: React.FC<Props> = props => {
+export const SlideOver: React.FC<Props> = (props) => {
   return (
     <Transition.Root show={props.value} as={Fragment}>
       <Dialog
@@ -57,7 +56,7 @@ export const SlideOver: React.FC<Props> = props => {
                       onClick={() => props.onChange(false)}
                     >
                       <span className="sr-only">Close panel</span>
-                      <XIcon className="h-6 w-6" aria-hidden="true" />
+                      <XCircleIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
                 </Transition.Child>
@@ -77,5 +76,5 @@ export const SlideOver: React.FC<Props> = props => {
         </div>
       </Dialog>
     </Transition.Root>
-  )
-}
+  );
+};

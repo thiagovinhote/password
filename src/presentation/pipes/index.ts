@@ -1,1 +1,1 @@
-export * from './date-pipe-operator'
+export * from "./date-pipe-operator";

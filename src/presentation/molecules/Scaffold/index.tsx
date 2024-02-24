@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, PropsWithChildren } from "react";
 
-type Props = {
-  title: string
-  append?: () => React.ReactNode
-}
+type Props = PropsWithChildren<{
+  title: string;
+  append?: () => React.ReactNode;
+}>;
 
-export const Scaffold: React.FC<Props> = props => {
+export const Scaffold = (props: Props) => {
   return (
     <Fragment>
       <header className="shadow">
@@ -22,5 +22,5 @@ export const Scaffold: React.FC<Props> = props => {
         <section>{props.children}</section>
       </main>
     </Fragment>
-  )
-}
+  );
+};

@@ -1,38 +1,39 @@
-import { Tag } from '~/domain/models/tag'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { SlideOver } from '~/presentation/molecules/SlideOver'
-import { useSet } from '~/presentation/hooks'
-import { TagItemSelect } from './tag-item-select'
+import { Tag } from "~/domain/models/tag";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { useSet } from "~/presentation/hooks";
+import { SlideOver } from "~/presentation/molecules/SlideOver";
+
+import { TagItemSelect } from "./tag-item-select";
 
 type FilterValue = {
-  tags: string[]
-}
+  tags: string[];
+};
 
-export type OnChangeFilter = (value: FilterValue) => void
+export type OnChangeFilter = (value: FilterValue) => void;
 
 type Props = {
-  open: boolean
-  onClose: (value: boolean) => void
-  selected?: string[]
-  tags?: Tag[]
-  onChange?: OnChangeFilter
-}
+  open: boolean;
+  onClose: (value: boolean) => void;
+  selected?: string[];
+  tags?: Tag[];
+  onChange?: OnChangeFilter;
+};
 
-export const FilterForm: React.FC<Props> = props => {
-  const tagsSet = useSet<string>(props.selected)
+export const FilterForm: React.FC<Props> = (props) => {
+  const tagsSet = useSet<string>(props.selected);
 
   const handleSelect = (tagId: string) => {
     if (tagsSet.has(tagId)) {
-      tagsSet.remove(tagId)
+      tagsSet.remove(tagId);
     } else {
-      tagsSet.add(tagId)
+      tagsSet.add(tagId);
     }
-  }
+  };
 
   const handleApply = () => {
-    props.onChange({ tags: tagsSet.values() })
-    props.onClose(false)
-  }
+    props.onChange({ tags: tagsSet.values() });
+    props.onClose(false);
+  };
 
   return (
     <SlideOver value={props.open} onChange={props.onClose} title="Filtros">
@@ -43,7 +44,7 @@ export const FilterForm: React.FC<Props> = props => {
           </p>
 
           <div className="space-x-2 space-y-2">
-            {props.tags?.map(tag => (
+            {props.tags?.map((tag) => (
               <TagItemSelect
                 key={tag.id}
                 value={tagsSet.has(tag.id)}
@@ -60,5 +61,5 @@ export const FilterForm: React.FC<Props> = props => {
         </DefaultButton>
       </div>
     </SlideOver>
-  )
-}
+  );
+};

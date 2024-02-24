@@ -1,54 +1,53 @@
 import {
   EyeIcon,
-  FilterIcon,
   PencilIcon,
   PlusIcon,
-  SearchIcon,
-  TrashIcon
-} from '@heroicons/react/outline'
-import Link from 'next/link'
-import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { Credential } from '~/domain/models/credential'
-import { Folder } from '~/domain/models/folder'
-import { Paginator } from '~/domain/models/paginator'
-import { Tag } from '~/domain/models/tag'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { Pagination } from '~/presentation/molecules/Pagination'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { Credential } from "~/domain/models/credential";
+import { Folder } from "~/domain/models/folder";
+import { Paginator } from "~/domain/models/paginator";
+import { Tag } from "~/domain/models/tag";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { DataCell, HeaderCell } from "~/presentation/atoms/Table";
+import { InputForm } from "~/presentation/molecules/InputForm";
+import { Pagination } from "~/presentation/molecules/Pagination";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
 import {
   FilterForm,
-  OnChangeFilter
-} from '~/presentation/organisms/credentials'
-import { DatePipeOperator } from '~/presentation/pipes'
+  OnChangeFilter,
+} from "~/presentation/organisms/credentials";
+import { DatePipeOperator } from "~/presentation/pipes";
 
 type Props = {
-  credentials: Paginator<Credential>
-  folders: Folder[]
-  tags: Tag[]
+  credentials: Paginator<Credential>;
+  folders: Folder[];
+  tags: Tag[];
   initializeValues: {
-    selectedTags: string[]
-    searchTerm?: string
-  }
-  onDeleteCredential: (id: string) => Promise<void>
-  onSearch: (term?: string) => Promise<void>
-  onChangeTags: (tags: string[]) => Promise<void>
-}
+    selectedTags: string[];
+    searchTerm?: string;
+  };
+  onDeleteCredential: (id: string) => Promise<void>;
+  onSearch: (term?: string) => Promise<void>;
+  onChangeTags: (tags: string[]) => Promise<void>;
+};
 
 type SearchDataForm = {
-  value?: string
-}
+  value?: string;
+};
 
-export type { Props as IndexTemplateProps }
+export type { Props as IndexTemplateProps };
 
-export const IndexTemplate: React.FC<Props> = props => {
-  const { exec: formatDate } = DatePipeOperator.factory()
-  const [filterIsOpen, setFilterIsOpen] = useState(false)
+export const IndexTemplate: React.FC<Props> = (props) => {
+  const { exec: formatDate } = DatePipeOperator.factory();
+  const [filterIsOpen, setFilterIsOpen] = useState(false);
   const searchForm = useForm<SearchDataForm>({
-    defaultValues: { value: props.initializeValues.searchTerm }
-  })
+    defaultValues: { value: props.initializeValues.searchTerm },
+  });
 
   const scaffoldAppend = () => {
     return (
@@ -58,13 +57,13 @@ export const IndexTemplate: React.FC<Props> = props => {
           className="inline-flex border border-transparent py-1.5 px-3"
           onClick={() => setFilterIsOpen(true)}
         >
-          <FilterIcon
+          <EyeIcon
             className="-ml-1 mr-2 h-5 w-5 text-indigo-600"
             aria-hidden="true"
           />
           Filtros
         </DefaultButton>
-        <Link href="/add" passHref>
+        <Link href="/add" passHref legacyBehavior>
           <DefaultButton
             color="blue"
             className="inline-flex border border-transparent py-1.5 px-3"
@@ -78,16 +77,16 @@ export const IndexTemplate: React.FC<Props> = props => {
           </DefaultButton>
         </Link>
       </div>
-    )
-  }
+    );
+  };
 
-  const handleSearch: SubmitHandler<SearchDataForm> = async data => {
-    await props.onSearch(data.value)
-  }
+  const handleSearch: SubmitHandler<SearchDataForm> = async (data) => {
+    await props.onSearch(data.value);
+  };
 
-  const handleChangeFilters: OnChangeFilter = async value => {
-    await props.onChangeTags(value.tags)
-  }
+  const handleChangeFilters: OnChangeFilter = async (value) => {
+    await props.onChangeTags(value.tags);
+  };
 
   return (
     <Scaffold title="Credenciais" append={scaffoldAppend}>
@@ -108,17 +107,14 @@ export const IndexTemplate: React.FC<Props> = props => {
             type="text"
             className="w-full"
             placeholder="Buscar pelo nome, username ou descrição"
-            formRegister={searchForm.register('value')}
+            formRegister={searchForm.register("value")}
           />
           <DefaultButton
             color="purple"
             className="inline-flex border border-transparent px-3 ml-3"
-            attrs={{ type: 'submit' }}
+            attrs={{ type: "submit" }}
           >
-            <SearchIcon
-              className="h-5 w-5 text-purple-600"
-              aria-hidden="true"
-            />
+            <EyeIcon className="h-5 w-5 text-purple-600" aria-hidden="true" />
           </DefaultButton>
         </form>
 
@@ -132,7 +128,7 @@ export const IndexTemplate: React.FC<Props> = props => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {props.credentials.data.map(credential => (
+            {props.credentials.data.map((credential) => (
               <tr key={credential.id}>
                 <DataCell>
                   <div className="flex items-center">
@@ -155,17 +151,18 @@ export const IndexTemplate: React.FC<Props> = props => {
                   <span className="text-sm text-gray-500">
                     {formatDate({
                       value: credential.createdAt,
-                      pattern: "dd/MMM 'de' yyyy 'às' HH:mm"
+                      pattern: "dd/MMM 'de' yyyy 'às' HH:mm",
                     })}
                   </span>
                 </DataCell>
                 <DataCell className="space-x-2">
                   <Link
                     href={{
-                      pathname: '/credentials/[id]/reveal',
-                      query: { id: credential.id }
+                      pathname: "/credentials/[id]/reveal",
+                      query: { id: credential.id },
                     }}
                     passHref
+                    legacyBehavior
                   >
                     <DefaultButton
                       color="yellow"
@@ -180,10 +177,11 @@ export const IndexTemplate: React.FC<Props> = props => {
                   </Link>
                   <Link
                     href={{
-                      pathname: '/credentials/[id]',
-                      query: { id: credential.id }
+                      pathname: "/credentials/[id]",
+                      query: { id: credential.id },
                     }}
                     passHref
+                    legacyBehavior
                   >
                     <DefaultButton
                       color="blue"
@@ -213,7 +211,7 @@ export const IndexTemplate: React.FC<Props> = props => {
         </table>
 
         <div className="sm:hidden min-w-full divide-y space-y-4 divide-gray-200">
-          {props.credentials.data.map(credential => (
+          {props.credentials.data.map((credential) => (
             <div
               key={credential.id}
               className="p-6 bg-white overflow-hidden rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
@@ -228,10 +226,11 @@ export const IndexTemplate: React.FC<Props> = props => {
               <div className="flex space-x-3">
                 <Link
                   href={{
-                    pathname: '/credentials/[id]/reveal',
-                    query: { id: credential.id }
+                    pathname: "/credentials/[id]/reveal",
+                    query: { id: credential.id },
                   }}
                   passHref
+                  legacyBehavior
                 >
                   <DefaultButton
                     color="yellow"
@@ -246,10 +245,11 @@ export const IndexTemplate: React.FC<Props> = props => {
                 </Link>
                 <Link
                   href={{
-                    pathname: '/credentials/[id]',
-                    query: { id: credential.id }
+                    pathname: "/credentials/[id]",
+                    query: { id: credential.id },
                   }}
                   passHref
+                  legacyBehavior
                 >
                   <DefaultButton
                     color="blue"
@@ -280,5 +280,5 @@ export const IndexTemplate: React.FC<Props> = props => {
         <Pagination value={props.credentials.pagination} />
       </div>
     </Scaffold>
-  )
-}
+  );
+};

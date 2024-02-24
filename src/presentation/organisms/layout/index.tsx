@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
-import Head from 'next/head'
-import { NavBar } from './Navbar'
-import { Footer } from './Footer'
+import Head from "next/head";
+import React, { Fragment, PropsWithChildren } from "react";
 
-export const Layout: React.FC = ({ children }) => {
+import { Footer } from "./Footer";
+import { NavBar } from "./Navbar";
+
+export const Layout = (props: PropsWithChildren) => {
   return (
     <Fragment>
       <Head>
@@ -31,13 +32,11 @@ export const Layout: React.FC = ({ children }) => {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <div className="flex flex-col h-screen justify-between">
+      <div className="flex flex-col justify-between h-full">
         <NavBar />
-
-        {children}
-
+        {props.children}
         <Footer />
       </div>
     </Fragment>
-  )
-}
+  );
+};

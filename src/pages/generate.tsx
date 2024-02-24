@@ -1,34 +1,31 @@
-import {
-  ClipboardIcon,
-  LightningBoltIcon,
-  ShieldCheckIcon
-} from '@heroicons/react/outline'
-import { useState } from 'react'
-import { makeApiFetchGenerate } from '~/main/factories/usecases'
-import { FeedbackAlert } from '~/presentation/molecules/Alert'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
-import {
-  TabsModel,
-  ModeItemTab,
-  MemorableForm,
-  StrongForm
-} from '~/presentation/organisms/generate'
+import { ClipboardIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
-const apiFetchGenerate = makeApiFetchGenerate()
+import { makeApiFetchGenerate } from "~/main/factories/usecases";
+import { FeedbackAlert } from "~/presentation/molecules/Alert";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
+import {
+  MemorableForm,
+  ModeItemTab,
+  StrongForm,
+  TabsModel,
+} from "~/presentation/organisms/generate";
+
+const apiFetchGenerate = makeApiFetchGenerate();
 
 const Generate: React.FC = () => {
-  const [showAlert, setShowAlert] = useState(false)
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <Scaffold title="Generate">
       <FeedbackAlert
         data={{
-          title: 'Nova credencial',
-          description: 'Suas credenciais foram salvas e criptografas'
+          title: "Nova credencial",
+          description: "Suas credenciais foram salvas e criptografas",
         }}
         show={showAlert}
         onDismiss={() => {
-          setShowAlert(false)
+          setShowAlert(false);
         }}
       />
       <h4 className="font-semibold text-md mb-2">Gerador de senhas seguras</h4>
@@ -40,11 +37,7 @@ const Generate: React.FC = () => {
         >
           <MemorableForm fetchGenerate={apiFetchGenerate} />
         </ModeItemTab>
-        <ModeItemTab
-          title="Forte"
-          icon={LightningBoltIcon}
-          color="text-yellow-400"
-        >
+        <ModeItemTab title="Forte" icon={ClipboardIcon} color="text-yellow-400">
           <StrongForm fetchGenerate={apiFetchGenerate} />
         </ModeItemTab>
         <ModeItemTab
@@ -56,7 +49,7 @@ const Generate: React.FC = () => {
         </ModeItemTab>
       </TabsModel>
     </Scaffold>
-  )
-}
+  );
+};
 
-export default Generate
+export default Generate;

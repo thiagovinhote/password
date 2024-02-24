@@ -1,25 +1,26 @@
-import { Paginator } from '~/domain/models/paginator'
+import { useRouter } from "next/router";
+import { useMemo } from "react";
+
+import { PlainObject, ReadonlyRequired } from "~/domain/fields/plain-object";
+import { Credential } from "~/domain/models/credential";
+import { Folder } from "~/domain/models/folder";
+import { Paginator } from "~/domain/models/paginator";
+import { Tag } from "~/domain/models/tag";
 import {
   makeApiDeleteCredential,
   makeApiLoadCredentials,
   makeApiLoadFolders,
-  makeApiLoadTags
-} from '~/main/factories/usecases'
+  makeApiLoadTags,
+} from "~/main/factories/usecases";
 import {
   CredentialPaginator,
   QueryStringParser,
-  ssrAuth
-} from '~/presentation/helpers'
+  ssrAuth,
+} from "~/presentation/helpers";
 import {
   IndexTemplate,
-  IndexTemplateProps
-} from '~/presentation/templates/credentials'
-import { useRouter } from 'next/router'
-import { Tag } from '~/domain/models/tag'
-import { PlainObject, ReadonlyRequired } from '~/domain/fields/plain-object'
-import { Folder } from '~/domain/models/folder'
-import { Credential } from '~/domain/models/credential'
-import { useMemo } from 'react'
+  IndexTemplateProps,
+} from "~/presentation/templates/credentials";
 
 // const cryptographyColorByColors: Record<any, any> = {
 //   AES128: 'green',
@@ -30,22 +31,22 @@ import { useMemo } from 'react'
 
 type Props = Omit<
   IndexTemplateProps,
-  | 'onDeleteCredential'
-  | 'onSearch'
-  | 'onChangeTags'
-  | 'credentials'
-  | 'folders'
-  | 'tags'
+  | "onDeleteCredential"
+  | "onSearch"
+  | "onChangeTags"
+  | "credentials"
+  | "folders"
+  | "tags"
 > & {
-  credentials: ReadonlyRequired<Paginator<Credential>>
-  folders: ReadonlyRequired<Folder[]>
-  tags: ReadonlyRequired<Tag[]>
-}
+  credentials: ReadonlyRequired<Paginator<Credential>>;
+  folders: ReadonlyRequired<Folder[]>;
+  tags: ReadonlyRequired<Tag[]>;
+};
 
-const apiDeleteCredential = makeApiDeleteCredential()
+const apiDeleteCredential = makeApiDeleteCredential();
 
 export default function Page(props: Props) {
-  const router = useRouter()
+  const router = useRouter();
 
   const deserialized = useMemo(() => {
     return {
@@ -53,23 +54,26 @@ export default function Page(props: Props) {
       folders: PlainObject.deserializer(Folder.create, props.folders),
       credentials: PlainObject.deserializer(
         CredentialPaginator.create,
-        props.credentials
-      )
-    }
-  }, [props.credentials, props.tags, props.folders])
+        props.credentials,
+      ),
+    };
+  }, [props.credentials, props.tags, props.folders]);
 
-  const handleSearch: IndexTemplateProps['onSearch'] = async term => {
-    await router.push({ query: { search: term } })
-  }
+  const handleSearch: IndexTemplateProps["onSearch"] = async (term) => {
+    await router.push({ query: { search: term } });
+  };
 
-  const handleDeleteCredential: IndexTemplateProps['onDeleteCredential'] = async id => {
-    await apiDeleteCredential.exec({ id })
-    await router.replace({ query: router.query })
-  }
+  const handleDeleteCredential: IndexTemplateProps["onDeleteCredential"] =
+    async (id) => {
+      await apiDeleteCredential.exec({ id });
+      await router.replace({ query: router.query });
+    };
 
-  const handleChangeTags: IndexTemplateProps['onChangeTags'] = async value => {
-    await router.replace({ query: { ...router.query, tags: value } })
-  }
+  const handleChangeTags: IndexTemplateProps["onChangeTags"] = async (
+    value,
+  ) => {
+    await router.replace({ query: { ...router.query, tags: value } });
+  };
 
   return (
     <IndexTemplate
@@ -81,39 +85,39 @@ export default function Page(props: Props) {
       onDeleteCredential={handleDeleteCredential}
       onSearch={handleSearch}
     />
-  )
+  );
 }
 
 type QueryString = {
-  search: string
-  page: string
-  tags: string | string[]
-}
+  search: string;
+  page: string;
+  tags: string | string[];
+};
 
-export const getServerSideProps = ssrAuth<Props>(async context => {
-  const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies)
-  const apiLoadFolders = makeApiLoadFolders(context.req.cookies)
-  const apiLoadTags = makeApiLoadTags(context.req.cookies)
-  const query = context.query as QueryString
-  const tagsQuery = QueryStringParser.array<string[]>(query.tags, [])
+export const getServerSideProps = ssrAuth<Props>(async (context) => {
+  const apiLoadCredentials = makeApiLoadCredentials(context.req.cookies);
+  const apiLoadFolders = makeApiLoadFolders(context.req.cookies);
+  const apiLoadTags = makeApiLoadTags(context.req.cookies);
+  const query = context.query as QueryString;
+  const tagsQuery = QueryStringParser.array<string[]>(query.tags, []);
 
   const [credentialsResult, foldersResult, tagsResult] = await Promise.all([
     apiLoadCredentials.exec({
       page: Number(query.page),
       search: query.search,
-      tags: tagsQuery
+      tags: tagsQuery,
     }),
     apiLoadFolders.exec(),
-    apiLoadTags.exec({ limit: 1000 })
-  ])
+    apiLoadTags.exec({ limit: 1000 }),
+  ]);
 
   const credentials = credentialsResult.isRight()
     ? credentialsResult.value
-    : null
-  const folders = foldersResult.isRight() ? foldersResult.value : []
+    : null;
+  const folders = foldersResult.isRight() ? foldersResult.value : [];
   const tags = tagsResult.isRight()
     ? tagsResult.value
-    : Paginator.create<Tag>({ data: [], pagination: null })
+    : Paginator.create<Tag>({ data: [], pagination: null });
 
   return {
     props: {
@@ -122,8 +126,8 @@ export const getServerSideProps = ssrAuth<Props>(async context => {
       tags: PlainObject.serializer(tags.data),
       initializeValues: {
         selectedTags: tagsQuery,
-        searchTerm: query.search ?? null
-      }
-    }
-  }
-})
+        searchTerm: query.search ?? null,
+      },
+    },
+  };
+});

@@ -1,49 +1,50 @@
-import React, { Fragment, useState } from 'react'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
+import { CogIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { Fragment, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { makeApiCreateCredential } from "~/main/factories/usecases";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { FeedbackAlert } from "~/presentation/molecules/Alert";
+import { InputForm } from "~/presentation/molecules/InputForm";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
+import { TextAreaForm } from "~/presentation/molecules/TextAreaForm";
 import {
   ListCryptography,
-  ListCryptographyProvider
-} from '~/presentation/organisms/add'
-import Link from 'next/link'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { FeedbackAlert } from '~/presentation/molecules/Alert'
-import { CheckIcon } from '@heroicons/react/solid'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { makeApiCreateCredential } from '~/main/factories/usecases'
-import { useRouter } from 'next/router'
-import { TextAreaForm } from '~/presentation/molecules/TextAreaForm'
-import { ArrowLeftIcon } from '@heroicons/react/outline'
+  ListCryptographyProvider,
+} from "~/presentation/organisms/add";
 
 type CredentialFormData = {
-  name: string
-  username: string
-  password: string
-  description?: string
-}
+  name: string;
+  username: string;
+  password: string;
+  description?: string;
+};
 
-const apiCreateCredential = makeApiCreateCredential()
+const apiCreateCredential = makeApiCreateCredential();
 
 const Add: React.FC = () => {
-  const router = useRouter()
-  const { register, handleSubmit } = useForm<CredentialFormData>()
-  const [showAlert, setShowAlert] = useState(false)
-  const [, setCryptography] = useState(undefined)
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<CredentialFormData>();
+  const [showAlert, setShowAlert] = useState(false);
+  const [, setCryptography] = useState(undefined);
 
-  const handleSave: SubmitHandler<CredentialFormData> = async data => {
+  const handleSave: SubmitHandler<CredentialFormData> = async (data) => {
     await apiCreateCredential.exec({
       ...data,
-      folderId: (router.query.folder_id as string) ?? ''
-    })
+      folderId: (router.query.folder_id as string) ?? "",
+    });
 
-    setShowAlert(!showAlert)
-  }
+    setShowAlert(!showAlert);
+  };
 
   const scaffoldAppend = () => {
     return (
       <Fragment>
         <span className="sm:ml-3">
-          <Link href={{ pathname: '/credentials' }} passHref>
+          <Link href={{ pathname: "/credentials" }} passHref legacyBehavior>
             <DefaultButton
               tag="a"
               color="gray"
@@ -58,21 +59,21 @@ const Add: React.FC = () => {
           </Link>
         </span>
       </Fragment>
-    )
-  }
+    );
+  };
 
   return (
     <Scaffold title="Adicionar senha" append={scaffoldAppend}>
       <FeedbackAlert
         data={{
-          title: 'Nova credencial',
-          description: 'Suas credenciais foram salvas e criptografas',
-          icon: CheckIcon,
-          color: 'green'
+          title: "Nova credencial",
+          description: "Suas credenciais foram salvas e criptografas",
+          icon: CogIcon,
+          color: "green",
         }}
         show={showAlert}
         onDismiss={() => {
-          router.push('/credentials')
+          router.push("/credentials");
         }}
       />
 
@@ -95,31 +96,31 @@ const Add: React.FC = () => {
               label="Nome"
               placeholder="Dê uma nome para as suas credenciais"
               type="text"
-              formRegister={register('name')}
+              formRegister={register("name")}
             />
             <hr />
             <InputForm
               label="Email / Username"
               placeholder="Informe sua conta"
               type="text"
-              formRegister={register('username')}
+              formRegister={register("username")}
             />
             <InputForm
               label="Senha"
               placeholder="Digite sua senha"
               type="password"
-              formRegister={register('password')}
+              formRegister={register("password")}
             />
             <TextAreaForm
               label="Descrição"
               placeholder="Informações extras sobre a credencial"
-              formRegister={register('description')}
+              formRegister={register("description")}
               rows={2}
             />
             <DefaultButton
               className="w-2/6"
               color="green"
-              attrs={{ type: 'submit' }}
+              attrs={{ type: "submit" }}
             >
               Salvar
             </DefaultButton>
@@ -127,7 +128,7 @@ const Add: React.FC = () => {
         </div>
       </div>
     </Scaffold>
-  )
-}
+  );
+};
 
-export default Add
+export default Add;

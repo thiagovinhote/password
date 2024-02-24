@@ -1,19 +1,25 @@
-import React, { Fragment } from 'react'
-import Link from 'next/link'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import {
+  BellIcon,
+  EllipsisVerticalIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+import React, { Fragment } from "react";
 
-import { ReactComponent as LogoSvg } from '../../../assets/images/padlock.svg'
-import { NavBarLink } from './NavBarLink'
-import { useAuth } from '~/presentation/hooks'
+import { useAuth } from "~/presentation/hooks";
+
+import LogoSvg from "../../../assets/images/padlock.svg";
+import { NavBarLink } from "./NavBarLink";
 
 const profile = [
-  { name: 'Seu perfil', href: '/profile' },
-  { name: 'Sair', href: '/auth/logout' }
-]
+  { name: "Seu perfil", href: "/profile" },
+  { name: "Sair", href: "/auth/logout" },
+];
 
 export const NavBar: React.FC = () => {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -23,7 +29,7 @@ export const NavBar: React.FC = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <LogoSvg className="h-8 w-8" />
+                  <Image src={LogoSvg} className="h-8 w-8" />
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -49,7 +55,7 @@ export const NavBar: React.FC = () => {
                             <span className="sr-only">Open user menu</span>
                             <div className="group relative text-right">
                               <span className="-m-2 px-2 py-1 block text-white">
-                                {user?.name ?? 'Faça o login'}
+                                {user?.name ?? "Faça o login"}
                               </span>
                               <span className="-m-2 px-2 py-1 block font-medium text-white">
                                 {user?.email}
@@ -78,12 +84,12 @@ export const NavBar: React.FC = () => {
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           >
-                            {profile.map(item => (
+                            {profile.map((item) => (
                               <Menu.Item key={item.href}>
                                 <Link href={item.href} passHref>
                                   <a
                                     className={
-                                      'hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700'
+                                      "hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
                                     }
                                   >
                                     {item.name}
@@ -106,9 +112,12 @@ export const NavBar: React.FC = () => {
                 <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XCircleIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    <EllipsisVerticalIcon
+                      className="block h-6 w-6"
+                      aria-hidden="true"
+                    />
                   )}
                 </Disclosure.Button>
               </div>
@@ -138,7 +147,7 @@ export const NavBar: React.FC = () => {
                 )}
                 <div>
                   <div className="text-base font-medium leading-none text-white">
-                    {user?.name ?? 'Faça o login'}
+                    {user?.name ?? "Faça o login"}
                   </div>
                   <div className="text-sm font-medium leading-none text-gray-400">
                     {user?.email}
@@ -150,7 +159,7 @@ export const NavBar: React.FC = () => {
                 </button>
               </div>
               <div className="mt-3 px-2 space-y-1">
-                {profile.map(item => (
+                {profile.map((item) => (
                   <Link key={item.href} href={item.href} passHref>
                     <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
                       {item.name}
@@ -163,5 +172,5 @@ export const NavBar: React.FC = () => {
         </>
       )}
     </Disclosure>
-  )
-}
+  );
+};
