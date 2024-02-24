@@ -36,7 +36,7 @@ const Login: React.FC<Props> = (props) => {
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <Image src={LogoSvg} className="mx-auto h-12 w-auto" />
+          <Image src={LogoSvg} className="mx-auto h-12 w-auto" alt="logo" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Entrar com sua conta
           </h2>
