@@ -2,8 +2,9 @@ import "~/assets/styles/globals.css";
 
 import { PropsWithChildren } from "react";
 
-import { MainNav } from "~/app/_components/main-nav";
-import { UserNav } from "~/app/_components/user-nav";
+import MainNav from "~/app/_components/main-nav";
+import SwitchThemeButton from "~/app/_components/switch-theme-button";
+import UserButtonMenu from "~/app/_components/user-button-menu";
 import { ThemeProvider } from "~/presentation/providers/theme-provider";
 
 export const metadata = {
@@ -20,7 +21,8 @@ export default function RootLayout(props: PropsWithChildren) {
             <div className="flex h-16 items-center px-4">
               <MainNav className="mx-6" />
               <div className="ml-auto flex items-center space-x-4">
-                <UserNav />
+                <SwitchThemeButton />
+                <UserButtonMenu />
               </div>
             </div>
           </div>

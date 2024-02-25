@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import * as React from "react";
 import { HTMLAttributes } from "react";
 
-import { NavLink } from "~/app/_components/nav-link";
+import NavLink from "~/app/_components/nav-link";
 import { cn } from "~/presentation/utils";
 
-export function MainNav(props: HTMLAttributes<HTMLElement>) {
+export default function MainNav(props: HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
 
   return (

@@ -24,16 +24,16 @@ export interface NavLinkProps
     LinkProps,
     VariantProps<typeof navLinkVariants> {}
 
-export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
-  (props, ref) => {
-    const { className, variant, ...restProps } = props;
-    return (
-      <Link
-        className={cn(navLinkVariants({ variant }), className)}
-        ref={ref}
-        {...restProps}
-      />
-    );
-  },
-);
+const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>((props, ref) => {
+  const { className, variant, ...restProps } = props;
+  return (
+    <Link
+      className={cn(navLinkVariants({ variant }), className)}
+      ref={ref}
+      {...restProps}
+    />
+  );
+});
 NavLink.displayName = "NavLink";
+
+export default NavLink;
