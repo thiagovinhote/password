@@ -9,3 +9,5 @@ export const credentials = pgTable("credentials", {
   createdAt: timestamp("created_at", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }),
 });
+
+export type Credential = typeof credentials.$inferSelect;
