@@ -4,52 +4,44 @@ import { formatDate } from "date-fns/format";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { CopyIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
+import deleteCredentialRepo from "~/app/credentials/[id]/_presentation/delete-credential-repo";
 import { Credential } from "~/infra/database/schema";
 import { Button } from "~/presentation/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/presentation/ui/card";
 import { Input } from "~/presentation/ui/input";
 import { Label } from "~/presentation/ui/label";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "~/presentation/ui/sheet";
 
-interface RevealSheetProps {
+import DeleteConfirmation from "./delete-confirmation";
+
+interface RevealCredentialProps {
   credential: Credential;
 }
 
-export default function RevealSheet(props: RevealSheetProps) {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setOpen(true);
-  }, []);
-
+export default function RevealCredential(props: RevealCredentialProps) {
   return (
-    <Sheet
-      open={open}
-      onOpenChange={(value) => {
-        if (!value) router.back();
-      }}
-    >
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>{props.credential.name}</SheetTitle>
-          <SheetDescription>
-            Criada em{" "}
-            {props.credential.createdAt &&
-              formatDate(props.credential.createdAt, "dd MMM yyyy HH:mm", {
-                locale: ptBR,
-              })}
-          </SheetDescription>
-          <SheetDescription>{props.credential.description}</SheetDescription>
-        </SheetHeader>
+    <Card>
+      <CardHeader>
+        <CardTitle>{props.credential.name}</CardTitle>
+        <CardDescription>
+          Criada em
+          {props.credential.createdAt &&
+            formatDate(props.credential.createdAt, "dd MMM yyyy HH:mm", {
+              locale: ptBR,
+            })}
+        </CardDescription>
+        <CardDescription>{props.credential.description}</CardDescription>
+      </CardHeader>
 
+      <CardContent>
         <div className="space-y-4 mt-4">
           <div className="space-y-2">
             <Label htmlFor="username">Username / E-mail</Label>
@@ -81,7 +73,11 @@ export default function RevealSheet(props: RevealSheetProps) {
             </div>
           </div>
         </div>
-      </SheetContent>
-    </Sheet>
+
+        <div className="mt-8">
+          <DeleteConfirmation id={props.credential.id} />
+        </div>
+      </CardContent>
+    </Card>
   );
 }

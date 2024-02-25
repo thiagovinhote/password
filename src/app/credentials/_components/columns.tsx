@@ -5,7 +5,6 @@ import { formatDate } from "date-fns/format";
 import { ptBR } from "date-fns/locale/pt-BR";
 import Link from "next/link";
 
-import CredentialActions from "~/app/credentials/_components/credential-actions";
 import { Credential } from "~/infra/database/schema";
 
 const columns: ColumnDef<Credential>[] = [
@@ -42,12 +41,6 @@ const columns: ColumnDef<Credential>[] = [
       return (
         <span>{formatDate(value, "dd MMM yyyy HH:mm", { locale: ptBR })}</span>
       );
-    },
-  },
-  {
-    id: "actions",
-    cell: (info) => {
-      return <CredentialActions credential={info.row.original} />;
     },
   },
 ];
