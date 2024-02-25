@@ -1,5 +1,6 @@
 import columns from "~/app/credentials/_components/columns";
 import DataTable from "~/app/credentials/_components/data-table";
+import DataTableToolbar from "~/app/credentials/_components/data-table-toolbar";
 import { Button } from "~/presentation/ui/button";
 
 import allCredentialsRepo from "./_presentation/all-credentials-repo";
@@ -16,6 +17,7 @@ export default async function CredentialsPage(props: { searchParams: any }) {
         </div>
       </div>
 
+      <DataTableToolbar />
       <DataTable
         columns={columns}
         data={credentials}
