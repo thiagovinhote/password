@@ -4,8 +4,8 @@ import { Button } from "~/presentation/ui/button";
 
 import allCredentialsRepo from "./_presentation/all-credentials-repo";
 
-export default async function CredentialsPage() {
-  const credentials = await allCredentialsRepo();
+export default async function CredentialsPage(props: { searchParams: any }) {
+  const credentials = await allCredentialsRepo(props.searchParams);
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -21,6 +21,7 @@ export default async function CredentialsPage() {
         data={credentials}
         count={credentials.length}
         pagination={{ pageSize: 10, pageIndex: 0 }}
+        orderBy={props.searchParams.orderBy}
       />
     </div>
   );
