@@ -1,6 +1,6 @@
 "use server";
 
-import { asc, desc, ilike } from "drizzle-orm";
+import { asc, count, desc, ilike } from "drizzle-orm";
 import { z } from "zod";
 
 import db from "~/infra/database/drizzle";
@@ -32,10 +32,19 @@ export default async function allCredentialsRepo(
   const safeInput = AllCredentialsInput.parse(input);
   const skip = (safeInput.page - 1) * safeInput.perPage;
 
-  return db.query.credentials.findMany({
-    where: safeInput.search,
-    offset: skip,
-    limit: safeInput.perPage,
-    orderBy: safeInput.orderBy,
-  });
+  const [records, [{ total }]] = await Promise.all([
+    db.query.credentials.findMany({
+      where: safeInput.search,
+      offset: skip,
+      limit: safeInput.perPage,
+      orderBy: safeInput.orderBy,
+    }),
+    db
+      .select({ total: count(credentials.id) })
+      .from(credentials)
+      .where(safeInput.search)
+      .limit(1),
+  ]);
+
+  return { records, total, page: safeInput.page, perPage: safeInput.perPage };
 }

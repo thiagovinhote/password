@@ -26,7 +26,7 @@ export default function DataTablePagination<TData>(
   return (
     <div className="flex items-center justify-between border-t px-4 py-3 sm:px-6">
       <div className="flex-1 text-sm text-muted-foreground">
-        Total: {props.count}
+        {props.count} no total
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">

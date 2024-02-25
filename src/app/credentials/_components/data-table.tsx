@@ -5,15 +5,13 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useRouter } from "next/navigation";
-import qs from "query-string";
 import { useMemo } from "react";
 
 import DataTableColumnHeader from "~/app/credentials/_components/data-table-column-header";
 import ColumnSortParser from "~/presentation/helpers/column-sort-parser";
+import useQueryPush from "~/presentation/hooks/use-query-push";
 import {
   Table,
   TableBody,
@@ -29,54 +27,51 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   count: number;
-  pagination: PaginationState;
+  pagination: { page: number; perPage: number };
   orderBy?: string[];
 }
 
 export default function DataTable<TData, TValue>(
   props: DataTableProps<TData, TValue>,
 ) {
-  const router = useRouter();
+  const queryPush = useQueryPush();
   const sorting = useMemo(
     () => ColumnSortParser.deserialize(props.orderBy),
     [props.orderBy],
+  );
+  const pagination = useMemo(
+    () => ({
+      pageIndex: props.pagination.page - 1,
+      pageSize: props.pagination.perPage,
+    }),
+    [props.pagination],
   );
 
   const table = useReactTable({
     data: props.data,
     columns: props.columns,
-    pageCount: Math.ceil(props.count / props.pagination.pageSize),
+    pageCount: Math.ceil(props.count / props.pagination.perPage),
     getCoreRowModel: getCoreRowModel(),
     onPaginationChange: (updaterOrValue) => {
       if (updaterOrValue instanceof Function) {
-        const nextPagination = updaterOrValue(props.pagination);
-        const url = qs.stringifyUrl(
-          {
-            url: window.location.href,
-            query: { ...nextPagination },
-          },
-          { skipEmptyString: true, skipNull: true },
-        );
-
-        router.push(url);
+        const nextPagination = updaterOrValue(pagination);
+        queryPush({
+          page: nextPagination.pageIndex + 1,
+          perPage: nextPagination.pageSize,
+        });
       }
     },
     getSortedRowModel: getSortedRowModel(),
-    onSortingChange: (value) => {
-      if (typeof value === "function") {
-        const orderBy = ColumnSortParser.serialize(value(sorting));
-        const url = qs.stringifyUrl(
-          {
-            url: window.location.href,
-            query: { orderBy },
-          },
-          { skipEmptyString: true, skipNull: true },
-        );
-
-        router.push(url);
+    onSortingChange: (updaterOrValue) => {
+      if (updaterOrValue instanceof Function) {
+        const orderBy = ColumnSortParser.serialize(updaterOrValue(sorting));
+        queryPush({ orderBy });
       }
     },
-    state: { pagination: props.pagination, sorting },
+    state: {
+      pagination,
+      sorting,
+    },
     manualPagination: true,
     manualSorting: true,
   });

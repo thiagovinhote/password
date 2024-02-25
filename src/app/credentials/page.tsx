@@ -6,7 +6,9 @@ import DataTableToolbar from "~/app/credentials/_components/data-table-toolbar";
 import allCredentialsRepo from "./_presentation/all-credentials-repo";
 
 export default async function CredentialsPage(props: { searchParams: any }) {
-  const credentials = await allCredentialsRepo(props.searchParams);
+  const { records, total, page, perPage } = await allCredentialsRepo(
+    props.searchParams,
+  );
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -20,9 +22,9 @@ export default async function CredentialsPage(props: { searchParams: any }) {
       <DataTableToolbar />
       <DataTable
         columns={columns}
-        data={credentials}
-        count={credentials.length}
-        pagination={{ pageSize: 10, pageIndex: 0 }}
+        data={records}
+        count={total}
+        pagination={{ page, perPage }}
         orderBy={props.searchParams.orderBy}
       />
     </div>
