@@ -15,6 +15,11 @@ const columns: ColumnDef<Credential>[] = [
   {
     accessorKey: "description",
     header: "Descrição",
+    cell: (info) => {
+      return (
+        <span className="line-clamp-1 max-w-sm">{info.getValue<string>()}</span>
+      );
+    },
   },
   {
     accessorKey: "createdAt",

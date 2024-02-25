@@ -14,8 +14,8 @@ const AllCredentialsInput = z.object({
       if (!arg) return undefined;
       return ilike(credentials.name, `%${arg}%`);
     }),
-  page: z.number().optional().default(1),
-  perPage: z.number().optional().default(10),
+  page: z.coerce.number().optional().default(1),
+  perPage: z.coerce.number().optional().default(10),
   orderBy: z
     .string()
     .nullish()

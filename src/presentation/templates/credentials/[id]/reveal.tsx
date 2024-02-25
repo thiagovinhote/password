@@ -1,28 +1,28 @@
-import { ArrowLeftIcon } from '@heroicons/react/outline'
-import Link from 'next/link'
-import { Password } from '~/domain/models/password'
-import { Credential } from '~/domain/models/credential'
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { Fragment } from "react";
 
-import { Scaffold } from '~/presentation/molecules/Scaffold'
-import { DatePipeOperator } from '~/presentation/pipes'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { Fragment } from 'react'
+import { Credential } from "~/domain/models/credential";
+import { Password } from "~/domain/models/password";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
+import { DatePipeOperator } from "~/presentation/pipes";
 
 export type Props = {
-  password: Password
-  credential: Credential
-}
+  password: Password;
+  credential: Credential;
+};
 
-export type { Props as RevealTemplateProps }
+export type { Props as RevealTemplateProps };
 
-export const RevealTemplate: React.FC<Props> = props => {
-  const { exec: formatDate } = DatePipeOperator.factory()
+export const RevealTemplate: React.FC<Props> = (props) => {
+  const { exec: formatDate } = DatePipeOperator.factory();
 
   const scaffoldAppend = () => {
     return (
       <Fragment>
         <span className="sm:ml-3">
-          <Link href={{ pathname: '/credentials' }} passHref>
+          <Link href={{ pathname: "/credentials" }} passHref legacyBehavior>
             <DefaultButton
               tag="a"
               color="gray"
@@ -37,8 +37,8 @@ export const RevealTemplate: React.FC<Props> = props => {
           </Link>
         </span>
       </Fragment>
-    )
-  }
+    );
+  };
 
   return (
     <Scaffold title="Credencial" append={scaffoldAppend}>
@@ -70,7 +70,7 @@ export const RevealTemplate: React.FC<Props> = props => {
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {formatDate({
                   value: props.credential.createdAt,
-                  pattern: "dd/MMM 'de' yyyy 'às' HH:mm"
+                  pattern: "dd/MMM 'de' yyyy 'às' HH:mm",
                 })}
               </dd>
             </div>
@@ -82,7 +82,7 @@ export const RevealTemplate: React.FC<Props> = props => {
                     role="list"
                     className="border border-gray-200 rounded-md divide-y divide-gray-200"
                   >
-                    {props.credential.folders.map(folder => {
+                    {props.credential.folders.map((folder) => {
                       return (
                         <li
                           className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
@@ -94,7 +94,7 @@ export const RevealTemplate: React.FC<Props> = props => {
                             </span>
                           </div>
                         </li>
-                      )
+                      );
                     })}
                   </ul>
                 </dd>
@@ -104,7 +104,7 @@ export const RevealTemplate: React.FC<Props> = props => {
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">Tags</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 space-x-2">
-                  {props.credential.tags.map(tag => {
+                  {props.credential.tags.map((tag) => {
                     return (
                       <div
                         className="py-0.5 px-3 rounded text-white inline-block"
@@ -113,7 +113,7 @@ export const RevealTemplate: React.FC<Props> = props => {
                       >
                         {tag.label}
                       </div>
-                    )
+                    );
                   })}
                 </dd>
               </div>
@@ -122,5 +122,5 @@ export const RevealTemplate: React.FC<Props> = props => {
         </div>
       </div>
     </Scaffold>
-  )
-}
+  );
+};
