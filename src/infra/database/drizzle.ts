@@ -6,7 +6,7 @@ import * as schema from "./schema";
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
 });
-await client.connect();
+client.connect().then();
 
 const db = drizzle(client, { schema });
 

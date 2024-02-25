@@ -1,3 +1,5 @@
+"use server";
+
 import { asc, desc, ilike } from "drizzle-orm";
 import { z } from "zod";
 
