@@ -1,11 +1,27 @@
 import crypto from "crypto";
-import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom().$defaultFn(crypto.randomUUID),
-  name: varchar("name", { length: 256 }).notNull(),
-  email: varchar("name", { length: 256 }).notNull(),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: uuid("id").primaryKey().defaultRandom().$defaultFn(crypto.randomUUID),
+    name: varchar("name", { length: 256 }).notNull(),
+    email: varchar("email", { length: 256 }).notNull(),
+    kindeId: varchar("kinde_id", { length: 256 }).unique(),
+  },
+  (table) => {
+    return {
+      kindeIdIdx: uniqueIndex("kind_id_idx").on(table.kindeId),
+    };
+  },
+);
 
 export const credentials = pgTable("credentials", {
   id: uuid("id").primaryKey().defaultRandom().$defaultFn(crypto.randomUUID),
