@@ -1,5 +1,5 @@
 const ProfileSettings: React.FC = () => {
-  return <div>Profile Settings</div>
-}
+  return <div>Profile Settings</div>;
+};
 
-export default ProfileSettings
+export default ProfileSettings;

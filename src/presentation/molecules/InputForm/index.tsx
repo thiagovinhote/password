@@ -1,30 +1,31 @@
-import React from 'react'
-import { UseFormRegisterReturn } from 'react-hook-form'
-import { classNames } from '~/presentation/helpers'
+import React from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
+
+import { classNames } from "~/presentation/helpers";
 
 type Props = {
-  label?: string
-  placeholder?: string
-  type: string
-  name?: string
-  autoComplete?: string
-  readOnly?: true
-  required?: true
-  formRegister?: UseFormRegisterReturn
-  className?: string
-  error?: string
-}
+  label?: string;
+  placeholder?: string;
+  type: string;
+  name?: string;
+  autoComplete?: string;
+  readOnly?: true;
+  required?: true;
+  formRegister?: UseFormRegisterReturn;
+  className?: string;
+  error?: string;
+};
 
-export const InputForm: React.FC<Props> = props => {
+export const InputForm: React.FC<Props> = (props) => {
   const inputClasses = classNames(
     props.readOnly
-      ? 'bg-gray-50 focus:border-gray-100 focus:ring-gray-100'
-      : 'focus:border-blue-400 focus:ring-blue-400',
-    'focus:ring-1  focus:outline-none w-full font-light text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 px-4'
-  )
+      ? "bg-gray-50 focus:border-gray-100 focus:ring-gray-100"
+      : "focus:border-blue-400 focus:ring-blue-400",
+    "focus:ring-1  focus:outline-none w-full font-light text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 px-4",
+  );
 
   return (
-    <div className={classNames('text-gray-800', props.className)}>
+    <div className={classNames("text-gray-800", props.className)}>
       {(props.label || props.error) && (
         <div className="grid grid-cols-2 mb-1">
           {props.label && (
@@ -51,5 +52,5 @@ export const InputForm: React.FC<Props> = props => {
         readOnly={props.readOnly}
       />
     </div>
-  )
-}
+  );
+};

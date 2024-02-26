@@ -1,16 +1,17 @@
-import { ElementType } from 'react'
-import { useAuth } from '../hooks'
+import { ElementType } from "react";
+
+import { useAuth } from "../hooks";
 
 export const withAuth = (Component: ElementType) => {
   const Wrapper = (props: any) => {
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated } = useAuth();
 
     if (!isAuthenticated) {
-      return null
+      return null;
     }
 
-    return <Component {...props} />
-  }
+    return <Component {...props} />;
+  };
 
-  return Wrapper
-}
+  return Wrapper;
+};

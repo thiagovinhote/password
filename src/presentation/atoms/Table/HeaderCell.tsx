@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { PropsWithChildren } from "react";
 
-export const HeaderCell: React.FC = props => {
+export const HeaderCell = (props: PropsWithChildren) => {
   return (
     <th
       scope="col"
@@ -8,5 +8,5 @@ export const HeaderCell: React.FC = props => {
     >
       {props.children}
     </th>
-  )
-}
+  );
+};

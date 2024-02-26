@@ -1,15 +1,17 @@
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/outline'
-import React, { Fragment } from 'react'
-import { classNames } from '~/presentation/helpers'
-import { DefaultButton } from '../../atoms/DefaultButton'
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/outline";
+import React, { Fragment } from "react";
+
+import { classNames } from "~/presentation/helpers";
+
+import { DefaultButton } from "../../atoms/DefaultButton";
 
 type Props = {
-  label: string
-  options: string[]
-}
+  label: string;
+  options: string[];
+};
 
-export const Dropdown: React.FC<Props> = props => {
+export const Dropdown: React.FC<Props> = (props) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -39,8 +41,8 @@ export const Dropdown: React.FC<Props> = props => {
                 <a
                   href="#"
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm",
                   )}
                 >
                   Account settings
@@ -52,8 +54,8 @@ export const Dropdown: React.FC<Props> = props => {
                 <a
                   href="#"
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm",
                   )}
                 >
                   Support
@@ -65,8 +67,8 @@ export const Dropdown: React.FC<Props> = props => {
                 <a
                   href="#"
                   className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm",
                   )}
                 >
                   License
@@ -79,8 +81,8 @@ export const Dropdown: React.FC<Props> = props => {
                   <button
                     type="submit"
                     className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full text-left px-4 py-2 text-sm'
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block w-full text-left px-4 py-2 text-sm",
                     )}
                   >
                     Sign out
@@ -92,5 +94,5 @@ export const Dropdown: React.FC<Props> = props => {
         </Menu.Items>
       </Transition>
     </Menu>
-  )
-}
+  );
+};

@@ -1,107 +1,108 @@
-import { ArrowLeftIcon, EyeIcon, PlusIcon } from '@heroicons/react/outline'
-import Link from 'next/link'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
-import { DatePipeOperator } from '~/presentation/pipes'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { Fragment } from 'react'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { TextAreaForm } from '~/presentation/molecules/TextAreaForm'
-import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
-import { Paginator } from '~/domain/models/paginator'
-import { Tag } from '~/domain/models/tag'
-import { Toggle } from '~/presentation/molecules/Toggle'
-import { useSet } from '~/presentation/hooks'
-import { Credential } from '~/domain/models/credential'
+import { ArrowLeftIcon, EyeIcon, PlusIcon } from "@heroicons/react/outline";
+import Link from "next/link";
+import { Fragment } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { Credential } from "~/domain/models/credential";
+import { Paginator } from "~/domain/models/paginator";
+import { Tag } from "~/domain/models/tag";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { DataCell, HeaderCell } from "~/presentation/atoms/Table";
+import { useSet } from "~/presentation/hooks";
+import { InputForm } from "~/presentation/molecules/InputForm";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
+import { TextAreaForm } from "~/presentation/molecules/TextAreaForm";
+import { Toggle } from "~/presentation/molecules/Toggle";
+import { DatePipeOperator } from "~/presentation/pipes";
 
 type Props = {
-  credential: Credential
-  tags: Paginator<Tag>
+  credential: Credential;
+  tags: Paginator<Tag>;
   onUpdateCredential: (
     id: string,
-    data: AccountFormData | DetailsFormData
-  ) => Promise<boolean>
-  onLoadTags: (term: string) => Promise<void>
-  onCreateTag: (data: TagsFormData) => Promise<Tag>
-  onAssociateTag: (credentialId: string, tagId: string) => Promise<void>
-  onDisassociateTag: (credentialId: string, tagId: string) => Promise<void>
-}
+    data: AccountFormData | DetailsFormData,
+  ) => Promise<boolean>;
+  onLoadTags: (term: string) => Promise<void>;
+  onCreateTag: (data: TagsFormData) => Promise<Tag>;
+  onAssociateTag: (credentialId: string, tagId: string) => Promise<void>;
+  onDisassociateTag: (credentialId: string, tagId: string) => Promise<void>;
+};
 
 type AccountFormData = {
-  username: string
-  password: string
-}
+  username: string;
+  password: string;
+};
 
 type DetailsFormData = {
-  name: string
-  description?: string
-}
+  name: string;
+  description?: string;
+};
 
 type TagsFormData = {
-  value: string
-  color?: string
-}
+  value: string;
+  color?: string;
+};
 
-export type { Props as ShowTemplateProps }
+export type { Props as ShowTemplateProps };
 
-export const ShowTemplate: React.FC<Props> = props => {
-  const { exec: formatDate } = DatePipeOperator.factory()
+export const ShowTemplate: React.FC<Props> = (props) => {
+  const { exec: formatDate } = DatePipeOperator.factory();
   const accountForm = useForm<AccountFormData>({
     defaultValues: {
       username: props.credential.username,
-      password: props.credential.username
-    }
-  })
+      password: props.credential.username,
+    },
+  });
   const detailsForm = useForm<DetailsFormData>({
     defaultValues: {
       name: props.credential.name,
-      description: props.credential.description
-    }
-  })
-  const tagsForm = useForm<TagsFormData>()
-  const selectedTags = useSet(props.credential.tags.map(tag => tag.id))
+      description: props.credential.description,
+    },
+  });
+  const tagsForm = useForm<TagsFormData>();
+  const selectedTags = useSet(props.credential.tags.map((tag) => tag.id));
 
-  const handleSaveAccount: SubmitHandler<AccountFormData> = async data => {
-    const result = await props.onUpdateCredential(props.credential.id, data)
-
-    if (result) {
-      alert('Dados salvos com sucesso!')
-    }
-  }
-
-  const handleSaveDetails: SubmitHandler<DetailsFormData> = async data => {
-    const result = await props.onUpdateCredential(props.credential.id, data)
+  const handleSaveAccount: SubmitHandler<AccountFormData> = async (data) => {
+    const result = await props.onUpdateCredential(props.credential.id, data);
 
     if (result) {
-      alert('Dados salvos com sucesso!')
+      alert("Dados salvos com sucesso!");
     }
-  }
+  };
 
-  const handleSearchTags: SubmitHandler<TagsFormData> = async data => {
-    await props.onLoadTags(data.value)
-  }
-
-  const handleSaveTag: SubmitHandler<TagsFormData> = async data => {
-    const result = await props.onCreateTag(data)
+  const handleSaveDetails: SubmitHandler<DetailsFormData> = async (data) => {
+    const result = await props.onUpdateCredential(props.credential.id, data);
 
     if (result) {
-      tagsForm.reset({ color: '#000000' })
+      alert("Dados salvos com sucesso!");
+    }
+  };
+
+  const handleSearchTags: SubmitHandler<TagsFormData> = async (data) => {
+    await props.onLoadTags(data.value);
+  };
+
+  const handleSaveTag: SubmitHandler<TagsFormData> = async (data) => {
+    const result = await props.onCreateTag(data);
+
+    if (result) {
+      tagsForm.reset({ color: "#000000" });
       await Promise.all([
         handleChangeToggle(result.id),
-        handleSearchTags({ value: '' })
-      ])
+        handleSearchTags({ value: "" }),
+      ]);
     }
-  }
+  };
 
   const handleChangeToggle = async (tagId: string) => {
     if (!selectedTags.has(tagId)) {
-      await props.onAssociateTag(props.credential.id, tagId)
-      selectedTags.add(tagId)
+      await props.onAssociateTag(props.credential.id, tagId);
+      selectedTags.add(tagId);
     } else {
-      await props.onDisassociateTag(props.credential.id, tagId)
-      selectedTags.remove(tagId)
+      await props.onDisassociateTag(props.credential.id, tagId);
+      selectedTags.remove(tagId);
     }
-  }
+  };
 
   const scaffoldAppend = () => {
     return (
@@ -109,8 +110,8 @@ export const ShowTemplate: React.FC<Props> = props => {
         <div className="space-x-3">
           <Link
             href={{
-              pathname: '/credentials/[id]/reveal',
-              query: { id: props.credential.id }
+              pathname: "/credentials/[id]/reveal",
+              query: { id: props.credential.id },
             }}
             passHref
           >
@@ -122,7 +123,7 @@ export const ShowTemplate: React.FC<Props> = props => {
               <EyeIcon className="h-5 w-5 text-yellow-600" aria-hidden="true" />
             </DefaultButton>
           </Link>
-          <Link href={{ pathname: '/credentials' }} passHref>
+          <Link href={{ pathname: "/credentials" }} passHref>
             <DefaultButton
               tag="a"
               color="gray"
@@ -137,8 +138,8 @@ export const ShowTemplate: React.FC<Props> = props => {
           </Link>
         </div>
       </Fragment>
-    )
-  }
+    );
+  };
 
   return (
     <Scaffold title="Credencial" append={scaffoldAppend}>
@@ -152,7 +153,7 @@ export const ShowTemplate: React.FC<Props> = props => {
               <p className="mt-1 max-w-2xl text-sm text-gray-500 whitespace-pre-line">
                 {formatDate({
                   value: props.credential.createdAt,
-                  pattern: "dd/MMM 'de' yyyy 'às' HH:mm"
+                  pattern: "dd/MMM 'de' yyyy 'às' HH:mm",
                 })}
               </p>
             </div>
@@ -164,19 +165,19 @@ export const ShowTemplate: React.FC<Props> = props => {
                 label="Nome"
                 placeholder="Dê uma nome para as suas credenciais"
                 type="text"
-                formRegister={detailsForm.register('name')}
+                formRegister={detailsForm.register("name")}
               />
               <TextAreaForm
                 label="Descrição"
                 placeholder="Informações extras sobre a credencial"
-                formRegister={detailsForm.register('description')}
+                formRegister={detailsForm.register("description")}
                 rows={3}
               />
 
               <DefaultButton
                 className="w-2/6"
                 color="green"
-                attrs={{ type: 'submit' }}
+                attrs={{ type: "submit" }}
               >
                 Salvar
               </DefaultButton>
@@ -200,7 +201,7 @@ export const ShowTemplate: React.FC<Props> = props => {
                 label="Email / Username"
                 placeholder="Informe sua conta"
                 type="text"
-                formRegister={accountForm.register('username')}
+                formRegister={accountForm.register("username")}
               />
               <InputForm
                 label="Senha"
@@ -211,7 +212,7 @@ export const ShowTemplate: React.FC<Props> = props => {
               <DefaultButton
                 className="w-2/6"
                 color="green"
-                attrs={{ type: 'submit' }}
+                attrs={{ type: "submit" }}
               >
                 Salvar
               </DefaultButton>
@@ -233,12 +234,12 @@ export const ShowTemplate: React.FC<Props> = props => {
             <InputForm
               placeholder="Buscar tags pelo nome"
               type="text"
-              formRegister={tagsForm.register('value')}
+              formRegister={tagsForm.register("value")}
               className="w-full"
             />
             <div>
               <input
-                {...tagsForm.register('color')}
+                {...tagsForm.register("color")}
                 type="color"
                 className="focus:ring-1 focus:outline-none font-light text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md"
               />
@@ -247,7 +248,7 @@ export const ShowTemplate: React.FC<Props> = props => {
               color="purple"
               className="inline-flex border border-transparent py-1.5 px-3"
               onClick={tagsForm.handleSubmit(handleSaveTag)}
-              attrs={{ type: 'button' }}
+              attrs={{ type: "button" }}
             >
               <PlusIcon
                 className="h-5 w-5 text-purple-600"
@@ -265,7 +266,7 @@ export const ShowTemplate: React.FC<Props> = props => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {props.tags.data.map(tag => (
+              {props.tags.data.map((tag) => (
                 <tr key={tag.id}>
                   <DataCell>
                     <span className="text-sm text-gray-900">{tag.label}</span>
@@ -289,5 +290,5 @@ export const ShowTemplate: React.FC<Props> = props => {
         </div>
       </div>
     </Scaffold>
-  )
-}
+  );
+};

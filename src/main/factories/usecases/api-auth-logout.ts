@@ -1,9 +1,11 @@
-import { ApiAuthLogout } from '~/data/usecases/api-auth-logout'
-import { parseCookies } from 'nookies'
-import { makeAuthorizationHttpClient } from '../decorators'
+import { parseCookies } from "nookies";
+
+import { ApiAuthLogout } from "~/data/usecases/api-auth-logout";
+
+import { makeAuthorizationHttpClient } from "../decorators";
 
 export const makeApiAuthLogout = (
-  mapCookies = parseCookies()
+  mapCookies = parseCookies(),
 ): ApiAuthLogout => {
-  return new ApiAuthLogout(makeAuthorizationHttpClient(mapCookies))
-}
+  return new ApiAuthLogout(makeAuthorizationHttpClient(mapCookies));
+};

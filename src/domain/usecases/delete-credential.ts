@@ -1,11 +1,11 @@
-import { Either } from '~/common/either'
+import { Either } from "~/common/either";
 
 export namespace DeleteCredential {
   export type Params = {
-    id: string
-  }
+    id: string;
+  };
 
-  export type Result = Promise<Either<Error, undefined>>
+  export type Result = Promise<Either<Error, undefined>>;
 
-  export type ResponseDTO = undefined
+  export type ResponseDTO = undefined;
 }

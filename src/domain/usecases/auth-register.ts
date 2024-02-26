@@ -1,18 +1,19 @@
-import { User } from '../models/user'
-import { Either } from '~/common/either'
+import { Either } from "~/common/either";
+
+import { User } from "../models/user";
 
 export namespace AuthRegister {
   export type Params = {
-    name: string
-    email: string
-    password: string
-  }
+    name: string;
+    email: string;
+    password: string;
+  };
 
-  export type Result = Promise<Either<Error, User>>
+  export type Result = Promise<Either<Error, User>>;
 
   export type ResponseDTO = {
-    id: string
-    name: string
-    email: string
-  }
+    id: string;
+    name: string;
+    email: string;
+  };
 }

@@ -1,16 +1,16 @@
 export class Password {
-  public decrypted: string
+  public decrypted: string;
 
   private constructor() {}
 
   static create(params: PasswordTypes.Params) {
-    const instance = new Password()
-    instance.decrypted = params.decrypted
+    const instance = new Password();
+    instance.decrypted = params.decrypted;
 
-    return instance
+    return instance;
   }
 }
 
 export namespace PasswordTypes {
-  export type Params = { decrypted: string }
+  export type Params = { decrypted: string };
 }

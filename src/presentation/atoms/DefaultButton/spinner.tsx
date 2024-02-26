@@ -16,5 +16,5 @@ export const Spinner = () => {
         fill="currentColor"
       />
     </svg>
-  )
-}
+  );
+};

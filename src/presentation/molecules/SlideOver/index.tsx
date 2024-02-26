@@ -1,14 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XCircleIcon } from "@heroicons/react/24/outline";
-import React, { Fragment } from "react";
+import React, { Fragment, PropsWithChildren } from "react";
 
-type Props = {
+type Props = PropsWithChildren<{
   title: string;
   value: boolean;
   onChange: (value: boolean) => void;
-};
+}>;
 
-export const SlideOver: React.FC<Props> = (props) => {
+export const SlideOver = (props) => {
   return (
     <Transition.Root show={props.value} as={Fragment}>
       <Dialog

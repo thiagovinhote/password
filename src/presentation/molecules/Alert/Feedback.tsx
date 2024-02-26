@@ -1,31 +1,32 @@
-import React, { Fragment, useRef } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { classNames } from '~/presentation/helpers'
+import { Dialog, Transition } from "@headlessui/react";
+import React, { Fragment, useRef } from "react";
+
+import { classNames } from "~/presentation/helpers";
 
 type Props = {
-  show: boolean
-  onDismiss: () => void
+  show: boolean;
+  onDismiss: () => void;
   data: {
-    title: string
-    description: string
-    buttonText?: string
+    title: string;
+    description: string;
+    buttonText?: string;
     color?:
-      | 'blue'
-      | 'green'
-      | 'purple'
-      | 'pink'
-      | 'red'
-      | 'yellow'
-      | 'indigo'
-      | 'gray'
-      | 'white'
-    icon?: React.FC<any>
-  }
-}
+      | "blue"
+      | "green"
+      | "purple"
+      | "pink"
+      | "red"
+      | "yellow"
+      | "indigo"
+      | "gray"
+      | "white";
+    icon?: React.FC<any>;
+  };
+};
 
-export const FeedbackAlert: React.FC<Props> = props => {
-  const Icon = props.data.icon
-  const dismissButtonRef = useRef()
+export const FeedbackAlert: React.FC<Props> = (props) => {
+  const Icon = props.data.icon;
+  const dismissButtonRef = useRef();
 
   return (
     <Transition.Root show={props.show} as={Fragment}>
@@ -72,14 +73,14 @@ export const FeedbackAlert: React.FC<Props> = props => {
                   {Icon && (
                     <div
                       className={classNames(
-                        'sm:mr-4 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10',
-                        `bg-${props.data.color}-100`
+                        "sm:mr-4 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10",
+                        `bg-${props.data.color}-100`,
                       )}
                     >
                       <Icon
                         className={classNames(
-                          'h-6 w-6',
-                          `text-${props.data.color}-600`
+                          "h-6 w-6",
+                          `text-${props.data.color}-600`,
                         )}
                         aria-hidden="true"
                       />
@@ -107,7 +108,7 @@ export const FeedbackAlert: React.FC<Props> = props => {
                   onClick={props.onDismiss}
                   ref={dismissButtonRef}
                 >
-                  {props.data.buttonText ?? 'Fechar'}
+                  {props.data.buttonText ?? "Fechar"}
                 </button>
               </div>
             </div>
@@ -115,5 +116,5 @@ export const FeedbackAlert: React.FC<Props> = props => {
         </div>
       </Dialog>
     </Transition.Root>
-  )
-}
+  );
+};

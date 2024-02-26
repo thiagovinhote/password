@@ -1,9 +1,11 @@
-import { parseCookies } from 'nookies'
-import { ApiLoadCredentials } from '~/data/usecases/api-load-credentials'
-import { makeAuthorizationHttpClient } from '../decorators'
+import { parseCookies } from "nookies";
+
+import { ApiLoadCredentials } from "~/data/usecases/api-load-credentials";
+
+import { makeAuthorizationHttpClient } from "../decorators";
 
 export const makeApiLoadCredentials = (
-  mapCookies = parseCookies()
+  mapCookies = parseCookies(),
 ): ApiLoadCredentials => {
-  return new ApiLoadCredentials(makeAuthorizationHttpClient(mapCookies))
-}
+  return new ApiLoadCredentials(makeAuthorizationHttpClient(mapCookies));
+};

@@ -1,9 +1,11 @@
-import { parseCookies } from 'nookies'
-import { ApiUpdateUserPicture } from '~/data/usecases/api-update-user-picture'
-import { makeAuthorizationHttpClient } from '../decorators'
+import { parseCookies } from "nookies";
+
+import { ApiUpdateUserPicture } from "~/data/usecases/api-update-user-picture";
+
+import { makeAuthorizationHttpClient } from "../decorators";
 
 export const makeApiUpdateUserPicture = (
-  mapCookies = parseCookies()
+  mapCookies = parseCookies(),
 ): ApiUpdateUserPicture => {
-  return new ApiUpdateUserPicture(makeAuthorizationHttpClient(mapCookies))
-}
+  return new ApiUpdateUserPicture(makeAuthorizationHttpClient(mapCookies));
+};

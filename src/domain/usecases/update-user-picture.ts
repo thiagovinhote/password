@@ -1,12 +1,12 @@
-import { Either } from '~/common/either'
+import { Either } from "~/common/either";
 
 export namespace UpdateUserPicture {
   export type Params = {
-    id: string
-    picture: File
-  }
+    id: string;
+    picture: File;
+  };
 
-  export type Result = Promise<Either<Error, void>>
+  export type Result = Promise<Either<Error, void>>;
 
-  export type ResponseDTO = undefined
+  export type ResponseDTO = undefined;
 }

@@ -1,16 +1,16 @@
-import { Transition } from '@headlessui/react'
-import React, { useMemo, useState } from 'react'
+import { Transition } from "@headlessui/react";
+import React, { useMemo, useState } from "react";
 
-export const PasswordItem: React.FC = props => {
-  const [showTooltip, setShowTooltip] = useState(false)
+export const PasswordItem: React.FC = (props) => {
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleOnClick = async () => {
-    setShowTooltip(true)
-    await navigator.clipboard.writeText(props.children.toString())
+    setShowTooltip(true);
+    await navigator.clipboard.writeText(props.children.toString());
     setTimeout(() => {
-      setShowTooltip(false)
-    }, 600)
-  }
+      setShowTooltip(false);
+    }, 600);
+  };
 
   const Tooptip = useMemo(
     () => (
@@ -27,8 +27,8 @@ export const PasswordItem: React.FC = props => {
         </svg>
       </div>
     ),
-    [props.children]
-  )
+    [props.children],
+  );
 
   return (
     <div>
@@ -50,5 +50,5 @@ export const PasswordItem: React.FC = props => {
         {Tooptip}
       </Transition>
     </div>
-  )
-}
+  );
+};

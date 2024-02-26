@@ -1,36 +1,37 @@
-import React, { useImperativeHandle, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { CreateFolder } from '~/domain/usecases/create-folder'
-import { Usecase } from '~/domain/usecases/usecase'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { SlideOver } from '~/presentation/molecules/SlideOver'
+import React, { useImperativeHandle, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { CreateFolder } from "~/domain/usecases/create-folder";
+import { Usecase } from "~/domain/usecases/usecase";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { InputForm } from "~/presentation/molecules/InputForm";
+import { SlideOver } from "~/presentation/molecules/SlideOver";
 
 type Props = {
-  createFolder: Usecase<CreateFolder.Params, CreateFolder.Result>
-}
+  createFolder: Usecase<CreateFolder.Params, CreateFolder.Result>;
+};
 
 type Ref = {
-  open: () => void
-}
+  open: () => void;
+};
 
 type FolderFormData = {
-  name: string
-}
+  name: string;
+};
 
 export const CreateFolderForm = React.forwardRef<Ref, Props>((props, ref) => {
-  const [open, setOpen] = useState(false)
-  const { register, handleSubmit } = useForm<FolderFormData>()
+  const [open, setOpen] = useState(false);
+  const { register, handleSubmit } = useForm<FolderFormData>();
 
-  const handleSave: SubmitHandler<FolderFormData> = async data => {
-    await props.createFolder.exec(data)
-  }
+  const handleSave: SubmitHandler<FolderFormData> = async (data) => {
+    await props.createFolder.exec(data);
+  };
 
   useImperativeHandle(ref, () => ({
     open: () => {
-      setOpen(true)
-    }
-  }))
+      setOpen(true);
+    },
+  }));
 
   return (
     <SlideOver value={open} onChange={setOpen} title="Nova pasta">
@@ -39,7 +40,7 @@ export const CreateFolderForm = React.forwardRef<Ref, Props>((props, ref) => {
           label="Nome"
           placeholder="Nome"
           type="text"
-          formRegister={register('name')}
+          formRegister={register("name")}
         />
         <hr />
         <DefaultButton
@@ -51,7 +52,8 @@ export const CreateFolderForm = React.forwardRef<Ref, Props>((props, ref) => {
         </DefaultButton>
       </form>
     </SlideOver>
-  )
-})
+  );
+});
+CreateFolderForm.displayName = "CreateFolderForm";
 
-export type CreateFolderFormRef = Ref
+export type CreateFolderFormRef = Ref;

@@ -1,10 +1,10 @@
 export class AccessDeniedError extends Error {
   private constructor() {
-    super('Acesso negado!')
-    this.name = 'AccessDeniedError'
+    super("Acesso negado!");
+    this.name = "AccessDeniedError";
   }
 
   static create(): AccessDeniedError {
-    return new AccessDeniedError()
+    return new AccessDeniedError();
   }
 }

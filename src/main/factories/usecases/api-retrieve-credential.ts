@@ -1,9 +1,11 @@
-import { parseCookies } from 'nookies'
-import { ApiRetrieveCredential } from '~/data/usecases/api-retrieve-credential'
-import { makeAuthorizationHttpClient } from '../decorators'
+import { parseCookies } from "nookies";
+
+import { ApiRetrieveCredential } from "~/data/usecases/api-retrieve-credential";
+
+import { makeAuthorizationHttpClient } from "../decorators";
 
 export const makeApiRetrieveCredential = (
-  mapCookies = parseCookies()
+  mapCookies = parseCookies(),
 ): ApiRetrieveCredential => {
-  return new ApiRetrieveCredential(makeAuthorizationHttpClient(mapCookies))
-}
+  return new ApiRetrieveCredential(makeAuthorizationHttpClient(mapCookies));
+};

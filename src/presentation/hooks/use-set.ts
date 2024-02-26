@@ -1,29 +1,29 @@
-import { useRef, useState } from 'react'
+import { useRef, useState } from "react";
 
 export const useSet = <T>(initialValue: T[] = []) => {
-  const [, emitSideEffect] = useState(0)
+  const [, emitSideEffect] = useState(0);
 
-  const state = useRef(new Set<T>(initialValue))
+  const state = useRef(new Set<T>(initialValue));
 
   const add = (value: T): Set<T> => {
-    const newSet = state.current.add(value)
-    emitSideEffect(old => old + 1)
-    return newSet
-  }
+    const newSet = state.current.add(value);
+    emitSideEffect((old) => old + 1);
+    return newSet;
+  };
 
   const remove = (value: T): boolean => {
-    const isRemoved = state.current.delete(value)
-    emitSideEffect(old => old + 1)
-    return isRemoved
-  }
+    const isRemoved = state.current.delete(value);
+    emitSideEffect((old) => old + 1);
+    return isRemoved;
+  };
 
   const has = (value: T): boolean => {
-    return state.current.has(value)
-  }
+    return state.current.has(value);
+  };
 
   const values = (): Array<T> => {
-    return Array.from(state.current)
-  }
+    return Array.from(state.current);
+  };
 
-  return { add, remove, has, values }
-}
+  return { add, remove, has, values };
+};

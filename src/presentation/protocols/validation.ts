@@ -1,3 +1,3 @@
 export interface ValueValidation<R = string> {
-  exec(input: R): Error | null
+  exec(input: R): Error | null;
 }

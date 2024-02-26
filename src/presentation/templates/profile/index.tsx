@@ -1,46 +1,47 @@
-import { ChangeEvent, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { Paginator } from '~/domain/models/paginator'
-import { Tag } from '~/domain/models/tag'
-import { User } from '~/domain/models/user'
-import { DefaultButton } from '~/presentation/atoms/DefaultButton'
-import { DataCell, HeaderCell } from '~/presentation/atoms/Table'
-import { InputForm } from '~/presentation/molecules/InputForm'
-import { Scaffold } from '~/presentation/molecules/Scaffold'
+import { ChangeEvent, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { Paginator } from "~/domain/models/paginator";
+import { Tag } from "~/domain/models/tag";
+import { User } from "~/domain/models/user";
+import { DefaultButton } from "~/presentation/atoms/DefaultButton";
+import { DataCell, HeaderCell } from "~/presentation/atoms/Table";
+import { InputForm } from "~/presentation/molecules/InputForm";
+import { Scaffold } from "~/presentation/molecules/Scaffold";
 
 type Props = {
-  user: User
-  tags: Paginator<Tag>
-  onLoadTags: (term: string) => Promise<void>
-  onChangePicture: (picture: File) => Promise<void>
-}
+  user: User;
+  tags: Paginator<Tag>;
+  onLoadTags: (term: string) => Promise<void>;
+  onChangePicture: (picture: File) => Promise<void>;
+};
 
 type TagsFormData = {
-  value: string
-}
+  value: string;
+};
 
-export type { Props as IndexTemplateProps }
+export type { Props as IndexTemplateProps };
 
-export const IndexTemplate: React.FC<Props> = props => {
-  const tagsForm = useForm<TagsFormData>()
-  const [pictureIsSaving, setPictureIsSaving] = useState(false)
+export const IndexTemplate: React.FC<Props> = (props) => {
+  const tagsForm = useForm<TagsFormData>();
+  const [pictureIsSaving, setPictureIsSaving] = useState(false);
   const pictureUrl =
-    props.user.pictureUrl?.toString() ?? '/images/profile-picture.jpeg'
+    props.user.pictureUrl?.toString() ?? "/images/profile-picture.jpeg";
 
-  const handleSearchTags: SubmitHandler<TagsFormData> = async data => {
-    await props.onLoadTags(data.value)
-  }
+  const handleSearchTags: SubmitHandler<TagsFormData> = async (data) => {
+    await props.onLoadTags(data.value);
+  };
 
   const handleChangePicture = async (event: ChangeEvent<HTMLInputElement>) => {
-    setPictureIsSaving(true)
-    const { files } = event.target
-    const picture = files.item(0)
+    setPictureIsSaving(true);
+    const { files } = event.target;
+    const picture = files?.item(0);
     if (!picture) {
-      return
+      return;
     }
-    await props.onChangePicture(picture)
-    setPictureIsSaving(false)
-  }
+    await props.onChangePicture(picture);
+    setPictureIsSaving(false);
+  };
 
   return (
     <Scaffold title="Perfil">
@@ -67,7 +68,7 @@ export const IndexTemplate: React.FC<Props> = props => {
 
               <DefaultButton
                 tag="label"
-                attrs={{ htmlFor: 'picture-upload' }}
+                attrs={{ htmlFor: "picture-upload" }}
                 color="yellow"
                 className="cursor-pointer mt-2 py-1.5 px-3"
                 loading={pictureIsSaving}
@@ -105,7 +106,7 @@ export const IndexTemplate: React.FC<Props> = props => {
             <InputForm
               placeholder="Buscar tags pelo nome"
               type="text"
-              formRegister={tagsForm.register('value')}
+              formRegister={tagsForm.register("value")}
               className="w-full"
             />
           </form>
@@ -118,7 +119,7 @@ export const IndexTemplate: React.FC<Props> = props => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {props.tags.data.map(tag => (
+              {props.tags.data.map((tag) => (
                 <tr key={tag.id}>
                   <DataCell>
                     <span className="text-sm text-gray-900">{tag.label}</span>
@@ -136,5 +137,5 @@ export const IndexTemplate: React.FC<Props> = props => {
         </div>
       </div>
     </Scaffold>
-  )
-}
+  );
+};

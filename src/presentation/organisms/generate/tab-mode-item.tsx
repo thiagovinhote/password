@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { Fragment, memo, useCallback } from "react";
+import React, { Fragment, memo, PropsWithChildren, useCallback } from "react";
 import colors from "tailwindcss/colors";
 
 import { classNames } from "~/presentation/helpers";
@@ -35,20 +35,23 @@ export const ModeItem: React.FC<Props> = (props) => {
       transition={{ type: "spring", stiffness: 600, damping: 40 }}
     />
   ));
+  Outline.displayName = "Outline";
 
   return (
     <li className={classNames(cardClasses)} onClick={handleOnClick}>
       {props.active && <Outline />}
       <div className="flex flex-col mx-auto space-y-2">
-        {Icon && <Icon className={classNames("h-10 w-auto", props.color)} />}
+        {Icon && (
+          <Icon className={classNames("h-10 w-auto", props.color ?? "")} />
+        )}
         <span className="font-normal block">{props.title}</span>
       </div>
     </li>
   );
 };
 
-export const ModeItemTab: React.FC<Omit<Props, "index" | "setSelectedTab">> = (
-  props,
+export const ModeItemTab = (
+  props: PropsWithChildren<Omit<Props, "index" | "setSelectedTab">>,
 ) => {
   return <Fragment>{props.children}</Fragment>;
 };

@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { FetchGenerate } from '~/domain/usecases/fetch-generate'
-import { Usecase } from '~/domain/usecases/usecase'
-import { Select } from '~/presentation/molecules/Select'
-import { Toggle } from '~/presentation/molecules/Toggle'
-import { range } from '~/presentation/helpers'
-import { OptionItem } from './option-item'
-import { OptionsSidebar } from './options-sidebard'
-import { PasswordItem } from './password-item'
-import { TransitionFade } from './transition-fade'
+import React, { useEffect, useState } from "react";
 
-const sizes = range(6, 16)
+import { FetchGenerate } from "~/domain/usecases/fetch-generate";
+import { Usecase } from "~/domain/usecases/usecase";
+import { range } from "~/presentation/helpers";
+import { Select } from "~/presentation/molecules/Select";
+import { Toggle } from "~/presentation/molecules/Toggle";
+
+import { OptionItem } from "./option-item";
+import { OptionsSidebar } from "./options-sidebard";
+import { PasswordItem } from "./password-item";
+import { TransitionFade } from "./transition-fade";
+
+const sizes = range(6, 16);
 
 type Props = {
-  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
-}
+  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>;
+};
 
 export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
-  const [includeNumbers, setIncludeNumbers] = useState(true)
-  const [uppercaseCharacters, setUppercaseCharacters] = useState(true)
-  const [lowercaseCharacters, setLowercaseCharacters] = useState(true)
-  const [passwordSize, setPasswordSize] = useState(sizes[0])
+  const [includeNumbers, setIncludeNumbers] = useState(true);
+  const [uppercaseCharacters, setUppercaseCharacters] = useState(true);
+  const [lowercaseCharacters, setLowercaseCharacters] = useState(true);
+  const [passwordSize, setPasswordSize] = useState(sizes[0]);
 
-  const [passwords, setPasswords] = useState([])
+  const [passwords, setPasswords] = useState([]);
 
   const fetchData = async () => {
     const data = await fetchGenerate.exec({
@@ -30,14 +32,14 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
       lowercaseCharacters,
       uppercaseCharacters,
       noAmbiguousCharacters: false,
-      passwordSize: passwordSize
-    })
-    if (data.isRight()) setPasswords(data.value)
-  }
+      passwordSize: passwordSize,
+    });
+    if (data.isRight()) setPasswords(data.value);
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <TransitionFade className="grid grid-cols-3 gap-4">
@@ -85,5 +87,5 @@ export const MemorableForm: React.FC<Props> = ({ fetchGenerate }) => {
         </OptionsSidebar>
       </div>
     </TransitionFade>
-  )
-}
+  );
+};

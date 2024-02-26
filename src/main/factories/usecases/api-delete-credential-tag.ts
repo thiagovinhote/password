@@ -1,9 +1,11 @@
-import { parseCookies } from 'nookies'
-import { ApiDeleteCredentialTag } from '~/data/usecases/api-delete-credential-tag'
-import { makeAuthorizationHttpClient } from '../decorators'
+import { parseCookies } from "nookies";
+
+import { ApiDeleteCredentialTag } from "~/data/usecases/api-delete-credential-tag";
+
+import { makeAuthorizationHttpClient } from "../decorators";
 
 export const makeApiDeleteCredentialTag = (
-  mapCookies = parseCookies()
+  mapCookies = parseCookies(),
 ): ApiDeleteCredentialTag => {
-  return new ApiDeleteCredentialTag(makeAuthorizationHttpClient(mapCookies))
-}
+  return new ApiDeleteCredentialTag(makeAuthorizationHttpClient(mapCookies));
+};

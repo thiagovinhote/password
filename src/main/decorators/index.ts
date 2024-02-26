@@ -1,1 +1,1 @@
-export * from './authorization-http-client'
+export * from "./authorization-http-client";

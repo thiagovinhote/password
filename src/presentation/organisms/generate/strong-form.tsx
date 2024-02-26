@@ -1,25 +1,27 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { FetchGenerate } from '~/domain/usecases/fetch-generate'
-import { Usecase } from '~/domain/usecases/usecase'
-import { Select } from '~/presentation/molecules/Select'
-import { Toggle } from '~/presentation/molecules/Toggle'
-import { classNames, range } from '~/presentation/helpers'
-import { OptionItem } from './option-item'
-import { OptionsSidebar } from './options-sidebard'
-import { PasswordItem } from './password-item'
-import { TransitionFade } from './transition-fade'
+import React, { useEffect, useMemo, useState } from "react";
 
-const sizes = range(16, 65)
+import { FetchGenerate } from "~/domain/usecases/fetch-generate";
+import { Usecase } from "~/domain/usecases/usecase";
+import { classNames, range } from "~/presentation/helpers";
+import { Select } from "~/presentation/molecules/Select";
+import { Toggle } from "~/presentation/molecules/Toggle";
+
+import { OptionItem } from "./option-item";
+import { OptionsSidebar } from "./options-sidebard";
+import { PasswordItem } from "./password-item";
+import { TransitionFade } from "./transition-fade";
+
+const sizes = range(16, 65);
 
 type Props = {
-  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>
-}
+  fetchGenerate: Usecase<FetchGenerate.Params, FetchGenerate.Result>;
+};
 
 export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
-  const [includeSymbols, setIncludeSymbols] = useState(true)
-  const [ambiguousCharacters, setAmbiguousCharacters] = useState(false)
-  const [passwordSize, setPasswordSize] = useState(sizes[0])
-  const [passwords, setPasswords] = useState([])
+  const [includeSymbols, setIncludeSymbols] = useState(true);
+  const [ambiguousCharacters, setAmbiguousCharacters] = useState(false);
+  const [passwordSize, setPasswordSize] = useState(sizes[0]);
+  const [passwords, setPasswords] = useState([]);
 
   const fetchData = async () => {
     const data = await fetchGenerate.exec({
@@ -28,18 +30,18 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
       lowercaseCharacters: true,
       uppercaseCharacters: true,
       noAmbiguousCharacters: !ambiguousCharacters,
-      passwordSize: passwordSize
-    })
-    if (data.isRight()) setPasswords(data.value)
-  }
+      passwordSize: passwordSize,
+    });
+    if (data.isRight()) setPasswords(data.value);
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const gridClasses = useMemo(() => {
-    return passwordSize >= 35 ? 'grid-cols-1' : 'grid-cols-2'
-  }, [passwords])
+    return passwordSize >= 35 ? "grid-cols-1" : "grid-cols-2";
+  }, [passwords]);
 
   return (
     <TransitionFade className="grid grid-cols-3 gap-4">
@@ -52,7 +54,7 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
             </p>
           </div>
           <div className="border-t border-gray-200">
-            <div className={classNames(gridClasses, 'grid px-4 py-5 gap-4')}>
+            <div className={classNames(gridClasses, "grid px-4 py-5 gap-4")}>
               {passwords.map((item, index) => (
                 <PasswordItem key={index}>{item}</PasswordItem>
               ))}
@@ -90,5 +92,5 @@ export const StrongForm: React.FC<Props> = ({ fetchGenerate }) => {
         </OptionsSidebar>
       </div>
     </TransitionFade>
-  )
-}
+  );
+};
