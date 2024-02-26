@@ -1,10 +1,12 @@
 "use server";
 
-import { asc, count, desc, ilike } from "drizzle-orm";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
+import { and, asc, count, desc, eq, ilike } from "drizzle-orm";
 import { z } from "zod";
 
 import db from "~/infra/database/drizzle";
-import { credentials } from "~/infra/database/schema";
+import { credentials, users } from "~/infra/database/schema";
 
 const AllCredentialsInput = z.object({
   search: z
@@ -26,15 +28,27 @@ const AllCredentialsInput = z.object({
     }),
 });
 
+async function getDbUser() {
+  const { getUser } = getKindeServerSession();
+  const kindeUser = await getUser();
+  const [dbUser] = await db
+    .select()
+    .from(users)
+    .where(eq(users.kindeId, kindeUser!.id))
+    .limit(1);
+  return dbUser;
+}
+
 export default async function allCredentialsRepo(
   input: z.input<typeof AllCredentialsInput>,
 ) {
+  const user = await getDbUser();
   const safeInput = AllCredentialsInput.parse(input);
   const skip = (safeInput.page - 1) * safeInput.perPage;
 
   const [records, [{ total }]] = await Promise.all([
     db.query.credentials.findMany({
-      where: safeInput.search,
+      where: and(safeInput.search, eq(credentials.userId, user.id)),
       offset: skip,
       limit: safeInput.perPage,
       orderBy: safeInput.orderBy,
@@ -42,7 +56,7 @@ export default async function allCredentialsRepo(
     db
       .select({ total: count(credentials.id) })
       .from(credentials)
-      .where(safeInput.search)
+      .where(and(safeInput.search, eq(credentials.userId, user.id)))
       .limit(1),
   ]);
 
