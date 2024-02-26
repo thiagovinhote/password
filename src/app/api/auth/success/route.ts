@@ -19,7 +19,10 @@ export async function GET(req: NextRequest) {
     where: eq(users.kindeId, user.id),
   });
 
-  if (userByKindId) return NextResponse.redirect(new URL("/", req.nextUrl));
+  if (userByKindId)
+    return NextResponse.redirect(
+      new URL(String(process.env.KINDE_SITE_URL), req.nextUrl),
+    );
 
   if (!user?.email)
     return NextResponse.json(
@@ -40,5 +43,7 @@ export async function GET(req: NextRequest) {
       set: { kindeId: user.id },
     });
 
-  return NextResponse.redirect(new URL("/", req.nextUrl));
+  return NextResponse.redirect(
+    new URL(String(process.env.KINDE_SITE_URL), req.nextUrl),
+  );
 }
