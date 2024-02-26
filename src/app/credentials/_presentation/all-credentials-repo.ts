@@ -31,6 +31,7 @@ const AllCredentialsInput = z.object({
 async function getDbUser() {
   const { getUser } = getKindeServerSession();
   const kindeUser = await getUser();
+  if (!kindeUser) return null;
   const [dbUser] = await db
     .select()
     .from(users)
@@ -44,6 +45,15 @@ export default async function allCredentialsRepo(
 ) {
   const user = await getDbUser();
   const safeInput = AllCredentialsInput.parse(input);
+
+  if (!user)
+    return {
+      records: [],
+      total: 0,
+      page: safeInput.page,
+      perPage: safeInput.perPage,
+    };
+
   const skip = (safeInput.page - 1) * safeInput.perPage;
 
   const [records, [{ total }]] = await Promise.all([

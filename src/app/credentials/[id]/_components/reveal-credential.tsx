@@ -3,11 +3,7 @@
 import { formatDate } from "date-fns/format";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { CopyIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { toast } from "sonner";
 
-import deleteCredentialRepo from "~/app/credentials/[id]/_presentation/delete-credential-repo";
 import { Credential } from "~/infra/database/schema";
 import { Button } from "~/presentation/ui/button";
 import {

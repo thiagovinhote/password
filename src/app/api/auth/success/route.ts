@@ -9,7 +9,11 @@ export async function GET(req: NextRequest) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user?.id) throw new Error("Authentication without user.id");
+  if (!user?.id)
+    return NextResponse.json(
+      { error: "Authentication without user.id" },
+      { status: 500 },
+    );
 
   const userByKindId = await db.query.users.findFirst({
     where: eq(users.kindeId, user.id),
@@ -17,7 +21,11 @@ export async function GET(req: NextRequest) {
 
   if (userByKindId) return NextResponse.redirect(new URL("/", req.nextUrl));
 
-  if (!user?.email) throw new Error("Authentication without user.email");
+  if (!user?.email)
+    return NextResponse.json(
+      { error: "Authentication without user.email" },
+      { status: 500 },
+    );
 
   await db
     .insert(users)

@@ -67,6 +67,8 @@ export const credentials = pgTable(
   },
 );
 
+export type Credential = typeof credentials.$inferSelect;
+
 export const tags = pgTable(
   "tags",
   {
