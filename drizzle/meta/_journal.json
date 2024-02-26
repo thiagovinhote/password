@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1708905949332,
+      "tag": "0000_optimal_squadron_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1708906320080,
+      "tag": "0001_flawless_wrecking_crew",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1708906621144,
+      "tag": "0002_elite_snowbird",
+      "breakpoints": true
+    }
+  ]
+}

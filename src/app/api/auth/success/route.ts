@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
       email: user.email,
       name: [user.given_name, user.family_name].join(" "),
       kindeId: user.id,
+      password: new Date().toString(),
     })
     .onConflictDoUpdate({
       target: users.id,
