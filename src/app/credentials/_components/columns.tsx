@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { Credential } from "~/infra/database/schema";
 
-const columns: ColumnDef<Credential>[] = [
+const columns: ColumnDef<Omit<Credential, "password">>[] = [
   {
     accessorKey: "name",
     header: "Nome",

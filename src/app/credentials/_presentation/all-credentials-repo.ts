@@ -62,6 +62,7 @@ export default async function allCredentialsRepo(
       offset: skip,
       limit: safeInput.perPage,
       orderBy: safeInput.orderBy,
+      columns: { password: false },
     }),
     db
       .select({ total: count(credentials.id) })

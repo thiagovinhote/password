@@ -33,6 +33,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "env.d.ts",
     "src/index.d.ts",
     "**/*.ts",
     "**/*.tsx",

@@ -25,6 +25,14 @@ export default async function createCredentialRepo(
 ) {
   const safeInput = CreateCredentialSchema.parse(input);
   const user = await getDbUser();
+  const { Encryption } = await import("@adonisjs/encryption");
+
+  const encryption = new Encryption({
+    algorithm: "aes-256-cbc",
+    secret: process.env.APP_KEY,
+  });
+
+  safeInput.password = encryption.encrypt(safeInput.password);
 
   await db.insert(credentials).values({ ...safeInput, userId: user!.id });
 }
