@@ -30,7 +30,7 @@ export default function DataTableToolbar() {
     const url = qs.stringifyUrl(
       {
         url: window.location.href,
-        query: values,
+        query: { ...values, page: 1 },
       },
       { skipEmptyString: true, skipNull: true },
     );
