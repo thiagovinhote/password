@@ -1,25 +1,22 @@
-"use client";
-
 import { formatDate } from "date-fns/format";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { CopyIcon } from "lucide-react";
 
+import RevealPasswordOutput from "~/app/credentials/[id]/_components/reveal-password";
+import RevealUsername from "~/app/credentials/[id]/_components/reveal-username";
 import { Credential } from "~/infra/database/schema";
-import { Button } from "~/presentation/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/presentation/ui/card";
-import { Input } from "~/presentation/ui/input";
-import { Label } from "~/presentation/ui/label";
 
 import DeleteConfirmation from "./delete-confirmation";
 
 interface RevealCredentialProps {
-  credential: Credential;
+  credential: Omit<Credential, "password">;
 }
 
 export default function RevealCredential(props: RevealCredentialProps) {
@@ -39,41 +36,13 @@ export default function RevealCredential(props: RevealCredentialProps) {
 
       <CardContent>
         <div className="space-y-4 mt-4">
-          <div className="space-y-2">
-            <Label htmlFor="username">Username / E-mail</Label>
-            <div className="flex items-center space-x-2">
-              <Input
-                id="username"
-                value={props.credential.username}
-                disabled
-                readOnly
-              />
-              <Button size="icon" variant="secondary">
-                <CopyIcon className="size-4" />
-              </Button>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">Senha</Label>
-            <div className="flex items-center space-x-2">
-              <Input
-                id="password"
-                value={props.credential.password}
-                disabled
-                readOnly
-              />
-              <Button size="icon" variant="secondary">
-                <CopyIcon className="size-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8">
-          <DeleteConfirmation id={props.credential.id} />
+          <RevealUsername username={props.credential.username} />
+          <RevealPasswordOutput id={props.credential.id} />
         </div>
       </CardContent>
+      <CardFooter>
+        <DeleteConfirmation id={props.credential.id} />
+      </CardFooter>
     </Card>
   );
 }

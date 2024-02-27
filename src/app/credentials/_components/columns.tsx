@@ -28,7 +28,7 @@ const columns: ColumnDef<Omit<Credential, "password">>[] = [
     header: "Descrição",
     cell: (info) => {
       return (
-        <span className="line-clamp-2 max-w-sm">{info.getValue<string>()}</span>
+        <span className="line-clamp-1 max-w-sm">{info.getValue<string>()}</span>
       );
     },
   },
