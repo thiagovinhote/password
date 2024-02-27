@@ -1,12 +1,17 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import { Pool, PoolConfig } from "pg";
 
 import * as schema from "./schema";
 
-export const client = new Pool({
+const config: PoolConfig = {
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
+};
+
+if (process.env.NODE_ENV === "production") {
+  config.ssl = { rejectUnauthorized: false };
+}
+
+export const client = new Pool(config);
 
 const db = drizzle(client, { schema });
 
