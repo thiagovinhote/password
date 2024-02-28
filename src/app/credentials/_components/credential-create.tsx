@@ -30,6 +30,7 @@ import {
   FormMessage,
 } from "~/presentation/ui/form";
 import { Input } from "~/presentation/ui/input";
+import { ScrollArea } from "~/presentation/ui/scroll-area";
 import { Separator } from "~/presentation/ui/separator";
 import { Textarea } from "~/presentation/ui/textarea";
 import { cn } from "~/presentation/utils";
@@ -77,94 +78,96 @@ export default function CredentialCreate() {
               <DialogDescription>Insira as informações</DialogDescription>
             </DialogHeader>
 
-            <div className="mt-4 space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nome</FormLabel>
-                    <FormControl>
-                      <Input placeholder="example" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Nome para identificar a credencial futuramente.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Descrição</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} rows={3} />
-                    </FormControl>
-                    <FormDescription>
-                      Alguma informação extra para lembrar.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Separator />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email / Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="nickname" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Nome de usuário usado para fazer login. Pode ser e-mail ou
-                      username.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Senha</FormLabel>
-                    <FormControl>
-                      <Input placeholder="123123" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Segredo utilizado para fazer login.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <ScrollArea className="h-[90%] sm:h-full -mx-3">
+              <div className="space-y-4 py-4 px-3">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nome</FormLabel>
+                      <FormControl>
+                        <Input placeholder="example" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Nome para identificar a credencial futuramente.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Descrição</FormLabel>
+                      <FormControl>
+                        <Textarea {...field} rows={3} />
+                      </FormControl>
+                      <FormDescription>
+                        Alguma informação extra para lembrar.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Separator />
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email / Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="nickname" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Nome de usuário usado para fazer login. Pode ser e-mail
+                        ou username.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input placeholder="123123" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Segredo utilizado para fazer login.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <DialogFooter>
-              <Button
-                variant="ghost"
-                type="button"
-                className={cn(
-                  "hidden",
-                  form.formState.isDirty && "inline-flex",
-                )}
-                onClick={() => form.reset()}
-              >
-                <EraserIcon className="size-4 mr-2" />
-                Limpar
-              </Button>
+              <DialogFooter className="gap-2 px-3">
+                <Button
+                  variant="ghost"
+                  type="button"
+                  className={cn(
+                    "hidden",
+                    form.formState.isDirty && "inline-flex",
+                  )}
+                  onClick={() => form.reset()}
+                >
+                  <EraserIcon className="size-4 mr-2" />
+                  Limpar
+                </Button>
 
-              <Button type="submit" disabled={isPending}>
-                <SaveIcon className="size-4 mr-2" />
-                Salvar
-              </Button>
-            </DialogFooter>
+                <Button type="submit" disabled={isPending}>
+                  <SaveIcon className="size-4 mr-2" />
+                  Salvar
+                </Button>
+              </DialogFooter>
+            </ScrollArea>
           </form>
         </Form>
       </DialogContent>
