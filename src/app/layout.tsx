@@ -1,10 +1,10 @@
 import "~/assets/styles/globals.css";
 
+import * as React from "react";
 import { PropsWithChildren } from "react";
 
-import MainNav from "~/app/_components/main-nav";
-import SwitchThemeButton from "~/app/_components/switch-theme-button";
-import UserButtonMenu from "~/app/_components/user-button-menu";
+import Navbar from "~/app/_components/navbar";
+import Sidebar from "~/app/_components/sidebar";
 import { ThemeProvider } from "~/presentation/providers/theme-provider";
 import { Toaster } from "~/presentation/ui/sonner";
 
@@ -18,18 +18,21 @@ export default function RootLayout(props: PropsWithChildren) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          <div className="border-b">
-            <div className="flex h-16 items-center px-4">
-              <MainNav className="mx-6" />
-              <div className="ml-auto flex items-center space-x-4">
-                <SwitchThemeButton />
-                <UserButtonMenu />
+          <div>
+            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-60 lg:flex-col">
+              <Sidebar />
+            </div>
+
+            <div className="lg:pl-60">
+              <div className="sticky top-0 z-40 lg:mx-auto lg:px-6">
+                <Navbar />
               </div>
+
+              <main className="py-4">
+                <div className="px-2 sm:px-4 lg:px-6">{props.children}</div>
+              </main>
             </div>
           </div>
-
-          {props.children}
-
           <Toaster />
         </ThemeProvider>
       </body>
