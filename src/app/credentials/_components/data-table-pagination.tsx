@@ -24,13 +24,13 @@ export default function DataTablePagination<TData>(
   props: DataTablePaginationProps<TData>,
 ) {
   return (
-    <div className="flex items-center justify-between border-t px-4 py-3 sm:px-6">
+    <div className="flex flex-col sm:flex-row items-center justify-between border-t px-4 py-3 sm:px-6">
       <div className="flex-1 text-sm text-muted-foreground">
         {props.count} no total
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Por página</p>
+        <div className="flex items-center sm:space-x-2">
+          <p className="hidden sm:block text-sm font-medium">Por página</p>
           <Select
             value={`${props.table.getState().pagination.pageSize}`}
             onValueChange={(value) => {

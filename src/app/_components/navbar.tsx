@@ -4,7 +4,7 @@ import UserButtonMenu from "./user-button-menu";
 
 export default function Navbar() {
   return (
-    <div className="flex h-16 items-center gap-x-4 border-b px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+    <div className="bg-background flex h-16 items-center gap-x-4 border-b px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
       <MobileSidebar />
 
       <div
