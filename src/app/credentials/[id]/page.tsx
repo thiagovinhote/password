@@ -9,9 +9,5 @@ export default async function CredentialIdPage(props: {
   const credential = await getCredentialRepo(props.params.id);
   if (!credential) notFound();
 
-  return (
-    <div className="p-8 pt-6">
-      <RevealCredential credential={credential} />
-    </div>
-  );
+  return <RevealCredential credential={credential} />;
 }
